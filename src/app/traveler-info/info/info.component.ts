@@ -1,5 +1,5 @@
 import { WelcomeService } from './../../welcome/welcome.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ɵCodegenComponentFactoryResolver } from '@angular/core';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { SiteSettingsService } from 'src/app/shared/site_settings.service';
@@ -31,6 +31,8 @@ export class InfoComponent implements OnInit {
     { value: 'spouse', viewValue: 'Spouse' },
     { value: 'kid', viewValue: 'Kid' }
   ];
+  minDateKid;
+  maxDateKid;
   dataJson;
   typesList;
   datesList;
@@ -49,6 +51,9 @@ export class InfoComponent implements OnInit {
 
 
   ngOnInit() {
+   
+    this.minDateKid = this.setting.getDateInYears(18);
+    this.maxDateKid = this.welService.getMinDateBefore30Days();
     const emptyArr = new Array(
       parseInt(localStorage.getItem('numOfTraveler'))
     );
@@ -68,6 +73,13 @@ export class InfoComponent implements OnInit {
 
   fullNameText(firstName, LastName) {
     return firstName + ' ' + LastName;
+  }
+  goEmptyDate() {
+    const selectElement = document.querySelector(".selectOptionType");
+    selectElement.addEventListener('change', (event)=> {
+      console.log('show event value', event);
+    });
+   
   }
 
   submitTravelerInfo(form: NgForm) {
