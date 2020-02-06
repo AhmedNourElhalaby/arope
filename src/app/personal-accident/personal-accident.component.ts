@@ -1,0 +1,81 @@
+import { OdooService } from 'src/app/shared/odoo.service';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-personal-accident',
+  templateUrl: './personal-accident.component.html',
+  styleUrls: ['./personal-accident.component.css']
+})
+export class PersonalAccidentComponent implements OnInit {
+  breakpoint: number;
+  jobs;
+  basicCovers;
+  optionalCovers;
+  isDeath = false;
+  isLoading = false;
+  isOn = true;
+  constructor(private odoo: OdooService, private router: Router) { }
+
+  ngOnInit() {
+    const data = {paramlist: {filter: [],
+      need: []}};
+    const basicData = {paramlist: {filter: [['basic', '=', true]],
+      need: []}};
+    const optionalData = {paramlist: {filter: [['basic', '=', false]],
+    need: []}};
+    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    'job.table', 'search_read', data ).subscribe(res => {
+      this.jobs = res;
+    });
+    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    'cover.table', 'search_read', basicData ).subscribe(res => {
+      console.log(res);
+      this.basicCovers = res;
+    });
+    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    'cover.table', 'search_read', optionalData ).subscribe(res => {
+      console.log(res);
+      this.optionalCovers = res;
+    });
+  }
+  onResize(event) {
+    console.log('yeah', event);
+    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
+  }
+  submitForm(form: NgForm) {
+    const covers = [];
+    const tableCovers = [];
+    for (const item of this.basicCovers) {
+      if (item.id === Number(form.value.type)) {
+        tableCovers.push(item.cover_id);
+      }
+    }
+    covers.push(Number(form.value.type));
+    for (const cover of this.optionalCovers) {
+      if (cover.taken === true) {
+        covers.push(cover.id);
+        tableCovers.push(cover.cover_id);
+      }
+    }
+    console.log(covers, form.value.job);
+    // const covers_id = JSON.stringify(covers);
+    // const storageCovers = JSON.stringify(tableCovers);
+    const personalAccData = {job_id: form.value.job, sum_insured: form.value.rate};
+    localStorage.setItem('personalAccData', JSON.stringify(personalAccData));
+    const objCovers = JSON.stringify({name: tableCovers, id: covers});
+    localStorage.setItem('covers', objCovers);
+    const data  = {paramlist: {data: {j: form.value.job,
+      sum_insured: form.value.rate, cover: covers}}};
+    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+  'policy.personal', 'get_qouate', data ).subscribe(res => {
+    localStorage.setItem('total_price', res.toFixed(2).toString());
+    this.router.navigate(['/personal-result']);
+  });
+  }
+  showField(event) {
+    const valueField = event.value;
+    console.log(valueField);
+  }
+}

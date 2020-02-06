@@ -1,0 +1,38 @@
+<section class="get_qoute">
+    <form #f="ngForm" (ngSubmit)="submitForm(f)">
+        <mat-card fxFlex="700px" fxFlex.xs="100%" class='overlay'>
+            <mat-card-title fxLayoutAlign="flex-start">Get Personal Accident Quote</mat-card-title>
+            <mat-card-content>
+                <mat-grid-list [cols]="3" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
+                    <mat-grid-tile>
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label>Name</mat-label>
+                            <input matInput type="text" name="name" ngModel #name="ngModel" required>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label>Job</mat-label>
+                            <input matInput type="text" name="job" ngModel #job="ngModel" required>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label> Phone Number</mat-label>
+                            <input matInput type="tel" name="phoneNumber" ngModel #phoneNumber="ngModel" required>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <div class="clearfix"></div>
+
+
+                </mat-grid-list>
+                
+                <br>
+                <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid">{{ 'Submit' | uppercase }}</button>
+                <div *ngIf="isLoading" fxLayoutAlign="center center">
+                    <mat-spinner [diameter]="40"></mat-spinner>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+</section>
