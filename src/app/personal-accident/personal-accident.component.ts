@@ -2,6 +2,7 @@ import { OdooService } from 'src/app/shared/odoo.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import {SiteSettingsService} from '../shared/site_settings.service';
 
 @Component({
   selector: 'app-personal-accident',
@@ -16,9 +17,17 @@ export class PersonalAccidentComponent implements OnInit {
   isDeath = false;
   isLoading = false;
   isOn = true;
-  constructor(private odoo: OdooService, private router: Router) { }
+  maxDate: Date;
+  minDate: Date;
+  constructor(private odoo: OdooService, private router: Router, private site: SiteSettingsService) { }
 
   ngOnInit() {
+    /* max and min date */
+    this.maxDate = this.site.getDateInYears(18);
+    this.minDate = this.site.getDateInYears(75);
+    /* end max and min date */
+
+
     const data = {paramlist: {filter: [],
       need: []}};
     const basicData = {paramlist: {filter: [['basic', '=', true]],

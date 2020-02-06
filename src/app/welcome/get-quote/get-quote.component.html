@@ -1,5 +1,6 @@
 <section class="get_qoute">
     <form #f="ngForm" (ngSubmit)="submitForm(f)">
+
         <input type="hidden" name="types" [ngModel]="familyDataString" #types="ngModel">
         <mat-card fxFlex="700px" fxFlex.xs="100%" class='overlay'>
             <mat-card-title fxLayoutAlign="flex-start">Get a Travel Insurance Quote</mat-card-title>
@@ -7,6 +8,7 @@
                 <mat-radio-group aria-label="Select an option" color="primary" name="type" ngModel="individual" #typeInput="ngModel" (change)="showField($event)" required>
                     <mat-radio-button checked value="individual">Individual</mat-radio-button>
                     <mat-radio-button value="family">Family</mat-radio-button>
+                    <mat-radio-button value="group">Group</mat-radio-button>
                 </mat-radio-group>
 
 
@@ -24,13 +26,15 @@
                             </mat-select>
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile *ngIf="!isIndividual">
+                    <mat-grid-tile *ngIf="isFamly">
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label> {{ 'Date Of Birth' | uppercase }}</mat-label>
                             <input type="text" matInput (click)="this.showPopup($event.target.value)" [ngModel]="agesString" name="familyAges" #familyAges="ngModel" required>
 
                         </mat-form-field>
                     </mat-grid-tile>
+
+
                     <mat-grid-tile *ngIf="isIndividual">
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label> {{ 'Date Of Birth' | uppercase }}</mat-label>
@@ -39,6 +43,17 @@
                             <mat-datepicker (closed)="inputAge.blur()" #agePicker></mat-datepicker>
                         </mat-form-field>
                     </mat-grid-tile>
+
+                    <mat-grid-tile *ngIf="isGroup">
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label> {{ 'number of group' | uppercase }}</mat-label>
+                            <input type="number" matInput placeholder="number of group" ngModel name="numOfGroup" #numOfGroup="ngModel" required>
+
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+
+
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label> {{ 'When' | uppercase }}</mat-label>
@@ -70,8 +85,7 @@
 
 
                 </mat-grid-list>
-                <mat-checkbox color="primary" ngModel #checkbox name="egyptian" [checked]="isEgyption"
-                (change)="isEgyption = !isEgyption">I confirm that i am a resident in Egypt</mat-checkbox>
+                <mat-checkbox color="primary" ngModel #checkbox name="egyptian" [checked]="isEgyption" (change)="isEgyption = !isEgyption">I confirm that i am a resident in Egypt</mat-checkbox>
                 <br><br>
                 <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid || isEgyption !== true">{{ 'Get A Quote' | uppercase }}</button>
                 <div *ngIf="isLoading" fxLayoutAlign="center center">

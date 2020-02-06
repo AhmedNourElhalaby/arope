@@ -39,6 +39,12 @@ export class SiteSettingsService{
     strToJosn(jsonString) {
         return JSON.parse(jsonString);
     }
+
+    getDateInYears(num: number) {
+        const date = new Date();
+        date.setFullYear(date.getFullYear() - num);
+        return date;
+      }
  
     saveDataInLocalStorage(data) {
         //NOTE: data has $key & value

@@ -20,6 +20,8 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   minDate;
   breakpoint: number;
   isIndividual = true;
+  isFamly = false;
+  isGroup = false;
   agesString: string;
   ageLoadSubs: Subscription;
   loadingSubs: Subscription;
@@ -87,6 +89,19 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   showField(event) {
     const valueField = event.value;
     if (valueField === 'family') { this.isIndividual = false; } else { this.isIndividual = true; }
+    if (valueField == 'family') {
+      this.isIndividual = false;
+      this.isFamly = true;
+      this.isGroup = false;
+    } else if (valueField === 'group') {
+      this.isIndividual = false;
+      this.isFamly = false;
+      this.isGroup = true;
+    } else if (valueField === 'individual') {
+      this.isIndividual = true;
+      this.isFamly = false;
+      this.isGroup = false;
+    } 
   }
 
   convertDate(dateAge) {
@@ -127,12 +142,18 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
       //  tills: {p_to: till}, ages: {kid_dob: data} }};
       this.saveDataInLocalStorage(form);
       this.welcomeService.sendQuoteResult('get_family', familyData);
-    } else {
+    } else if(form.value.type === 'individual') {
       const age = this.convertDate(form.value.indAge);
       const data = {paramlist: {data: {z: form.value.zone, d: [age],
       p_from: when, p_to: till}}};
       // const olddata = {paramlist: {zone: {z: form.value.zone}, ages: {d: [age]},
       //  whens: {p_from: when}, tills: {p_to: till} }};
+      this.saveDataInLocalStorage(form);
+      this.welcomeService.sendQuoteResult('get_individual', data);
+    } else if(form.value.type === 'group') {
+      // const data = {paramlist: {data: {z: form.value.zone, 
+      // p_from: when, p_to: till}}};
+     const data ={};
       this.saveDataInLocalStorage(form);
       this.welcomeService.sendQuoteResult('get_individual', data);
     }
@@ -171,6 +192,12 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
     localStorage.setItem('when', form.value.dateWhen);
     localStorage.setItem('till', form.value.dateTill);
+
+    if(form.value.numOfGroup) {
+      localStorage.setItem('numOfGroup', form.value.numOfGroup);
+    }
+
+
     console.log('yearBirth', localStorage.getItem('age'));
   }
 

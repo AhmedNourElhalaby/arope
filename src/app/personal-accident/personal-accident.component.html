@@ -9,19 +9,19 @@
                             <mat-grid-tile>
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label> {{ 'Date Of Birth' | uppercase }}</mat-label>
-                                    <input type="text" matInput [matDatepicker]="agePicker" (focus)="agePicker.open()" #inputAge placeholder="Date Of Birth" [max]="minDate" ngModel name="indAge" #indAge="ngModel" required>
+                                    <input type="text" matInput [matDatepicker]="agePicker" (focus)="agePicker.open()" #inputAge placeholder="Date Of Birth" [max]="maxDate" [min]="minDate" ngModel name="indAge" #indAge="ngModel" required>
                                     <mat-datepicker-toggle matSuffix [for]="agePicker"></mat-datepicker-toggle>
                                     <mat-datepicker (closed)="inputAge.blur()" #agePicker></mat-datepicker>
                                 </mat-form-field>
                             </mat-grid-tile>
                             <mat-grid-tile>
                                 <mat-form-field appearance="outline" class='form-field'>
-                                        <mat-label>{{ 'Job' | uppercase }}</mat-label>
-                                        <mat-select name="job" ngModel #jobInput="ngModel" required>
-                                            <mat-option *ngFor="let job of jobs" [value]="job.id">
-                                                {{job.job_id}}
-                                            </mat-option>
-                                        </mat-select>
+                                    <mat-label>{{ 'Job' | uppercase }}</mat-label>
+                                    <mat-select name="job" ngModel #jobInput="ngModel" required>
+                                        <mat-option *ngFor="let job of jobs" [value]="job.id">
+                                            {{job.job_id}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </mat-grid-tile>
                             <mat-grid-tile>
@@ -37,24 +37,23 @@
                         <div style="float:left">
                             <h3>Basic Covers</h3>
                             <div>
-                                <mat-radio-group *ngFor="let cover of basicCovers" required  aria-label="Select an option" color="primary" name="type" ngModel="type" #typeInput="ngModel" (change)="showField($event)">
+                                <mat-radio-group *ngFor="let cover of basicCovers" required aria-label="Select an option" color="primary" name="type" ngModel="type" #typeInput="ngModel" (change)="showField($event)">
                                     <mat-radio-button style="margin-bottom:4px;" value="{{cover.id}}">{{cover.cover_id}}</mat-radio-button>
                                     <br>
                                 </mat-radio-group>
-                                
+
                             </div>
                             <br>
                         </div>
                         <div style="margin-left: 50%;">
                             <h3>Optional Covers</h3>
                             <div *ngFor="let cover of optionalCovers">
-                            <mat-checkbox color="primary" ngModel #checkbox name="death" [checked]="cover.taken"
-                                (change)="cover.taken = !cover.taken">{{cover.cover_id}}</mat-checkbox>
+                                <mat-checkbox color="primary" ngModel #checkbox name="death" [checked]="cover.taken" (change)="cover.taken = !cover.taken">{{cover.cover_id}}</mat-checkbox>
                                 <br>
                             </div>
                         </div>
-                        
-                        <h4>If you can't find your job  <button type="button" mat-button class='here-button' (click)="isOn = false">click here</button></h4>
+
+                        <h4>If you can't find your job <button type="button" mat-button class='here-button' (click)="isOn = false">click here</button></h4>
 
                         <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid">{{ 'Get A Quote' | uppercase }}</button>
                         <div *ngIf="isLoading" fxLayoutAlign="center center">
@@ -62,9 +61,9 @@
                         </div>
                     </mat-card-content>
                 </mat-card>
-                </form>
-                
-            
+            </form>
+
+
 
         </section>
         <app-ticket-form *ngIf="!isOn"></app-ticket-form>

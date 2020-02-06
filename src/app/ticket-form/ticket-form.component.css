@@ -20,6 +20,7 @@
         margin: auto 10px !important;
     }
 }
+
 .form-field:not(:last-child) {
     margin-right: 20px;
 }
@@ -41,6 +42,7 @@
     line-height: 51px;
     top: -5px;
 }
+
 .here-button {
     background-color: #073e89;
     color: #fff;
@@ -76,3 +78,36 @@ mat-radio-button {
 .clearfix {
     clear: both;
 }
+
+
+/* Section Phone Number Field */
+
+.form-group {
+    position: relative;
+}
+
+#selectOptions {
+    position: absolute;
+}
+
+mat-label#phoneLabel {
+    padding-left: 55px;
+}
+
+input#phoneInput {
+    padding-left: 47px;
+}
+
+#selectOptions {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    height: 67%;
+    border: none;
+    width: 50px;
+    z-index: 999;
+    background: transparent;
+}
+
+
+/* End Section Phone Number Field */
