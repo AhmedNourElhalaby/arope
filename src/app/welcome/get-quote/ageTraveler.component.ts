@@ -3,6 +3,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { NgForm } from '@angular/forms';
 import { WelcomeService } from '../welcome.service';
 import { SiteSettingsService } from '../../shared/site_settings.service';
+
+
+//FORMATE DATE
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 @Component({
   selector: "app-stop-training",
   template: `
@@ -41,6 +46,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
             
                 <div class="form-group" *ngIf="i == 0">
                 <!-- start mat-from-field -->
+
                 <mat-form-field
                   class="form-age-traveler"
                   style="
@@ -308,6 +314,14 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
   `,
   styles: [
     ".margin-right-fix:not(:last-child) { margin-right: 70px !important }; button.margin-right-fix.mat-raised-button.mat-button-base.mat-warn.ng-star-inserted { max-width: 7% !important }"
+  ],
+  providers: [
+    {
+      provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
   ]
 })
 export class AgeTravelerComponent implements OnInit {

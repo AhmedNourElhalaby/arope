@@ -7,6 +7,9 @@ import { OdooService } from 'src/app/shared/odoo.service';
 import { TravelerService } from '../traveler.service';
 import { ValidationService } from 'src/app/shared/validation.service';
 // import { saveAs } from 'file-saver';
+//FORMATE DATE
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -19,7 +22,15 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
-  styleUrls: ['./info.component.css']
+  styleUrls: ['./info.component.css'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+  ]
 })
 export class InfoComponent implements OnInit {
   constructor(
@@ -138,6 +149,7 @@ export class InfoComponent implements OnInit {
         });
       const caching = {
         fname: form.value.firstName,
+       
         lname: form.value.lastName,
         gender: form.value.gender,
         email: form.value.emailAddress,
@@ -155,10 +167,11 @@ export class InfoComponent implements OnInit {
       while (index <= objectKeysLen) {
         const types = object['type' + index];
         const firstName = object['tfirstName' + index];
+        const middleName = object['tmiddleName' + index];
         const lastName = object['tlastName' + index];
         const dateBirth = object['tbirthDate' + index];
         const passports = object['tpassport' + index];
-        const fullName = firstName + ' ' + lastName
+        const fullName = ''.concat(' ',firstName,' ',middleName,' ',lastName);
         const jsonData = {
           name: fullName,
           dob: dateBirth,

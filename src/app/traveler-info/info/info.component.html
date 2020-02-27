@@ -40,23 +40,23 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label>Date Of Birth</mat-label>
-                    <input *ngIf="indi"  matInput type="text" name="dateBirth" [matDatepicker]="dateBirthPicker" ngModel [(ngModel)]="date" #dateBirth="ngModel" required>
-                    <input *ngIf="!indi"  matInput type="text" name="dateBirth" [matDatepicker]="dateBirthPicker" ngModel [(ngModel)]="datesList['date-0']" #dateBirth="ngModel" required>
+                    <input *ngIf="indi" matInput type="text" name="dateBirth" [matDatepicker]="dateBirthPicker" ngModel [(ngModel)]="date" #dateBirth="ngModel" required>
+                    <input *ngIf="!indi" matInput type="text" name="dateBirth" [matDatepicker]="dateBirthPicker" ngModel [(ngModel)]="datesList['date-0']" #dateBirth="ngModel" required>
                     <mat-datepicker-toggle matSuffix [for]="dateBirthPicker"></mat-datepicker-toggle>
                     <mat-datepicker #dateBirthPicker [startAt]="dataJson?.dates['date-0']"></mat-datepicker>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
-        
+
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> Email Address</mat-label>
                     <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email (blur)="checkMail()">
                     <mat-error *ngIf="emailAddress.hasError('required')">Email is <strong>required</strong></mat-error>
-                    <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>                
+                    <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>
                 </mat-form-field>
-                
+
             </mat-grid-tile>
-            
+
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> Phone Number</mat-label>
@@ -82,10 +82,10 @@
         </mat-grid-list>
         <mat-grid-list cols="1" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
-                    <mat-form-field appearance="outline" class='form-field'>
-                        <mat-label> Enter Your Address</mat-label>
-                        <input matInput type="text" name="address" ngModel #address="ngModel" required>
-                    </mat-form-field>
+                <mat-form-field appearance="outline" class='form-field'>
+                    <mat-label> Enter Your Address</mat-label>
+                    <input matInput type="text" name="address" ngModel #address="ngModel" required>
+                </mat-form-field>
             </mat-grid-tile>
 
         </mat-grid-list>
@@ -96,76 +96,94 @@
                 <h2 class="title">Additional Traveler Information</h2>
 
                 <ng-container *ngFor="let traveler of numOfTravelers | slice:1; let i = index">
-                    <h2 class="title">Traveller {{i+1}}</h2>
-                    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
-                        <div fxFlex="33.33333%">
-                            <mat-form-field appearance="outline" class='form-field'>
-                                <mat-label> First Name</mat-label>
-                                <input matInput type="text" name="tfirstName{{traveler}}" ngModel #tfirstName="ngModel" required>
-                            </mat-form-field>
+                    <div class="typeSection">
 
-
-
-                        </div>
-
-                        <div fxFlex="33.33333%">
-                            <mat-form-field appearance="outline" class='form-field'>
-                                <mat-label> Last Name</mat-label>
-                                <input matInput type="text" name="tlastName{{traveler}}" ngModel #tlastName="ngModel" required>
-                            </mat-form-field>
-
-
-                        </div>
-
-                        <div fxFlex="33.33333%">
-                            <div class="form-group" *ngIf="typesList['type-'+traveler] == 'kid'">
+                        <h2 class="title">Traveller {{i+1}}</h2>
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
+                            <div fxFlex="33.33333%">
                                 <mat-form-field appearance="outline" class='form-field'>
-                                    <mat-label> Date Of Birth</mat-label>
-                                    <input matInput type="text" [min]="minDateKid" [max]="maxDateKid" [matDatepicker]="birthDatePicker" name="tbirthDate{{traveler}}" [(ngModel)]="datesList['date-'+traveler]" #tbirthDate="ngModel">
-                                    <mat-datepicker-toggle matSuffix [for]="birthDatePicker" onkeydown="return false"></mat-datepicker-toggle>
-                                    <mat-datepicker [startAt]="datesList['date-'+traveler]" #birthDatePicker onkeydown="return false"></mat-datepicker>
+                                    <mat-label> First Name</mat-label>
+                                    <input matInput type="text" name="tfirstName{{traveler}}" ngModel #tfirstName="ngModel" required>
+                                </mat-form-field>
+
+
+
+                            </div>
+                            <div fxFlex="33.33333%">
+                                <mat-form-field appearance="outline" class='form-field'>
+                                    <mat-label> Middle Name</mat-label>
+                                    <input matInput type="text" name="tmiddleName{{traveler}}" ngModel #tmiddleName="ngModel" required>
+                                </mat-form-field>
+
+
+
+                            </div>
+
+                            <div fxFlex="33.33333%">
+                                <mat-form-field appearance="outline" class='form-field'>
+                                    <mat-label> Last Name</mat-label>
+                                    <input matInput type="text" name="tlastName{{traveler}}" ngModel #tlastName="ngModel" required>
+                                </mat-form-field>
+
+
+                            </div>
+                        </div>
+                        <!-- end div.flexLayout -->
+
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
+                            <div fxFlex="50%">
+                                <div class="form-group" *ngIf="typesList['type-'+traveler] == 'kid'">
+                                    <mat-form-field appearance="outline" class='form-field'>
+                                        <mat-label> Date Of Birth</mat-label>
+                                        <input matInput type="text" [min]="minDateKid" [max]="maxDateKid" [matDatepicker]="birthDatePicker" name="tbirthDate{{traveler}}" [(ngModel)]="datesList['date-'+traveler]" #tbirthDate="ngModel">
+                                        <mat-datepicker-toggle matSuffix [for]="birthDatePicker" onkeydown="return false"></mat-datepicker-toggle>
+                                        <mat-datepicker [startAt]="datesList['date-'+traveler]" #birthDatePicker onkeydown="return false"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <!-- end form-group -->
+                                <div class="form-group" *ngIf="typesList['type-'+traveler] == 'spouse'">
+                                    <mat-form-field appearance="outline" class='form-field'>
+                                        <mat-label> Date Of Birth</mat-label>
+                                        <input matInput type="text" [matDatepicker]="birthDatePicker" [max]="maxDateKid" name="tbirthDate{{traveler}}" [(ngModel)]="datesList['date-'+traveler]" #tbirthDate="ngModel">
+                                        <mat-datepicker-toggle matSuffix [for]="birthDatePicker" onkeydown="return false"></mat-datepicker-toggle>
+                                        <mat-datepicker [startAt]="datesList['date-'+traveler]" #birthDatePicker onkeydown="return false"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <!-- end form-group -->
+                            </div>
+                            <div fxFlex="50%">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Type</mat-label>
+                                    <mat-select name="type{{traveler}}" class="selectOptionType" [(ngModel)]="typesList['type-'+traveler]" #type="ngModel">
+                                        <mat-option *ngFor="let type of types" [value]="type.value">
+                                            {{type.viewValue}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                             <!-- end form-group -->
 
-                            <div class="form-group" *ngIf="typesList['type-'+traveler] == 'spouse'">
+
+                        </div>
+                        <!-- end div.flexLayout -->
+                        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
+
+
+
+                            <div fxFlex="50%">
                                 <mat-form-field appearance="outline" class='form-field'>
-                                    <mat-label> Date Of Birth</mat-label>
-                                    <input matInput type="text" [matDatepicker]="birthDatePicker" [max]="maxDateKid" name="tbirthDate{{traveler}}" [(ngModel)]="datesList['date-'+traveler]" #tbirthDate="ngModel">
-                                    <mat-datepicker-toggle matSuffix [for]="birthDatePicker" onkeydown="return false"></mat-datepicker-toggle>
-                                    <mat-datepicker [startAt]="datesList['date-'+traveler]" #birthDatePicker onkeydown="return false"></mat-datepicker>
+                                    <mat-label> National ID Number</mat-label>
+                                    <input matInput type="number" name="tid{{traveler}}" ngModel #tid="ngModel" required>
                                 </mat-form-field>
                             </div>
-                            <!-- end form-group -->
+                            <div fxFlex="50%">
+                                <mat-form-field appearance="outline" class='form-field'>
+                                    <mat-label> Passport Number</mat-label>
+                                    <input matInput type="text" name="tpassport{{traveler}}" ngModel #tpassport="ngModel" required>
+                                </mat-form-field>
+                            </div>
                         </div>
-                    </div>
-                    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
-
-
-                        <div fxFlex="33.33333%">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Type</mat-label>
-                                <mat-select name="type{{traveler}}" class="selectOptionType" [(ngModel)]="typesList['type-'+traveler]" #type="ngModel">
-                                    <mat-option *ngFor="let type of types" [value]="type.value">
-                                        {{type.viewValue}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-
-                        <div fxFlex="33.33333%">
-                            <mat-form-field appearance="outline" class='form-field'>
-                                <mat-label> National ID Number</mat-label>
-                                <input matInput type="number" name="tid{{traveler}}" ngModel #tid="ngModel" required>
-                            </mat-form-field>
-                        </div>
-
-                        <div fxFlex="33.3333%">
-                            <mat-form-field appearance="outline" class='form-field'>
-                                <mat-label> Passport Number</mat-label>
-                                <input matInput type="text" name="tpassport{{traveler}}" ngModel #tpassport="ngModel" required>
-                            </mat-form-field>
-                        </div>
+                        <!-- end div.flexLayout -->
                     </div>
                 </ng-container>
 

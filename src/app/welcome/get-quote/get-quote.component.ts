@@ -2,17 +2,31 @@ import { GroupAgeComponent } from './groupAge.component';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AgeTravelerComponent } from './ageTraveler.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MatRadioChange } from '@angular/material';
 import { WelcomeService } from '../welcome.service';
 import { Subscription } from 'rxjs';
 import { UIService } from '../../shared/ui.services';
 import { OdooService } from '../../shared/odoo.service';
+
+//FORMATE DATE
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
+
+
 @Component({
   selector: 'app-get-quote',
   templateUrl: './get-quote.component.html',
-  styleUrls: ['./get-quote.component.css']
+  styleUrls: ['./get-quote.component.css'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+  ]
 })
 export class GetQuoteComponent implements OnInit, OnDestroy {
   countries = [];
@@ -33,17 +47,58 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   isActive = true;
   groupAge;
   priceValue;
+  
+  formFields = {
+    typeTraveler : 'individual',
+    dates: '',
+    zone: '',
+    date: '',
+    when: '',
+    till: ''
+  };
 
+
+
+
+
+  
   // @Output() change: EventEmitter<MatRadioChange>;
   constructor(
     public dialog: MatDialog,
     private router: Router,
     private welcomeService: WelcomeService,
     private uiService: UIService,
-    private odoo: OdooService
+    private odoo: OdooService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    //get query params
+    this.route.queryParamMap.subscribe(paramMap=> {
+      if(!paramMap.has('type')) {
+        return;
+      }
+
+      if(paramMap.get('type') == 'individual') {
+        this.formFields.typeTraveler = paramMap.get('type');
+        this.formFields.date = this.convertDate(paramMap.get('date'));
+        this.isFamly = false;
+        this.isIndividual = true;
+      
+      } else if(paramMap.get('type') == 'family') {
+        this.formFields.typeTraveler = paramMap.get('type');
+        this.formFields.dates = paramMap.get('dates');
+        this.isFamly = true;
+        this.isIndividual = false;
+        this.familyDataString = localStorage.getItem('typesDates');
+      }
+      console.log('dates ==> ', paramMap.get('dates'));
+      this.formFields.zone = paramMap.get('zone');
+      this.formFields.date = this.convertDate(paramMap.get('date'));
+      this.formFields.till = this.convertDate(paramMap.get('till'));
+      this.formFields.when = this.convertDate(paramMap.get('when'));
+    });
+
     this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
     this.maxDate = new Date();
     this.maxDate.setDate(this.maxDate.getDate() - 0);
@@ -60,7 +115,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
 
   onResize(event) {
-    console.log('yeah', event);
+   
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
   }
 
@@ -85,7 +140,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
           arr.push(new_json.dates[i]);
         }
 
-        this.agesString = arr.join(', ');
+        this.formFields.dates = arr.join(', ');
       }
 
     });
@@ -147,6 +202,22 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     }
 
     return [year, month, day].join('-');
+  }
+
+  convertDateForDatePicker(date) {
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+
+    return [day, month, year].join('/');
   }
 
   submitForm(form: NgForm) {

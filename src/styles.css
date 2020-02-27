@@ -93,3 +93,8 @@ body {
         max-width: 95% !important;
     }
 }
+
+.price-card .mat-progress-spinner circle,
+.price-card .mat-spinner circle {
+    stroke: #fff !important;
+}

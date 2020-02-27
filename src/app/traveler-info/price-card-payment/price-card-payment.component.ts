@@ -4,6 +4,8 @@ import { WelcomeService } from '../../welcome/welcome.service';
 import { TravelerService } from '../traveler.service';
 import { NgForm } from '@angular/forms';
 import { OdooService } from '../../shared/odoo.service';
+import { Subscription } from 'rxjs';
+import { UIService } from 'src/app/shared/ui.services';
 
 @Component({
   selector: 'app-price-card-payment',
@@ -14,19 +16,24 @@ export class PriceCardPaymentComponent implements OnInit {
   totalPrice;
   formList;
   isDisabled = false;
+  isLoading = false;
+  isLoadingSubs: Subscription;
 
   @Output() clickedDone = new EventEmitter();
   constructor(
     private welService: WelcomeService,
     private travelerService: TravelerService,
     private odoo: OdooService,
-    private http: HttpClient
+    private http: HttpClient,
+    private uiService: UIService
   ) {}
 
   ngOnInit() {
     this.formList = this.travelerService.paymentForm;
     console.log('formList', this.formList.cardNumber);
     this.totalPrice = localStorage.getItem('total_price');
+
+
     // this.welService.priceLoad.subscribe(result => {
     //   this.totalPrice = result;
     // });
@@ -35,6 +42,7 @@ export class PriceCardPaymentComponent implements OnInit {
   }
 
   submitFormPriceCard(form: NgForm) {
+    this.isLoading = true;
     console.log('ay kala,');
     if (form.valid) {
       console.log('ayyy');
@@ -65,6 +73,7 @@ export class PriceCardPaymentComponent implements OnInit {
   }
 
   whenSucceed() {
+    this.isLoading = false;
     this.clickedDone.emit(true);
     this.isDisabled = true;
     window.scrollTo(0, 0);

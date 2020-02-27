@@ -28,7 +28,6 @@ mat-grid-list.mat-grid-list.ng-star-inserted {
     height: calc(70px) !important;
 }
 
-
 mat-form-field {
     position: relative;
 }
@@ -39,4 +38,13 @@ mat-form-field {
     left: -11px;
     font-size: 13px;
     color: red;
+}
+
+.typeSection {
+    padding: 10px;
+}
+
+.typeSection:nth-child(even) {
+    background: #eee;
+    border-radius: 10px;
 }
