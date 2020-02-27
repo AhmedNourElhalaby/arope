@@ -1,18 +1,18 @@
-import { MatSnackBar } from '@angular/material';
-import { OdooService } from 'src/app/shared/odoo.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { OdooService } from 'src/app/shared/odoo.service';
 import { Router } from '@angular/router';
+import { group } from '@angular/animations';
 import { ValidationService } from 'src/app/shared/validation.service';
 
 
 @Component({
-  selector: 'app-ticket-form',
-  templateUrl: './ticket-form.component.html',
-  styleUrls: ['./ticket-form.component.css']
+  selector: 'app-group-ticket',
+  templateUrl: './group-ticket.component.html',
+  styleUrls: ['./group-ticket.component.css']
 })
-export class TicketFormComponent implements OnInit {
-  breakpoint: number;
+export class GroupTicketComponent implements OnInit {
+  breakpoint;
   isLoading = false;
   mail: boolean;
   constructor(private odoo: OdooService, private router: Router, private validation: ValidationService) { }
@@ -20,11 +20,11 @@ export class TicketFormComponent implements OnInit {
   ngOnInit() {
   }
   submitForm(form: NgForm) {
-    const data = {paramlist: {data: {type: 'pa', job: form.value.job,
+    const groups = JSON.parse(localStorage.getItem('groupMembers'));
+    const data = {paramlist: {data: {group: groups, type: 'travel',
       name: form.value.name, phone: form.value.prefixNum + form.value.phoneNumber, mail: form.value.emailAddress}}};
     this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'ticket.api', 'create_ticket', data ).subscribe(res => {
-      console.log(res);
       this.router.navigate(['/thanks']);
     });
   }

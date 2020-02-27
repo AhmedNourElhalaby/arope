@@ -1,10 +1,13 @@
 import { WelcomeService } from './../../welcome/welcome.service';
-import { Component, OnInit, Output, EventEmitter, ɵCodegenComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroupDirective, NgForm, Validators, AbstractControl} from '@angular/forms';
 import { SiteSettingsService } from 'src/app/shared/site_settings.service';
 import { OdooService } from 'src/app/shared/odoo.service';
 import { TravelerService } from '../traveler.service';
+import { ValidationService } from 'src/app/shared/validation.service';
+// import { saveAs } from 'file-saver';
+
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -23,9 +26,13 @@ export class InfoComponent implements OnInit {
     private setting: SiteSettingsService,
     private odoo: OdooService,
     private welService: WelcomeService,
-    private travelerService: TravelerService
+    private travelerService: TravelerService,
+    private validation: ValidationService,
+    // private save: saveAs
   ) {
   }
+  @ViewChild('fInfo', {static: false}) customForm: NgForm;
+  // @ViewChild('fInfo', {static: true}) form: NgForm;
   numOfTravelers = [];
   types = [
     { value: 'spouse', viewValue: 'Spouse' },
@@ -40,10 +47,19 @@ export class InfoComponent implements OnInit {
   check = true;
   isValidFormSubmitted = false;
   isConfrim = false;
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  mail: boolean;
+  type;
+  date;
+  indi;
+  cid: boolean;
+  // emailFormControl = new FormControl('', [
+  //   Validators.required,
+  //   Validators.email,
+  //   // this.checkMailValidator
+
+  // ]);
+
+  // emailFormControl = new FormControl(null, [this.checkMailValidator]);
 
   matcher = new MyErrorStateMatcher();
   @Output() changeStatus = new EventEmitter();
@@ -51,7 +67,8 @@ export class InfoComponent implements OnInit {
 
 
   ngOnInit() {
-   
+    // this.mail = false;
+    // this.checkMail('ahmednourelhalaby@gmail.com');
     this.minDateKid = this.setting.getDateInYears(18);
     this.maxDateKid = this.welService.getMinDateBefore30Days();
     const emptyArr = new Array(
@@ -63,7 +80,11 @@ export class InfoComponent implements OnInit {
       console.log('count', i);
       this.numOfTravelers.push(i);
    }
-
+    this.type = localStorage.getItem('type');
+    if (this.type === 'individual') {
+      this.indi = true;
+      this.date = localStorage.getItem('date');
+    }
     const fJson = JSON.parse(localStorage.getItem('typesDates'));
     this.dataJson = JSON.parse(fJson);
     this.typesList = this.dataJson.types;
@@ -71,15 +92,16 @@ export class InfoComponent implements OnInit {
   }
 
 
-  fullNameText(firstName, LastName) {
-    return firstName + ' ' + LastName;
+
+  fullNameText(firstName, middleName ,LastName) {
+    return firstName + ' '  + middleName + ' ' + LastName;
   }
   goEmptyDate() {
-    const selectElement = document.querySelector(".selectOptionType");
-    selectElement.addEventListener('change', (event)=> {
+    const selectElement = document.querySelector('.selectOptionType');
+    selectElement.addEventListener('change', (event) => {
       console.log('show event value', event);
     });
-   
+
   }
 
   submitTravelerInfo(form: NgForm) {
@@ -88,31 +110,40 @@ export class InfoComponent implements OnInit {
     const age = this.setting.convertDate(form.value.dateBirth);
     const when = this.setting.convertDate(localStorage.getItem('when'));
     const till = this.setting.convertDate(localStorage.getItem('till'));
-    console.log(this.emailFormControl);
+    // console.log(this.emailFormControl);
     if (localStorage.getItem('type') === 'individual') {
       const formData = {data: {
+        source: 'online',
         package: localStorage.getItem('type'),
-        c_name: form.value.firstName + ' ' + form.value.lastName,
+        c_name: this.fullNameText(form.value.firstName,form.value.middleName,form.value.lastName),
         add: form.value.address,
-        passport_num: form.value.Passport,
+        pass: form.value.Passport,
         dob: age,
         zone: localStorage.getItem('zone'),
         p_from: when,
         p_to: till,
         family: [],
         id: form.value.id,
-        mail: this.emailFormControl.value
+        mail: form.value.emailAddress
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));
       const data = {paramlist: {data: {z: localStorage.getItem('zone'), d: [age],
         p_from: when, p_to: till}}};
-      this.odoo.call_odoo_function('travel_agency', 'demo', 'demo', 'policy.travel',
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'policy.travel',
         'get_individual', data).subscribe(res => {
           const x = res.gross.toFixed(2);
-          localStorage.setItem('total_price', x.toString());
+          localStorage.setItem('total_price', parseInt(x.toString(), 10).toString());
           this.changeShowValue();
           this.changeStatus.emit(true);
         });
+      const caching = {
+        fname: form.value.firstName,
+        lname: form.value.lastName,
+        gender: form.value.gender,
+        email: form.value.emailAddress,
+        phone: form.value.phoneNumber,
+
+      };
       // this.welService.sendQuoteResult('get_individual', data);
     } else {
       const object = form.value.additionalTravelers;
@@ -127,7 +158,7 @@ export class InfoComponent implements OnInit {
         const lastName = object['tlastName' + index];
         const dateBirth = object['tbirthDate' + index];
         const passports = object['tpassport' + index];
-        const fullName = this.fullNameText(firstName, lastName);
+        const fullName = firstName + ' ' + lastName
         const jsonData = {
           name: fullName,
           dob: dateBirth,
@@ -145,34 +176,76 @@ export class InfoComponent implements OnInit {
         p_to: till, kid_dob: kidAges}}};
       const familyD = emptyArr;
       const formData = {data: {
+        source: 'online',
         package: localStorage.getItem('type'),
-        c_name: form.value.firstName + ' ' + form.value.lastName,
+        c_name: this.fullNameText(form.value.firstName,form.value.middleName,form.value.lastName),
         add: form.value.address,
-        passport_num: form.value.Passport,
+        pass: form.value.Passport,
         dob: age,
         zone: localStorage.getItem('zone'),
         p_from: when,
         p_to: till,
         family: familyD,
-        mail: this.emailFormControl.value
+        mail: form.value.emailAddress
 
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));
-      this.odoo.call_odoo_function('travel_agency', 'demo', 'demo', 'policy.travel',
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'policy.travel',
       'get_family', data).subscribe(res => {
-        const x = res.gross.toFixed(2);
-        localStorage.setItem('total_price', x.toString());
+        const x = res.gross.toString();
+        console.log(x);
+        // console.log(res);
+        localStorage.setItem('total_price', x);
         this.changeShowValue();
         this.changeStatus.emit(true);
       });
-      // this.welService.sendQuoteResult('get_family', data);
+      this.welService.sendQuoteResult('get_family', data);
     }
     this.isValidFormSubmitted = true;
-    form.resetForm();
+    // form.resetForm();
   }
 
   changeShowValue() {
     this.travelerService.changeStatusShowValue();
 
   }
+  checkMail() {
+    // let result = true;
+    const email = this.customForm.value.emailAddress;
+    this.validation.checkMail(email).subscribe(res => {
+      const key = 'smtp_check';
+      this.mail = res[key];
+    });
+  }
+  convertDate(dateAge) {
+    let d = new Date(dateAge),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+
+    return [year, month, day].join('-');
+  }
+  checkId() {
+    const dob = this.convertDate(this.customForm.value.dateBirth);
+    const id = this.customForm.value.id.toString();
+    const dyear = dob.substring(2, 4);
+    const idYear = id.substring(1, 3);
+    const dmonth = dob.substring(5, 7);
+    const dday = dob.substring(8, 10);
+    const idMonth = id.substring(3, 5);
+    const idDay = id.substring(5, 7);
+    if (idYear !== dyear || idMonth !== dmonth || idDay !== dday) {
+      this.cid = false;
+    } else {
+      this.cid = true;
+    }
+  }
+
 }

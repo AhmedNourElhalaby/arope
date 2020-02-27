@@ -27,3 +27,16 @@ mat-form-field {
 mat-grid-list.mat-grid-list.ng-star-inserted {
     height: calc(70px) !important;
 }
+
+
+mat-form-field {
+    position: relative;
+}
+
+.custom-error {
+    position: absolute;
+    top: 43px;
+    left: -11px;
+    font-size: 13px;
+    color: red;
+}

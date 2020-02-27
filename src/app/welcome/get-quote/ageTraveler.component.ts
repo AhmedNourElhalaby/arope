@@ -341,7 +341,7 @@ export class AgeTravelerComponent implements OnInit {
       let newJson = JSON.parse(this.passedData.datesList);
       var genJson = JSON.parse(newJson);
 
-      for (var dateItem in genJson.dates) {
+      for (const dateItem in genJson.dates) {
         this.elements.push(this.elements.length);
       }
 
@@ -359,12 +359,12 @@ export class AgeTravelerComponent implements OnInit {
   }
 
   submitFormAges(form: NgForm) {
-    for (let age in form.value.dates) {
+    for (const age in form.value.dates) {
       form.value.dates[age] = this.site_settings.convertDate(
         form.value.dates[age]
       );
     }
-    let listValue = {
+    const listValue = {
       dates: form.value.dates,
       types: form.value.types
     };
@@ -373,7 +373,7 @@ export class AgeTravelerComponent implements OnInit {
   }
 
   deleteElement(index: number) {
-    const target_id = "field-" + index;
+    const target_id = 'field-' + index;
     const element_id = document.getElementById(target_id);
     element_id.parentNode.removeChild(element_id);
   }

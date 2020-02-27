@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { WelcomeService } from '../../welcome/welcome.service';
 import { MatStepper } from '@angular/material';
 import { UIService } from '../../shared/ui.services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-price-card',
@@ -16,16 +17,19 @@ export class PriceCardComponent implements OnInit {
   isLoadingSubs: Subscription;
   isDisabled = false;
   loadPriceSubs: Subscription;
+  type;
   @Output() clicked = new EventEmitter();
 
   constructor(
     private welService: WelcomeService,
-    private uiService: UIService
+    private uiService: UIService,
+    private router: Router
   ) {
 
   }
 
   ngOnInit() {
+    this.type = localStorage.getItem('type');
 
     this.totalPrice = localStorage.getItem('total_price');
     // this.loadPriceSubs = this.welService.priceLoad.subscribe(result => {
@@ -42,9 +46,14 @@ export class PriceCardComponent implements OnInit {
   }
 
   goNextStepper() {
+    if (this.type === 'group') {
+      this.router.navigate(['/group-res']);
+      localStorage.removeItem('type');
+    } else {
     this.isDisabled = true;
     this.clicked.emit(true);
     window.scrollTo(0, 0);
+  }
 
   }
 

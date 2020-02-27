@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AgeTravelerComponent } from './welcome/get-quote/ageTraveler.component';
+import { GroupAgeComponent } from './welcome/get-quote/groupAge.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { TravelerInfoComponent } from './traveler-info/traveler-info.component';
 import { QuoteComponent } from './traveler-info/quote/quote.component';
@@ -24,6 +25,7 @@ import { TravelerService } from './traveler-info/traveler.service';
 import { SiteSettingsService } from './shared/site_settings.service';
 import { UIService } from './shared/ui.services';
 import { OdooService } from './shared/odoo.service';
+import { ValidationService } from './shared/validation.service';
 // components
 import { TripDetailsComponent } from './traveler-info/trip-details/trip-details.component';
 import { PriceCardComponent } from './traveler-info/price-card/price-card.component';
@@ -39,11 +41,15 @@ import { PersonalResultComponent } from './personal-result/personal-result.compo
 import { PersonalQuoteComponent } from './personal-quote/personal-quote.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { TicketFormComponent } from './ticket-form/ticket-form.component';
+import { GroupResComponent } from './group-res/group-res.component';
+import { GroupTicketComponent } from './group-ticket/group-ticket.component';
+import { ThanksComponent } from './thanks/thanks.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AgeTravelerComponent,
+    GroupAgeComponent,
     WelcomeComponent,
     TravelerInfoComponent,
     QuoteComponent,
@@ -63,7 +69,10 @@ import { TicketFormComponent } from './ticket-form/ticket-form.component';
     PersonalResultComponent,
     PersonalQuoteComponent,
     PersonalInfoComponent,
-    TicketFormComponent
+    TicketFormComponent,
+    GroupResComponent,
+    GroupTicketComponent,
+    ThanksComponent
   ],
   imports: [
     BrowserModule,
@@ -75,8 +84,8 @@ import { TicketFormComponent } from './ticket-form/ticket-form.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [WelcomeService, TravelerService, UIService, OdooService, SiteSettingsService],
+  providers: [WelcomeService, TravelerService, UIService, OdooService, SiteSettingsService, ValidationService],
   bootstrap: [AppComponent],
-  entryComponents: [AgeTravelerComponent]
+  entryComponents: [AgeTravelerComponent, GroupAgeComponent]
 })
 export class AppModule {}

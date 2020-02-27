@@ -10,7 +10,7 @@
                 <input type="hidden" name="cvCode" [(ngModel)]="formList.cvCode" #cvCode="ngModel" minlength="4" required />
                 <!-- end form input hiddens -->
                 <h3 class="price">EGP {{ totalPrice }}</h3>
-                <button type="submit" mat-button class="button-quote" [disabled]="fPriceCard.invalid || isDisabled"> {{ isDisabled ? 'Successfully' : 'PAY' }} </button>
+                <button type="submit" mat-button class="button-quote" [disabled]="fPriceCard.invalid || isDisabled"> {{ isDisabled ? 'Paid' : 'PAY' }} </button>
             </div>
         </form>
 

@@ -29,7 +29,7 @@
                     <mat-grid-tile *ngIf="isFamly">
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label> {{ 'Date Of Birth' | uppercase }}</mat-label>
-                            <input type="text" matInput (click)="this.showPopup($event.target.value)" [ngModel]="agesString" name="familyAges" #familyAges="ngModel" required>
+                            <input type="text" matInput (click)="this.showPopup()" [ngModel]="agesString" name="familyAges" #familyAges="ngModel" required>
 
                         </mat-form-field>
                     </mat-grid-tile>
@@ -46,8 +46,10 @@
 
                     <mat-grid-tile *ngIf="isGroup">
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'number of group' | uppercase }}</mat-label>
-                            <input type="number" matInput placeholder="number of group" ngModel name="numOfGroup" #numOfGroup="ngModel" required>
+                            <mat-label> {{ 'number of travelers' | uppercase }}</mat-label>
+                            <input type="text" matInput (click)="this.showGrpupPopup()" [ngModel]="groupAge" name="groupAges" #groupAges="ngModel" required>
+
+                            <!-- <input type="number" matInput placeholder="number of group" ngModel name="numOfGroup" #numOfGroup="ngModel" required> -->
 
                         </mat-form-field>
                     </mat-grid-tile>

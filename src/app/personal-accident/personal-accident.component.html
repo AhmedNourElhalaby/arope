@@ -34,7 +34,7 @@
 
 
                         </mat-grid-list>
-                        <div style="float:left">
+                        <div [ngClass]="{'float': this.type !=6, 'non-float': this.type == 6}" style="float:left">
                             <h3>Basic Covers</h3>
                             <div>
                                 <mat-radio-group *ngFor="let cover of basicCovers" required aria-label="Select an option" color="primary" name="type" ngModel="type" #typeInput="ngModel" (change)="showField($event)">
@@ -43,18 +43,18 @@
                                 </mat-radio-group>
 
                             </div>
-                            <br>
+                                
                         </div>
-                        <div style="margin-left: 50%;">
+                        <div style="margin-left: 50%;" *ngIf="this.type != 6" >
                             <h3>Optional Covers</h3>
                             <div *ngFor="let cover of optionalCovers">
                                 <mat-checkbox color="primary" ngModel #checkbox name="death" [checked]="cover.taken" (change)="cover.taken = !cover.taken">{{cover.cover_id}}</mat-checkbox>
-                                <br>
+                                <!-- <br> -->
                             </div>
                         </div>
-
+                        <div>
                         <h4>If you can't find your job <button type="button" mat-button class='here-button' (click)="isOn = false">click here</button></h4>
-
+                    </div>
                         <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid">{{ 'Get A Quote' | uppercase }}</button>
                         <div *ngIf="isLoading" fxLayoutAlign="center center">
                             <mat-spinner [diameter]="40"></mat-spinner>

@@ -47,7 +47,7 @@ export class TravelerService {
     });
     const data = {paramlist: {filter: [],
       need: []}};
-    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
      'travel.benefits', 'search_read', data).subscribe(res => {
       for (const x in res) {
         const cover = res[x].cover;
@@ -67,7 +67,7 @@ export class TravelerService {
     this.uiService.loadingChangedStatus.next(true);
     const data = {paramlist: {filter: [],
       need: []}};
-    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'travel.excess', 'search_read', data).subscribe(res => {
       this.loadResObjExcess.next(res);
       this.uiService.loadingChangedStatus.next(false);

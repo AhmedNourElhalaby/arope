@@ -16,7 +16,6 @@ export class ExcessComponent implements OnInit, OnDestroy {
   isLoading = false;
   isLoadingSubs: Subscription;
   constructor(private odoo: OdooService, private uiService: UIService, private travelerService: TravelerService) {
-   
   }
 
   ngOnInit() {

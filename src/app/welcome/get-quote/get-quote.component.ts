@@ -1,3 +1,4 @@
+import { GroupAgeComponent } from './groupAge.component';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AgeTravelerComponent } from './ageTraveler.component';
@@ -26,9 +27,13 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   ageLoadSubs: Subscription;
   loadingSubs: Subscription;
   familyDataString: string;
+  groupData;
   checked = true;
   isEgyption = false;
   isActive = true;
+  groupAge;
+  priceValue;
+
   // @Output() change: EventEmitter<MatRadioChange>;
   constructor(
     public dialog: MatDialog,
@@ -85,11 +90,35 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
     });
   }
+  showGrpupPopup() {
+    console.log(this.groupData);
+    const dialogRef = this.dialog.open(GroupAgeComponent, {
+      data : {
+        sizesList: this.groupData
+      },
+
+
+      width: '550px',
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.groupData = JSON.stringify(this.welcomeService.getListDates());
+      let data = 0;
+      if (this.groupData) {
+        const new_json = JSON.parse(this.welcomeService.getListDates());
+        for (const i in new_json.sizes) {
+          data += Number(new_json.sizes[i]);
+        }
+        this.groupAge = String(data);
+      }
+
+    });
+  }
 
   showField(event) {
     const valueField = event.value;
     if (valueField === 'family') { this.isIndividual = false; } else { this.isIndividual = true; }
-    if (valueField == 'family') {
+    if (valueField === 'family') {
       this.isIndividual = false;
       this.isFamly = true;
       this.isGroup = false;
@@ -101,7 +130,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
       this.isIndividual = true;
       this.isFamly = false;
       this.isGroup = false;
-    } 
+    }
   }
 
   convertDate(dateAge) {
@@ -140,22 +169,49 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
       p_to: till, kid_dob: data}}};
       // const oldfamilyData = {paramlist: {zone: {z: form.value.zone}, whens: {p_from: when},
       //  tills: {p_to: till}, ages: {kid_dob: data} }};
-      this.saveDataInLocalStorage(form);
-      this.welcomeService.sendQuoteResult('get_family', familyData);
-    } else if(form.value.type === 'individual') {
+      this.saveDataInLocalStorage(form).then(res =>
+        this.welcomeService.sendQuoteResult('get_family', familyData)
+      );
+    } else if (form.value.type === 'individual') {
       const age = this.convertDate(form.value.indAge);
       const data = {paramlist: {data: {z: form.value.zone, d: [age],
       p_from: when, p_to: till}}};
       // const olddata = {paramlist: {zone: {z: form.value.zone}, ages: {d: [age]},
       //  whens: {p_from: when}, tills: {p_to: till} }};
-      this.saveDataInLocalStorage(form);
-      this.welcomeService.sendQuoteResult('get_individual', data);
-    } else if(form.value.type === 'group') {
-      // const data = {paramlist: {data: {z: form.value.zone, 
-      // p_from: when, p_to: till}}};
-     const data ={};
-      this.saveDataInLocalStorage(form);
-      this.welcomeService.sendQuoteResult('get_individual', data);
+      this.saveDataInLocalStorage(form).then(res =>
+        this.welcomeService.sendQuoteResult('get_individual', data)
+      );
+    } else if (form.value.type === 'group') {
+      const object = JSON.parse(this.welcomeService.getListDates());
+      const groups = [];
+      const listSizes = Object.values(object.sizes);
+      // const listAges = Object.values(object.ranges);
+      let i = 0;
+      for (const val of listSizes) {
+        const list2 = {size: Number(object.sizes['size-' + i]), age: object.ranges['range-' + i]};
+        groups.push(list2);
+        i ++;
+      }
+      const data = {paramlist: {data: {zone: form.value.zone, p_from: when, p_to: till,
+      group: groups}}};
+      // this.saveDataInLocalStorage(form);
+      // this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'policy.travel',
+      // 'get_group', data).subscribe(res => {
+      //   console.log(res);
+      // });
+      localStorage.setItem('type', form.value.type);
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'policy.travel',
+      'get_group', data).subscribe(res => {
+        const x = res.gross;
+        console.log(res);
+        localStorage.setItem('total_price', parseInt(x.toString(), 10).toString());
+        const groubLocal = JSON.stringify(groups);
+        localStorage.setItem('groupMembers', groubLocal);
+        localStorage.setItem('groupDetails', groubLocal);
+        this.priceValue = res;
+        this.uiService.loadingChangedStatus.next(false);
+        this.router.navigate(['/group-travel']);
+     }, error => this.welcomeService.handleError(error.statusText));
     }
   }
 
@@ -168,42 +224,46 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   }
 
   saveDataInLocalStorage(form) {
-    const zone = '';
-    console.log(form);
+    return new Promise((resolve, reject) => {
+      const zone = '';
+      console.log(form);
 
-    localStorage.setItem('zone', form.value.zone);
-    let ageArgs;
-    const type = form.value.type;
-    let valArgLength = 0;
-    if (type === 'individual') {
-      ageArgs = form.value.indAge;
-      valArgLength = this.typeAges(type, ageArgs).length ;
-    } else {
-      ageArgs = form.value.familyAges;
-      valArgLength = this.typeAges(type, ageArgs).length;
-      localStorage.setItem('typesDates', form.value.types);
-    }
-    const valArgs = this.typeAges(type, ageArgs);
-    localStorage.setItem('type', type);
+      localStorage.setItem('zone', form.value.zone);
+      let ageArgs;
+      const type = form.value.type;
+      let valArgLength = 0;
+      if (type === 'individual') {
+        ageArgs = form.value.indAge;
+        valArgLength = this.typeAges(type, ageArgs).length ;
+        localStorage.setItem('date', this.convertDate(form.value.indAge));
+      } else {
+        ageArgs = form.value.familyAges;
+        valArgLength = this.typeAges(type, ageArgs).length;
+        localStorage.setItem('typesDates', form.value.types);
+      }
+      const valArgs = this.typeAges(type, ageArgs);
+      localStorage.setItem('type', type);
 
-    this.getAge(valArgs[0]);
+      this.getAge(valArgs[0]);
 
-    localStorage.setItem('numOfTraveler', valArgLength.toString());
+      localStorage.setItem('numOfTraveler', valArgLength.toString());
 
-    localStorage.setItem('when', form.value.dateWhen);
-    localStorage.setItem('till', form.value.dateTill);
+      localStorage.setItem('when', form.value.dateWhen);
+      localStorage.setItem('till', form.value.dateTill);
 
-    if(form.value.numOfGroup) {
-      localStorage.setItem('numOfGroup', form.value.numOfGroup);
-    }
+      if (form.value.numOfGroup) {
+        localStorage.setItem('numOfGroup', form.value.numOfGroup);
+      }
 
 
-    console.log('yearBirth', localStorage.getItem('age'));
+      console.log('yearBirth', localStorage.getItem('age'));
+      resolve();
+    });
   }
 
   getAge(dateString) {
     const data = {paramlist: {age: [dateString]}};
-    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo', 'policy.travel',
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'policy.travel',
     'calculate_age', data).subscribe(res => {
       const age = res[0];
       localStorage.setItem('age', age.toString());

@@ -19,6 +19,7 @@ export class PersonalAccidentComponent implements OnInit {
   isOn = true;
   maxDate: Date;
   minDate: Date;
+  type;
   constructor(private odoo: OdooService, private router: Router, private site: SiteSettingsService) { }
 
   ngOnInit() {
@@ -34,16 +35,16 @@ export class PersonalAccidentComponent implements OnInit {
       need: []}};
     const optionalData = {paramlist: {filter: [['basic', '=', false]],
     need: []}};
-    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'job.table', 'search_read', data ).subscribe(res => {
       this.jobs = res;
     });
-    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'cover.table', 'search_read', basicData ).subscribe(res => {
       console.log(res);
       this.basicCovers = res;
     });
-    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'cover.table', 'search_read', optionalData ).subscribe(res => {
       console.log(res);
       this.optionalCovers = res;
@@ -75,9 +76,10 @@ export class PersonalAccidentComponent implements OnInit {
     localStorage.setItem('personalAccData', JSON.stringify(personalAccData));
     const objCovers = JSON.stringify({name: tableCovers, id: covers});
     localStorage.setItem('covers', objCovers);
+    localStorage.setItem('date', this.convertDate(form.value.indAge));
     const data  = {paramlist: {data: {j: form.value.job,
       sum_insured: form.value.rate, cover: covers}}};
-    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo',
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
   'policy.personal', 'get_qouate', data ).subscribe(res => {
     localStorage.setItem('total_price', res.toFixed(2).toString());
     this.router.navigate(['/personal-result']);
@@ -85,6 +87,21 @@ export class PersonalAccidentComponent implements OnInit {
   }
   showField(event) {
     const valueField = event.value;
-    console.log(valueField);
+    this.type = valueField;
+  }
+  convertDate(dateAge) {
+    let d = new Date(dateAge),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+
+    return [year, month, day].join('-');
   }
 }

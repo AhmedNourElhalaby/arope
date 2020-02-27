@@ -1,7 +1,7 @@
 <section class="get_qoute">
     <form #f="ngForm" (ngSubmit)="submitForm(f)">
         <mat-card fxFlex="700px" fxFlex.xs="100%" class='overlay'>
-            <mat-card-title fxLayoutAlign="flex-start">Get Personal Accident Quote</mat-card-title>
+            <mat-card-title fxLayoutAlign="flex-start">Please fill out the form below</mat-card-title>
             <mat-card-content>
                 <mat-grid-list [cols]="3" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
                     <mat-grid-tile>
@@ -12,8 +12,10 @@
                     </mat-grid-tile>
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label>Job</mat-label>
-                            <input matInput type="text" name="job" ngModel #job="ngModel" required>
+                            <mat-label> Email Address</mat-label>
+                            <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email (blur)="checkMail()">
+                            <mat-error *ngIf="emailAddress.hasError('required')">Email is <strong>required</strong></mat-error>
+                            <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>                
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile>
@@ -34,8 +36,8 @@
 
                     <mat-grid-tile colspan="3">
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> Email Address</mat-label>
-                            <input matInput type="email" name="emailAddress" ngModel #e="ngModel" email required>
+                            <mat-label>Job</mat-label>
+                            <input matInput type="text" name="job" ngModel #job="ngModel" required>
                         </mat-form-field>
                     </mat-grid-tile>
 
@@ -45,7 +47,7 @@
                 </mat-grid-list>
 
                 <br>
-                <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid">{{ 'Submit' | uppercase }}</button>
+                <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid || mail !== true">{{ 'Submit' | uppercase }}</button>
                 <div *ngIf="isLoading" fxLayoutAlign="center center">
                     <mat-spinner [diameter]="40"></mat-spinner>
                 </div>

@@ -50,7 +50,7 @@ export class PaymentComponent implements OnInit {
       console.log('ay kalam 1');
       const formData = JSON.parse(localStorage.getItem('formData'));
       const data = {paramlist: formData};
-      this.odoo.call_odoo_function('travel_agency', 'demo', 'demo', 'travel.front',
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'travel.front',
       'create_policy', data).subscribe(res => {
         console.log('res', res);
         this.paymentStatus.emit(true);

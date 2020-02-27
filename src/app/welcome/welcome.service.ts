@@ -44,11 +44,11 @@ export class WelcomeService {
 
     this.uiService.loadingChangedStatus.next(true);
 
-    this.odoo.call_odoo_function('travel_agency', 'demo', 'demo', 'policy.travel',
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'policy.travel',
      fun, data).subscribe(res => {
         const x = res.gross.toFixed(2);
-        console.log(x);
-        localStorage.setItem('total_price', x.toString());
+        console.log(res);
+        localStorage.setItem('total_price', parseInt(x.toString(), 10).toString());
         this.priceValue = res;
         this.uiService.loadingChangedStatus.next(false);
         this.router.navigate(['/traveler-info']);

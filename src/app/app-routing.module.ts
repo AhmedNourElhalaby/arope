@@ -1,3 +1,4 @@
+import { GroupTicketComponent } from './group-ticket/group-ticket.component';
 import { PersonalAccidentComponent } from './personal-accident/personal-accident.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -5,6 +6,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { TravelerInfoComponent } from './traveler-info/traveler-info.component';
 import { TermsOfServicesComponent } from './pages/terms-of-services/terms-of-services.component';
 import { PersonalResultComponent } from './personal-result/personal-result.component';
+import { GroupResComponent } from './group-res/group-res.component';
+import { ThanksComponent } from './thanks/thanks.component';
 
 
 const routes: Routes = [
@@ -12,7 +15,10 @@ const routes: Routes = [
   {path: 'traveler-info', component: TravelerInfoComponent},
   {path: 'page/terms-of-service', component: TermsOfServicesComponent},
   {path: 'personal-accident', component: PersonalAccidentComponent},
-  {path: 'personal-result', component: PersonalResultComponent}
+  {path: 'personal-result', component: PersonalResultComponent},
+  {path: 'group-travel', component: GroupResComponent},
+  {path: 'group-res', component: GroupTicketComponent},
+  {path: 'thanks', component: ThanksComponent}
 ];
 
 @NgModule({

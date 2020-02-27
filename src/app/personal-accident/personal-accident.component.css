@@ -76,3 +76,9 @@ mat-radio-button {
 .clearfix {
     clear: both;
 }
+.float{
+    float:left;
+}
+.non-float{
+    float: none !important ;
+}
