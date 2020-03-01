@@ -1,13 +1,24 @@
 import { OdooService } from 'src/app/shared/odoo.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {SiteSettingsService} from '../shared/site_settings.service';
 
+//FORMATE DATE
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS} from '../date.adapter';
 @Component({
   selector: 'app-personal-accident',
   templateUrl: './personal-accident.component.html',
-  styleUrls: ['./personal-accident.component.css']
+  styleUrls: ['./personal-accident.component.css'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+  ]
 })
 export class PersonalAccidentComponent implements OnInit {
   breakpoint: number;
@@ -20,7 +31,8 @@ export class PersonalAccidentComponent implements OnInit {
   maxDate: Date;
   minDate: Date;
   type;
-  constructor(private odoo: OdooService, private router: Router, private site: SiteSettingsService) { }
+  isShow: boolean = true;
+  constructor(private odoo: OdooService, private router: Router, private site: SiteSettingsService, private activateRouter: ActivatedRoute) { }
 
   ngOnInit() {
     /* max and min date */
@@ -28,6 +40,15 @@ export class PersonalAccidentComponent implements OnInit {
     this.minDate = this.site.getDateInYears(75);
     /* end max and min date */
 
+    this.activateRouter.paramMap.subscribe(param=> {
+      console.log('param',param.get('page'));
+      if(param.get('page') == 'find-yourjob') {
+        this.isOn = false;
+      } else if(param.get('page') == null) {
+        this.isOn = true;
+      }
+    });
+    this.isShow = false;
 
     const data = {paramlist: {filter: [],
       need: []}};
@@ -43,17 +64,22 @@ export class PersonalAccidentComponent implements OnInit {
     'cover.table', 'search_read', basicData ).subscribe(res => {
       console.log(res);
       this.basicCovers = res;
+      this.isShow = true;
+
     });
     this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'cover.table', 'search_read', optionalData ).subscribe(res => {
       console.log(res);
       this.optionalCovers = res;
+      this.isShow = true;
     });
   }
   onResize(event) {
     console.log('yeah', event);
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
   }
+
+
   submitForm(form: NgForm) {
     const covers = [];
     const tableCovers = [];

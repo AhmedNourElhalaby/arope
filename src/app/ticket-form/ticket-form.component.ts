@@ -41,4 +41,7 @@ export class TicketFormComponent implements OnInit {
     });
   }
 
+  goBack() {
+    this.router.navigateByUrl("/personal-accident");
+  }
 }

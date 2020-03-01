@@ -1,7 +1,10 @@
 <section class="get_qoute">
     <form #f="ngForm" (ngSubmit)="submitForm(f)">
         <mat-card fxFlex="700px" fxFlex.xs="100%" class='overlay'>
-            <mat-card-title fxLayoutAlign="flex-start">Please fill out the form below</mat-card-title>
+            <mat-card-title fxLayoutAlign="flex-start">
+                <mat-icon (click)="goBack()" style="padding-right: 10px;padding-top: 2px;font-size: 25px;cursor: pointer;" color="primary">keyboard_backspace</mat-icon>
+
+                Please fill out the form below</mat-card-title>
             <mat-card-content>
                 <mat-grid-list [cols]="3" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
                     <mat-grid-tile>
@@ -15,7 +18,7 @@
                             <mat-label> Email Address</mat-label>
                             <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email (blur)="checkMail()">
                             <mat-error *ngIf="emailAddress.hasError('required')">Email is <strong>required</strong></mat-error>
-                            <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>                
+                            <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile>

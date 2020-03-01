@@ -78,7 +78,7 @@
                             <mat-label> {{ 'Till' | uppercase }}</mat-label>
                             <!-- <input matInput > -->
 
-                            <input type="text" matInput [matDatepicker]="picker1" name="dateTill" #inputTill [(ngModel)]="formFields.till" #dateTill="ngModel" required [min]="maxDate" (focus)="picker1.open()" placeholder="To">
+                            <input type="text" matInput [matDatepicker]="picker1" name="dateTill" #inputTill [(ngModel)]="formFields.till" #dateTill="ngModel" required [min]="dateWhen.value" (focus)="picker1.open()" placeholder="To">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker (closed)="inputTill.blur()" #picker1 [startAt]="formFields.till" #picker1></mat-datepicker>
 

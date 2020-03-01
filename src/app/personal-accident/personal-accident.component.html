@@ -1,17 +1,23 @@
 <div class=" img-background">
     <main class="container-welcome" fxFlex fxLayout fxLayoutAlign="center center">
         <section class="get_qoute" *ngIf="isOn">
+
             <form #f="ngForm" (ngSubmit)="submitForm(f)">
                 <mat-card fxFlex="700px" fxFlex.xs="100%" class='overlay'>
-                    <mat-card-title fxLayoutAlign="flex-start">Get Personal Accident Quote</mat-card-title>
-                    <mat-card-content>
+                    <mat-card-title fxLayoutAlign="flex-start">
+
+                        Get Personal Accident Quote</mat-card-title>
+                    <div *ngIf="!isShow" fxLayoutAlign="center center">
+                        <mat-spinner [diameter]="80"></mat-spinner>
+                    </div>
+                    <mat-card-content *ngIf="isShow">
                         <mat-grid-list [cols]="3" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
                             <mat-grid-tile>
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label> {{ 'Date Of Birth' | uppercase }}</mat-label>
                                     <input type="text" matInput [matDatepicker]="agePicker" (focus)="agePicker.open()" #inputAge placeholder="Date Of Birth" [max]="maxDate" [min]="minDate" ngModel name="indAge" #indAge="ngModel" required>
                                     <mat-datepicker-toggle matSuffix [for]="agePicker"></mat-datepicker-toggle>
-                                    <mat-datepicker (closed)="inputAge.blur()" #agePicker></mat-datepicker>
+                                    <mat-datepicker startView="multi-year" (closed)="inputAge.blur()" #agePicker></mat-datepicker>
                                 </mat-form-field>
                             </mat-grid-tile>
                             <mat-grid-tile>
@@ -36,25 +42,33 @@
                         </mat-grid-list>
                         <div [ngClass]="{'float': this.type !=6, 'non-float': this.type == 6}" style="float:left">
                             <h3>Basic Covers</h3>
-                            <div>
+                            <div *ngIf="!isShow" fxLayoutAlign="center center">
+                                <mat-spinner [diameter]="40"></mat-spinner>
+                            </div>
+                            <div *ngIf="isShow">
                                 <mat-radio-group *ngFor="let cover of basicCovers" required aria-label="Select an option" color="primary" name="type" ngModel="type" #typeInput="ngModel" (change)="showField($event)">
                                     <mat-radio-button style="margin-bottom:4px;" value="{{cover.id}}">{{cover.cover_id}}</mat-radio-button>
                                     <br>
                                 </mat-radio-group>
 
                             </div>
-                                
+
                         </div>
-                        <div style="margin-left: 50%;" *ngIf="this.type != 6" >
+                        <div style="margin-left: 50%;" *ngIf="this.type != 6">
                             <h3>Optional Covers</h3>
-                            <div *ngFor="let cover of optionalCovers">
-                                <mat-checkbox color="primary" ngModel #checkbox name="death" [checked]="cover.taken" (change)="cover.taken = !cover.taken">{{cover.cover_id}}</mat-checkbox>
-                                <!-- <br> -->
+                            <div *ngIf="!isShow" fxLayoutAlign="center center">
+                                <mat-spinner [diameter]="40"></mat-spinner>
                             </div>
+                            <ng-container *ngIf="isShow">
+                                <div *ngFor="let cover of optionalCovers">
+                                    <mat-checkbox color="primary" ngModel #checkbox name="death" [checked]="cover.taken" (change)="cover.taken = !cover.taken">{{cover.cover_id}}</mat-checkbox>
+                                    <!-- <br> -->
+                                </div>
+                            </ng-container>
                         </div>
                         <div>
-                        <h4>If you can't find your job <button type="button" mat-button class='here-button' (click)="isOn = false">click here</button></h4>
-                    </div>
+                            <a style="margin: 20px 0; display: block;font-weight: 500;" [routerLink]="['/', 'personal-accident', {page: 'find-yourjob'}]">If you can't find your job?</a>
+                        </div>
                         <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid">{{ 'Get A Quote' | uppercase }}</button>
                         <div *ngIf="isLoading" fxLayoutAlign="center center">
                             <mat-spinner [diameter]="40"></mat-spinner>

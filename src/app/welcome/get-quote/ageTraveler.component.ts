@@ -63,7 +63,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     [ngModel]="dataList.dates['date-' + i]"
                     name="date-{{ i }}"
                     #ages="ngModel"
-                    [max]="minDate"
+                    [max]="maxDateKid"
                     required
                   />
                   <!-- End Input Date -->
@@ -143,7 +143,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     [ngModel]="dataList.dates['date-' + i]"
                     name="date-{{ i }}"
                     #ages="ngModel"
-                    [max]="minDate"
+                    [max]="maxDateKid"
                    
                     required
                   />
