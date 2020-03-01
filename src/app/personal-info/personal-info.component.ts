@@ -4,6 +4,9 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/form
 import { SiteSettingsService } from '../shared/site_settings.service';
 import {ErrorStateMatcher} from '@angular/material/core';
 import { ValidationService } from 'src/app/shared/validation.service';
+// FORMATE DATE
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { AppDateAdapter, APP_DATE_FORMATS} from '../date.adapter';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -15,7 +18,15 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
-  styleUrls: ['./personal-info.component.css']
+  styleUrls: ['./personal-info.component.css'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+  ]
 })
 export class PersonalInfoComponent implements OnInit {
   isValidFormSubmitted = false;
@@ -31,15 +42,17 @@ export class PersonalInfoComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   maxDate: Date;
   minDate: Date;
+  date;
   @Output() changeStatus = new EventEmitter();
   ngOnInit() {
     /* max and min date */
     this.maxDate = this.setting.getDateInYears(75);
     this.minDate = this.setting.getDateInYears(18);
     /* end max and min date */
+    this.date = localStorage.getItem('date');
   }
-  fullNameText(firstName, LastName) {
-    return firstName + ' ' + LastName;
+  fullNameText(firstName, middleName , LastName) {
+    return firstName + ' ' + middleName + ' ' + LastName;
   }
 
   submitPersonalInfo(form: NgForm) {
@@ -49,7 +62,7 @@ export class PersonalInfoComponent implements OnInit {
     const coversData = JSON.parse(localStorage.getItem('covers'));
     const coversId = coversData.id;
     const formData = {data: {
-      c_name: this.fullNameText(form.value.firstName, form.value.lastName),
+      c_name: this.fullNameText(form.value.firstName, form.value.middleName, form.value.lastName),
       mail: this.emailFormControl.value,
       phone: form.value.phoneNumber,
       id: form.value.id,
@@ -90,7 +103,7 @@ export class PersonalInfoComponent implements OnInit {
     return [year, month, day].join('-');
   }
   checkId() {
-    const dob = this.convertDate(this.customForm.value.dateBirth);
+    const dob = this.convertDate(this.customForm.value.indAge);
     const id = this.customForm.value.id.toString();
     const dyear = dob.substring(2, 4);
     const idYear = id.substring(1, 3);
@@ -98,6 +111,7 @@ export class PersonalInfoComponent implements OnInit {
     const dday = dob.substring(8, 10);
     const idMonth = id.substring(3, 5);
     const idDay = id.substring(5, 7);
+    console.log(dob.substring(2, 4), dob.substring(5, 7), dob.substring(8, 10));
     if (idYear !== dyear || idMonth !== dmonth || idDay !== dday) {
       this.cid = false;
     } else {

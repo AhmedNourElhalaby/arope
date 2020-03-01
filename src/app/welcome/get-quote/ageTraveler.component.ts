@@ -169,10 +169,10 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   style="
                   width: 162px;"
                   *ngIf="!fDialog.value.types['type-'+i]"
-                    
+
                 >
 
-                
+
                   <!-- Input Date -->
 
                   <input
@@ -352,8 +352,8 @@ export class AgeTravelerComponent implements OnInit {
 
     if (result) {
       console.log(this.passedData.datesList, "newjson");
-      let newJson = JSON.parse(this.passedData.datesList);
-      var genJson = JSON.parse(newJson);
+      const newJson = JSON.parse(this.passedData.datesList);
+      const genJson = JSON.parse(newJson);
 
       for (const dateItem in genJson.dates) {
         this.elements.push(this.elements.length);
@@ -365,7 +365,7 @@ export class AgeTravelerComponent implements OnInit {
       this.elements.push(this.elements.length);
     }
     this.result = result;
-    console.log("result", result);
+    console.log('result', result);
   }
 
   clickMe() {

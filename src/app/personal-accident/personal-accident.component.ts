@@ -4,8 +4,8 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import {SiteSettingsService} from '../shared/site_settings.service';
 
-//FORMATE DATE
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+// FORMATE DATE
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from '../date.adapter';
 @Component({
   selector: 'app-personal-accident',
@@ -31,7 +31,7 @@ export class PersonalAccidentComponent implements OnInit {
   maxDate: Date;
   minDate: Date;
   type;
-  isShow: boolean = true;
+  isShow = true;
   constructor(private odoo: OdooService, private router: Router, private site: SiteSettingsService, private activateRouter: ActivatedRoute) { }
 
   ngOnInit() {
@@ -40,11 +40,11 @@ export class PersonalAccidentComponent implements OnInit {
     this.minDate = this.site.getDateInYears(75);
     /* end max and min date */
 
-    this.activateRouter.paramMap.subscribe(param=> {
-      console.log('param',param.get('page'));
-      if(param.get('page') == 'find-yourjob') {
+    this.activateRouter.paramMap.subscribe(param => {
+      console.log('param', param.get('page'));
+      if (param.get('page') === 'find-yourjob') {
         this.isOn = false;
-      } else if(param.get('page') == null) {
+      } else if (param.get('page') == null) {
         this.isOn = true;
       }
     });
@@ -107,6 +107,7 @@ export class PersonalAccidentComponent implements OnInit {
       sum_insured: form.value.rate, cover: covers}}};
     this.odoo.call_odoo_function('travel_agency', 'online', 'online',
   'policy.personal', 'get_qouate', data ).subscribe(res => {
+    console.log(res);
     localStorage.setItem('total_price', res.toFixed(2).toString());
     this.router.navigate(['/personal-result']);
   });

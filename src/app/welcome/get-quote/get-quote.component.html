@@ -60,7 +60,7 @@
                     <mat-grid-tile>
 
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'When' | uppercase }}</mat-label>
+                            <mat-label> {{ 'From' | uppercase }}</mat-label>
                             <!-- <input matInput > -->
 
 
@@ -75,7 +75,7 @@
 
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'Till' | uppercase }}</mat-label>
+                            <mat-label> {{ 'To' | uppercase }}</mat-label>
                             <!-- <input matInput > -->
 
                             <input type="text" matInput [matDatepicker]="picker1" name="dateTill" #inputTill [(ngModel)]="formFields.till" #dateTill="ngModel" required [min]="dateWhen.value" (focus)="picker1.open()" placeholder="To">

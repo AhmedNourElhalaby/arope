@@ -7,7 +7,7 @@ import { OdooService } from 'src/app/shared/odoo.service';
 import { TravelerService } from '../traveler.service';
 import { ValidationService } from 'src/app/shared/validation.service';
 // import { saveAs } from 'file-saver';
-//FORMATE DATE
+// FORMATE DATE
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 
@@ -130,6 +130,8 @@ export class InfoComponent implements OnInit {
         add: form.value.address,
         pass: form.value.Passport,
         dob: age,
+        gender: form.value.gender,
+        phone: form.value.phoneNumber,
         zone: localStorage.getItem('zone'),
         p_from: when,
         p_to: till,
@@ -149,7 +151,7 @@ export class InfoComponent implements OnInit {
         });
       const caching = {
         fname: form.value.firstName,
-       
+
         lname: form.value.lastName,
         gender: form.value.gender,
         email: form.value.emailAddress,
@@ -171,7 +173,7 @@ export class InfoComponent implements OnInit {
         const lastName = object['tlastName' + index];
         const dateBirth = object['tbirthDate' + index];
         const passports = object['tpassport' + index];
-        const fullName = ''.concat(' ',firstName,' ',middleName,' ',lastName);
+        const fullName = ''.concat(' ', firstName, ' ', middleName, ' ', lastName);
         const jsonData = {
           name: fullName,
           dob: dateBirth,
@@ -191,15 +193,18 @@ export class InfoComponent implements OnInit {
       const formData = {data: {
         source: 'online',
         package: localStorage.getItem('type'),
-        c_name: this.fullNameText(form.value.firstName,form.value.middleName,form.value.lastName),
+        c_name: this.fullNameText(form.value.firstName, form.value.middleName, form.value.lastName),
         add: form.value.address,
         pass: form.value.Passport,
+        gender: form.value.gender,
+        phone: form.value.phoneNumber,
         dob: age,
         zone: localStorage.getItem('zone'),
         p_from: when,
         p_to: till,
         family: familyD,
-        mail: form.value.emailAddress
+        mail: form.value.emailAddress,
+        id: form.value.id
 
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));

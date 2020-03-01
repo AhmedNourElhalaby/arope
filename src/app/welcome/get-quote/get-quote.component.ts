@@ -10,8 +10,8 @@ import { Subscription } from 'rxjs';
 import { UIService } from '../../shared/ui.services';
 import { OdooService } from '../../shared/odoo.service';
 
-//FORMATE DATE
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+// FORMATE DATE
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 
 
@@ -47,7 +47,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   isActive = true;
   groupAge;
   priceValue;
-  
+
   formFields = {
     typeTraveler : 'individual',
     dates: '',
@@ -61,7 +61,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
 
 
-  
+
   // @Output() change: EventEmitter<MatRadioChange>;
   constructor(
     public dialog: MatDialog,
@@ -73,19 +73,19 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    //get query params
-    this.route.queryParamMap.subscribe(paramMap=> {
-      if(!paramMap.has('type')) {
+    // get query params
+    this.route.queryParamMap.subscribe(paramMap => {
+      if (!paramMap.has('type')) {
         return;
       }
 
-      if(paramMap.get('type') == 'individual') {
+      if (paramMap.get('type') === 'individual') {
         this.formFields.typeTraveler = paramMap.get('type');
         this.formFields.date = this.convertDate(paramMap.get('date'));
         this.isFamly = false;
         this.isIndividual = true;
-      
-      } else if(paramMap.get('type') == 'family') {
+
+      } else if (paramMap.get('type') === 'family') {
         this.formFields.typeTraveler = paramMap.get('type');
         this.formFields.dates = paramMap.get('dates');
         this.isFamly = true;
@@ -115,7 +115,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
 
   onResize(event) {
-   
+
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
   }
 
