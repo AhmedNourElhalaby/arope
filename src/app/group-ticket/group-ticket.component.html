@@ -15,9 +15,9 @@
                                 <mat-grid-tile>
                                     <mat-form-field appearance="outline" class='form-field'>
                                         <mat-label> Email Address</mat-label>
-                                        <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email (blur)="checkMail()">
+                                        <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email>
                                         <mat-error *ngIf="emailAddress.hasError('required')">Email is <strong>required</strong></mat-error>
-                                        <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>                
+                                        <!-- <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>                 -->
                                     </mat-form-field>
                                 </mat-grid-tile>
                                 <mat-grid-tile>
@@ -41,7 +41,7 @@
                             </mat-grid-list>
             
                             <br>
-                            <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid || mail !== true">{{ 'Submit' | uppercase }}</button>
+                            <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid">{{ 'Submit' | uppercase }}</button>
                             <div *ngIf="isLoading" fxLayoutAlign="center center">
                                 <mat-spinner [diameter]="40"></mat-spinner>
                             </div>

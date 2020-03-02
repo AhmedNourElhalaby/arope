@@ -79,14 +79,14 @@ export class PersonalInfoComponent implements OnInit {
   changeShowValue() {
     this.travelerService.changeStatusShowValue();
   }
-  checkMail() {
-    // let result = true;
-    const email = this.customForm.value.emailAddress;
-    this.validation.checkMail(email).subscribe(res => {
-      const key = 'smtp_check';
-      this.mail = res[key];
-    });
-  }
+  // checkMail() {
+  //   // let result = true;
+  //   const email = this.customForm.value.emailAddress;
+  //   this.validation.checkMail(email).subscribe(res => {
+  //     const key = 'smtp_check';
+  //     this.mail = res[key];
+  //   });
+  // }
   convertDate(dateAge) {
     let d = new Date(dateAge),
       month = '' + (d.getMonth() + 1),

@@ -51,14 +51,17 @@ export class TicketFormComponent implements OnInit {
     console.log("yeah", event);
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
   }
-  checkMail(val) {
-    this.validation.checkMail(val).subscribe(res => {
-      console.log(res);
-      const key = "smtp_check";
-      this.mail = res[key];
-      console.log(this.mail);
-    });
-  }
+
+  // checkMail(val) {
+
+
+  //   this.validation.checkMail(val).subscribe(res => {
+  //     console.log(res);
+  //     const key = 'smtp_check';
+  //     this.mail = res[key];
+  //     console.log(this.mail);
+  //   });
+  // }
 
   goBack() {
     this.router.navigateByUrl("/personal-accident");

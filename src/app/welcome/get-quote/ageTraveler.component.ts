@@ -161,7 +161,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                 </mat-form-field>
                 <!-- End mat-form-field -->
            
-                
+
                 <!-- End If Condition -->
                 <!-- start mat-from-field -->
                 <mat-form-field
@@ -348,10 +348,10 @@ export class AgeTravelerComponent implements OnInit {
   ngOnInit() {
     this.minDate = this.welcomeService.getMinDateBefore30Days();
     this.maxDateKid = this.site_settings.getDateInYears(18);
-    let result = this.site_settings.isEmpty(this.passedData);
+    const result = this.site_settings.isEmpty(this.passedData);
 
     if (result) {
-      console.log(this.passedData.datesList, "newjson");
+      console.log(this.passedData.datesList, 'newjson');
       const newJson = JSON.parse(this.passedData.datesList);
       const genJson = JSON.parse(newJson);
 

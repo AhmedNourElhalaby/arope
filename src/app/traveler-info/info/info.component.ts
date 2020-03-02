@@ -8,7 +8,7 @@ import { TravelerService } from '../traveler.service';
 import { ValidationService } from 'src/app/shared/validation.service';
 // import { saveAs } from 'file-saver';
 // FORMATE DATE
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 
 
@@ -104,7 +104,7 @@ export class InfoComponent implements OnInit {
 
 
 
-  fullNameText(firstName, middleName ,LastName) {
+  fullNameText(firstName, middleName , LastName) {
     return firstName + ' '  + middleName + ' ' + LastName;
   }
   goEmptyDate() {
@@ -126,7 +126,7 @@ export class InfoComponent implements OnInit {
       const formData = {data: {
         source: 'online',
         package: localStorage.getItem('type'),
-        c_name: this.fullNameText(form.value.firstName,form.value.middleName,form.value.lastName),
+        c_name: this.fullNameText(form.value.firstName, form.value.middleName, form.value.lastName),
         add: form.value.address,
         pass: form.value.Passport,
         dob: age,
@@ -227,14 +227,14 @@ export class InfoComponent implements OnInit {
     this.travelerService.changeStatusShowValue();
 
   }
-  checkMail() {
-    // let result = true;
-    const email = this.customForm.value.emailAddress;
-    this.validation.checkMail(email).subscribe(res => {
-      const key = 'smtp_check';
-      this.mail = res[key];
-    });
-  }
+  // checkMail() {
+  //   // let result = true;
+  //   const email = this.customForm.value.emailAddress;
+  //   this.validation.checkMail(email).subscribe(res => {
+  //     const key = 'smtp_check';
+  //     this.mail = res[key];
+  //   });
+  // }
   convertDate(dateAge) {
     let d = new Date(dateAge),
       month = '' + (d.getMonth() + 1),

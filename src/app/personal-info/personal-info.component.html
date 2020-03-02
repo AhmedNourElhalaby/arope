@@ -48,9 +48,9 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> Email Address</mat-label>
-                    <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email (blur)="checkMail()">
+                    <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email>
                     <mat-error *ngIf="emailAddress.hasError('required')">Email is <strong>required</strong></mat-error>
-                    <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>                
+                    <!-- <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>                 -->
                 </mat-form-field>
             </mat-grid-tile>
 
@@ -74,6 +74,6 @@
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
-    <button type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || mail !== true || cid !== true">{{ 'complete purchase' | uppercase }} <mat-icon>arrow_right_alt</mat-icon></button>
+    <button type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || cid !== true">{{ 'complete purchase' | uppercase }} <mat-icon>arrow_right_alt</mat-icon></button>
     </form>
 </mat-card>
