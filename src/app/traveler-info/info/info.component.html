@@ -62,15 +62,20 @@
                     <mat-label> Phone Number</mat-label>
                     <input matInput type="tel" name="phoneNumber" ngModel #phoneNumber="ngModel" required>
                 </mat-form-field>
+
+
             </mat-grid-tile>
 
 
-            <mat-grid-tile>
+            <mat-grid-tile hintLabel="Should It Be 14 number">
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> National ID Number</mat-label>
-                    <input matInput type="number" name="id" ngModel #id="ngModel" required (blur)="checkId()">
+                    <input matInput name="id" ngModel minlength="14" maxlength="14" #id="ngModel" (blur)="checkId()">
+
                     <p *ngIf="cid === false" class="custom-error">ID is not matching date of birth</p>
+                    <p *ngIf="cid && id.errors?.minlength" class="custom-error">ID must be 14 Number</p>
                 </mat-form-field>
+
             </mat-grid-tile>
 
             <mat-grid-tile>

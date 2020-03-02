@@ -1,0 +1,71 @@
+<section class="get_qoute">
+    <form #f="ngForm" (ngSubmit)="submitForm(f)">
+
+
+        <mat-card fxFlex="700px" fxFlex.xs="100%" class='overlay'>
+            <mat-card-title fxLayoutAlign="flex-start">Get a Car Insurance Quote</mat-card-title>
+            <mat-card-content>
+
+                <mat-radio-group aria-label="Select an option" color="primary" name="type" ngModel #typeInput="ngModel" (change)="showField($event)" required>
+                    <mat-radio-button value="original">Original</mat-radio-button>
+                    <mat-radio-button value="total-loss">Total Loss</mat-radio-button>
+                </mat-radio-group>
+
+
+                <br><br>
+                <mat-grid-list cols="2" rowHeight="75px" gutterSize="10px">
+
+
+                    <mat-grid-tile colspan="2">
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label>{{ 'Brands' | uppercase }}</mat-label>
+                            <mat-select name="zone" ngModel #brandInput="ngModel" required>
+                                <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                                    {{brand.title}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label> {{ 'price' | uppercase }}</mat-label>
+                            <input type="text" matInput ngModel name="price" #price="ngModel" required>
+
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label>{{ 'Country of Origin' | uppercase }}</mat-label>
+                            <mat-select name="zone" ngModel #country="ngModel" required>
+                                <mat-option value="Europe">
+                                    Europe Expect (China And East Assia)
+                                </mat-option>
+
+                                <mat-option value="China">
+                                    China And East Assia
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+
+
+
+
+
+
+
+
+
+
+                </mat-grid-list>
+
+                <br><br>
+                <button class='button-quote' mat-button color="primary" type="submit">GET A QUOTE</button>
+
+            </mat-card-content>
+        </mat-card>
+    </form>
+</section>

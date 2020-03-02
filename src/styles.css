@@ -98,3 +98,13 @@ body {
 .price-card .mat-spinner circle {
     stroke: #fff !important;
 }
+
+.container-welcome {
+    margin: auto 40px !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    .container-welcome {
+        margin: auto 10px !important;
+    }
+}

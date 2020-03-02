@@ -8,6 +8,7 @@ import { TermsOfServicesComponent } from './pages/terms-of-services/terms-of-ser
 import { PersonalResultComponent } from './personal-result/personal-result.component';
 import { GroupResComponent } from './group-res/group-res.component';
 import { ThanksComponent } from './thanks/thanks.component';
+import { CarInsuranceComponent } from './car-insurance/car-insurance.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path: 'personal-result', component: PersonalResultComponent},
   {path: 'group-travel', component: GroupResComponent},
   {path: 'group-res', component: GroupTicketComponent},
-  {path: 'thanks', component: ThanksComponent}
+  {path: 'thanks', component: ThanksComponent},
+  {path: 'car-insurance', component: CarInsuranceComponent}
 ];
 
 @NgModule({

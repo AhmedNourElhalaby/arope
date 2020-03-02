@@ -26,6 +26,7 @@ import { SiteSettingsService } from './shared/site_settings.service';
 import { UIService } from './shared/ui.services';
 import { OdooService } from './shared/odoo.service';
 import { ValidationService } from './shared/validation.service';
+import { CarInsuranceService } from './car-insurance/car-insurance.service';
 // components
 import { TripDetailsComponent } from './traveler-info/trip-details/trip-details.component';
 import { PriceCardComponent } from './traveler-info/price-card/price-card.component';
@@ -44,6 +45,8 @@ import { TicketFormComponent } from './ticket-form/ticket-form.component';
 import { GroupResComponent } from './group-res/group-res.component';
 import { GroupTicketComponent } from './group-ticket/group-ticket.component';
 import { ThanksComponent } from './thanks/thanks.component';
+import { CarInsuranceComponent } from './car-insurance/car-insurance.component';
+import { CarQuoteComponent } from './car-insurance/car-quote/car-quote.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +75,9 @@ import { ThanksComponent } from './thanks/thanks.component';
     TicketFormComponent,
     GroupResComponent,
     GroupTicketComponent,
-    ThanksComponent
+    ThanksComponent,
+    CarInsuranceComponent,
+    CarQuoteComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +89,7 @@ import { ThanksComponent } from './thanks/thanks.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [WelcomeService, TravelerService, UIService, OdooService, SiteSettingsService, ValidationService],
+  providers: [CarInsuranceService, WelcomeService, TravelerService, UIService, OdooService, SiteSettingsService, ValidationService],
   bootstrap: [AppComponent],
   entryComponents: [AgeTravelerComponent, GroupAgeComponent]
 })

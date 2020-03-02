@@ -1,26 +1,3 @@
-/*Wrapper Content*/
-
-.wrapper-content {
-    height: 600px;
-}
-
-.img-background {
-    background-size: cover;
-    width: auto;
-    background-image: url('/assets/images/background-img.jpg');
-    height: 100vh;
-}
-
-.container-welcome {
-    margin: auto 40px !important;
-}
-
-@media only screen and (max-width: 1000px) {
-    .container-welcome {
-        margin: auto 10px !important;
-    }
-}
-
 .form-field:not(:last-child) {
     margin-right: 20px;
 }
@@ -41,11 +18,6 @@
     height: 51px;
     line-height: 51px;
     top: -5px;
-}
-
-.here-button {
-    background-color: #073e89;
-    color: #fff;
 }
 
 .overlay {
@@ -77,12 +49,4 @@ mat-radio-button {
 
 .clearfix {
     clear: both;
-}
-
-.float {
-    float: left;
-}
-
-.non-float {
-    float: none !important;
 }

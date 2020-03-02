@@ -80,6 +80,7 @@ export class PersonalAccidentComponent implements OnInit {
   }
 
 
+
   submitForm(form: NgForm) {
     const covers = [];
     const tableCovers = [];
@@ -109,7 +110,13 @@ export class PersonalAccidentComponent implements OnInit {
   'policy.personal', 'get_qouate', data ).subscribe(res => {
     console.log(res);
     localStorage.setItem('total_price', res.toFixed(2).toString());
-    this.router.navigate(['/personal-result']);
+    if(form.value.rate >= 1500000) {
+      console.log('HERE');
+      this.router.navigate(['/personal-accident', {page: 'find-yourjob'}], {queryParams: {dateOfBirth: this.convertDate(form.value.indAge), job: form.value.job, sum_insured: form.value.rate}});
+      return;
+    } else {
+      this.router.navigate(['/personal-result']);
+    }
   });
   }
   showField(event) {
