@@ -32,13 +32,14 @@ export class GroupTicketComponent implements OnInit {
     console.log('yeah', event);
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
   }
-  checkMail() {
-    // let result = true;
-    const email = this.customForm.value.emailAddress;
-    this.validation.checkMail(email).subscribe(res => {
-      const key = 'smtp_check';
-      this.mail = res[key];
-    });
-  }
+  // checkMail(val) {
+  //   // let result = true;
+  //   this.validation.checkMail(val).subscribe(res => {
+  //     console.log(res);
+  //     const key = 'smtp_check';
+  //     this.mail = res[key];
+  //     console.log(this.mail);
+  //   });
+  // }
 
 }

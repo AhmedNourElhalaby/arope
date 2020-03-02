@@ -50,9 +50,9 @@
 
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> Email Address</mat-label>
-                    <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email (blur)="checkMail()">
+                    <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email>
                     <mat-error *ngIf="emailAddress.hasError('required')">Email is <strong>required</strong></mat-error>
-                    <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>
+                    <!-- <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p> -->
                 </mat-form-field>
 
             </mat-grid-tile>
@@ -68,7 +68,7 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> National ID Number</mat-label>
-                    <input matInput type="number" name="id" ngModel #id="ngModel" required (blur)="checkId()">
+                    <input matInput type="number" name="id" ngModel #id="ngModel" maxlength="14" required (blur)="checkId()">
                     <p *ngIf="cid === false" class="custom-error">ID is not matching date of birth</p>
                 </mat-form-field>
             </mat-grid-tile>
@@ -76,7 +76,7 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> Passport Number</mat-label>
-                    <input matInput type="text" name="Passport" ngModel #Passport="ngModel" required>
+                    <input matInput type="text" name="Passport" maxlength="14" ngModel #Passport="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
@@ -196,6 +196,6 @@
 
         <mat-checkbox ngModel #checkbox name="terms" [checked]="isConfrim" (change)="isConfrim = !isConfrim" color="primary">I have read and accepted <a href="http://207.154.195.214/TravelWording.pdf" download target="_blank">Terms& Conditions.</a></mat-checkbox>
         <br> <br>
-        <button type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || mail !== true || cid !== true">{{ 'complete purchase' | uppercase }} <mat-icon>arrow_right_alt</mat-icon></button>
+        <button type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'complete purchase' | uppercase }} <mat-icon>arrow_right_alt</mat-icon></button>
     </form>
 </mat-card>

@@ -1,18 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, Inject, OnInit } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { NgForm } from '@angular/forms';
 import { WelcomeService } from '../welcome.service';
 import { SiteSettingsService } from '../../shared/site_settings.service';
 
 
-// FORMATE DATE
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+//FORMATE DATE
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 @Component({
-  selector: 'app-stop-training',
+  selector: "app-stop-training",
   template: `
     <form #fDialog="ngForm" (ngSubmit)="submitFormAges(fDialog)">
-
+    
       <div mat-dialog-content>
         <div *ngFor="let element of elements; let i = index">
           <span id="field-{{ i }}">
@@ -30,64 +30,20 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
               </ng-template>
               <ng-template #elseBlock>
                 <div
-                  style="color: #565656;font-size:14px;margin-top: 11px !important;font-weight: normal;"
+                  style="color: #565656;     font-size:14px;margin-top: 11px !important;font-weight: normal;"
                   fxFlex="30%"
                 >
                   Additional Traveler's Age:
                 </div>
               </ng-template>
 
-                            <!-- Start Secion Types -->
-                            <div *ngIf="!result; then thenBlock1; else elseBlock1"></div>
-              <ng-template #thenBlock1>
-                <div ngModelGroup="types" fxFlex="20%" class="margin-right-fix">
-                  <mat-form-field *ngIf="i != 0">
-                    <mat-label>Type</mat-label>
-                    <mat-select
-                      name="type-{{ i }}"
-                      ngModel
-                      #type="ngModel"
-                      required
-                    >
-                      <mat-option
-                        *ngFor="let type of types"
-                        [value]="type.value"
-                      >
-                        {{ type.viewValue }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </ng-template>
-              <ng-template #elseBlock1>
-                <div ngModelGroup="types" fxFlex="20%" class="margin-right-fix">
-                  <mat-form-field *ngIf="i != 0">
-                    <mat-label>Type</mat-label>
-                    <mat-select
-                      name="type-{{ i }}"
-                      [(ngModel)]="dataList.types['type-' + i]"
-                      #type="ngModel"
-                      required
-                    >
-                      <mat-option
-                        *ngFor="let type of types"
-                        [value]="type.value"
-                      >
-                        {{ type.viewValue }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </ng-template>
-
-              <!-- End Section Types -->
 
 
               <!-- Start Section Dates -->
 
-              <div ngModelGroup="dates" fxFlex="20%">
+              <div ngModelGroup="dates" fxFlex="20%" class="margin-right-fix">
 
-
+            
                 <div class="form-group" *ngIf="i == 0">
                 <!-- start mat-from-field -->
 
@@ -95,7 +51,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   class="form-age-traveler"
                   style="
                   width: 162px;"
-
+                
                 >
                   <!-- Input Date -->
 
@@ -128,18 +84,18 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 
 
                 <div class="form-group" *ngIf="i > 0">
-
+                
                 <!-- Start IF Condition -->
-
+          
                    <!-- start mat-from-field -->
                 <mat-form-field
                   class="form-age-traveler"
                   style="
                   width: 162px;"
-                  *ngIf="fDialog.value.types['type-'+i] == 'kid'"
+                  *ngIf="fDialog.value.types['type-'+i] == 'kid'"                    
                 >
 
-
+                
                   <!-- Input Date -->
 
                   <input
@@ -167,16 +123,16 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   ></mat-datepicker>
                 </mat-form-field>
                 <!-- End mat-form-field -->
-
+           
                 <mat-form-field
                   class="form-age-traveler"
                   style="
                   width: 162px;"
-                 *ngIf="fDialog.value.types['type-'+i] == 'spouse'"
-
+                 *ngIf="fDialog.value.types['type-'+i] == 'spouse'"  
+                    
                 >
 
-
+                
                   <!-- Input Date -->
 
                   <input
@@ -188,7 +144,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     name="date-{{ i }}"
                     #ages="ngModel"
                     [max]="maxDateKid"
-
+                   
                     required
                   />
                   <!-- End Input Date -->
@@ -204,7 +160,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   ></mat-datepicker>
                 </mat-form-field>
                 <!-- End mat-form-field -->
-
+           
 
                 <!-- End If Condition -->
                 <!-- start mat-from-field -->
@@ -255,6 +211,50 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 
 
 
+              <!-- Start Secion Types -->
+              <div *ngIf="!result; then thenBlock1; else elseBlock1"></div>
+              <ng-template #thenBlock1>
+                <div ngModelGroup="types" fxFlex="20%" class="margin-right-fix">
+                  <mat-form-field *ngIf="i != 0">
+                    <mat-label>Type</mat-label>
+                    <mat-select
+                      name="type-{{ i }}"
+                      ngModel
+                      #type="ngModel"
+                      required
+                    >
+                      <mat-option
+                        *ngFor="let type of types"
+                        [value]="type.value"
+                      >
+                        {{ type.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </ng-template>
+              <ng-template #elseBlock1>
+                <div ngModelGroup="types" fxFlex="20%" class="margin-right-fix">
+                  <mat-form-field *ngIf="i != 0">
+                    <mat-label>Type</mat-label>
+                    <mat-select
+                      name="type-{{ i }}"
+                      [(ngModel)]="dataList.types['type-' + i]"
+                      #type="ngModel"
+                      required
+                    >
+                      <mat-option
+                        *ngFor="let type of types"
+                        [value]="type.value"
+                      >
+                        {{ type.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </ng-template>
+
+              <!-- End Section Types -->
 
               <!-- Start Section Delete Field-->
               <div
@@ -313,7 +313,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
     </form>
   `,
   styles: [
-    '.margin-right-fix:not(:last-child) { margin-right: 70px !important }; button.margin-right-fix.mat-raised-button.mat-button-base.mat-warn.ng-star-inserted { max-width: 7% !important }'
+    ".margin-right-fix:not(:last-child) { margin-right: 70px !important }; button.margin-right-fix.mat-raised-button.mat-button-base.mat-warn.ng-star-inserted { max-width: 7% !important }"
   ],
   providers: [
     {
@@ -330,12 +330,12 @@ export class AgeTravelerComponent implements OnInit {
   maxDateKid;
   result;
   types = [
-    { value: 'spouse', viewValue: 'Spouse' },
-    { value: 'kid', viewValue: 'Kid' }
+    { value: "spouse", viewValue: "Spouse" },
+    { value: "kid", viewValue: "Kid" }
   ];
   dataList = {
-    dates: '',
-    types: ''
+    dates: "",
+    types: ""
   };
   isShow: boolean;
   constructor(
