@@ -9,6 +9,7 @@ import { PersonalResultComponent } from './personal-result/personal-result.compo
 import { GroupResComponent } from './group-res/group-res.component';
 import { ThanksComponent } from './thanks/thanks.component';
 import { CarInsuranceComponent } from './car-insurance/car-insurance.component';
+import { InsuranceInfoComponent } from './car-insurance/insurance-info/insurance-info.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   {path: 'group-travel', component: GroupResComponent},
   {path: 'group-res', component: GroupTicketComponent},
   {path: 'thanks', component: ThanksComponent},
-  {path: 'car-insurance', component: CarInsuranceComponent}
+  {path: 'car-insurance', component: CarInsuranceComponent},
+  {path: 'insurance-info/:brandCar/:brand/:product/:price', component: InsuranceInfoComponent}
 ];
 
 @NgModule({

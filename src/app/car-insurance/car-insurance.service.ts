@@ -1,8 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Brand } from "./brand.model";
+import { OdooService } from '../shared/odoo.service';
+import { Subject } from 'rxjs';
+import { UIService } from '../shared/ui.services';
 
 @Injectable()
 export class CarInsuranceService {
+  loadPrice = new Subject<number>();
   brands: Brand[] = [
     
       { id: 351, title: "Alfa RomioJullita" },
@@ -357,8 +361,60 @@ export class CarInsuranceService {
       { id: 700, title: "MG350" }
     
   ];
+  loadCovers = new Subject<any>();
+  constructor(private odoo: OdooService, private uiService: UIService ) {}
 
   get Brands() {
       return this.brands;
+  }
+
+  getCovers(type) {
+    this.uiService.loadingChangedStatus.next(true);
+    const data = {paramlist: { data: { type: type } } };
+    return this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+     'motor.api', 'get_covers', data).subscribe(res => {
+       this.loadCovers.next(this.convertFromArrayToObject(res));
+       this.uiService.loadingChangedStatus.next(false);
+     });
+
+  }
+
+  convertFromArrayToObject(dataList: string[]) {
+    let obj = [];
+    dataList.map(ele => {
+      obj.push({cover: ele});
+      
+    });
+    return obj;
+  }
+
+  sendPriceAndGetPrice(data) {
+     this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'motor.api',
+    'get_price', data).subscribe(res => {
+       this.loadPrice.next(res);
+     
+    }, error => console.log(error));
+  }
+
+  getTicketCar(data) {
+    const dataList = {
+      paramlist: {
+        data: data
+      }
+    };
+    return this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'ticket.api',
+    'create_motor_ticket', dataList);
+  }
+
+  getValueBrand(brandId:number) {
+    let title = '';
+    this.brands.find(val=> {
+      if(val.id === brandId) {
+        title = val.title;
+      }
+      
+    });
+
+    return title;
   }
 }

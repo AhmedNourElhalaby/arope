@@ -47,6 +47,7 @@ import { GroupTicketComponent } from './group-ticket/group-ticket.component';
 import { ThanksComponent } from './thanks/thanks.component';
 import { CarInsuranceComponent } from './car-insurance/car-insurance.component';
 import { CarQuoteComponent } from './car-insurance/car-quote/car-quote.component';
+import { InsuranceInfoComponent } from './car-insurance/insurance-info/insurance-info.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { CarQuoteComponent } from './car-insurance/car-quote/car-quote.component
     GroupTicketComponent,
     ThanksComponent,
     CarInsuranceComponent,
-    CarQuoteComponent
+    CarQuoteComponent,
+    InsuranceInfoComponent
   ],
   imports: [
     BrowserModule,

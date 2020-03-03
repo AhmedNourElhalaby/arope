@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -10,8 +11,19 @@ export class NavbarComponent implements OnInit {
   @Output() toggleSideNav = new EventEmitter<void>();
   travel = true;
   personal = false;
-  constructor(private router: Router) { }
+  tree: UrlTree;
+  urlTarget = '';
+  constructor(private router: Router, private location: Location) { }
   ngOnInit() {
+    
+  }
+
+  chkIsUrl(url) {
+    this.tree = this.router.parseUrl(this.location.path());
+    this.urlTarget = this.tree.root.children.primary.segments[0].path;
+
+    if(url === this.urlTarget) return true;
+    else return false;
   }
 
   onToggleSideNav() {

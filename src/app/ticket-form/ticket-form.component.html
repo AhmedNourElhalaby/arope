@@ -35,7 +35,7 @@
                         </div>
                     </mat-grid-tile>
 
-                    <mat-grid-tile colspan="3">
+                    <mat-grid-tile colspan="3" *ngIf="isShow">
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label>Job</mat-label>
                             <input matInput type="text" name="job" ngModel #job="ngModel" required>

@@ -1,0 +1,51 @@
+<div class="insurance-life" style="margin-bottom: 60px;">
+    <div class='wrapper-img'>
+        <img class="img-responsive" src="assets/images/Untitled.png" style="    max-width: 107%;
+        margin-left: -4px;
+        width: 107%;" height="250">
+    </div>
+    <div class='container' fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
+
+        <div fxFlex="75%">
+            <h2 class="special-title">Covers</h2>
+            <table *ngIf="!isLoading" mat-table [dataSource]="objCovers" class="mat-elevation-z8">
+
+
+
+                <ng-container matColumnDef="cover">
+                    <th mat-header-cell *matHeaderCellDef> Cover </th>
+                    <td mat-cell *matCellDef="let item"> {{item.cover}} </td>
+
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+
+            <div *ngIf="isLoading" fxLayoutAlign="center center">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+
+        <div fxFlex="25%">
+
+            <section class='price-card'>
+                <mat-card style="background-color: #013781;">
+                    <form>
+                        <div class="total-quote">
+                            <h4 class='title'>Your Total Quote</h4>
+                            <h3 class="price">EGP {{totalPrice}}</h3>
+                            <button mat-button class="button-quote" [routerLink]="['/', 'personal-accident', {page: 'car-insurance', brandCar: brandCar,type: type, brand: brand, product: type, price: price}]"> BUY </button>
+                        </div>
+                    </form>
+
+                </mat-card>
+            </section>
+
+        </div>
+
+
+    </div>
+</div>

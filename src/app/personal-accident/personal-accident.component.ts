@@ -42,7 +42,7 @@ export class PersonalAccidentComponent implements OnInit {
 
     this.activateRouter.paramMap.subscribe(param => {
       console.log('param', param.get('page'));
-      if (param.get('page') === 'find-yourjob') {
+      if ((param.get('page') === 'find-yourjob') || (param.get('page') == 'car-insurance')) {
         this.isOn = false;
       } else if (param.get('page') == null) {
         this.isOn = true;
@@ -59,6 +59,7 @@ export class PersonalAccidentComponent implements OnInit {
     this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'job.table', 'search_read', data ).subscribe(res => {
       this.jobs = res;
+      console.log('jobs', res);
     });
     this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'cover.table', 'search_read', basicData ).subscribe(res => {
@@ -109,16 +110,29 @@ export class PersonalAccidentComponent implements OnInit {
     this.odoo.call_odoo_function('travel_agency', 'online', 'online',
   'policy.personal', 'get_qouate', data ).subscribe(res => {
     console.log(res);
-    localStorage.setItem('total_price', res.toFixed(2).toString());
+    localStorage.setItem('total_price', parseInt(res).toString());
     if(form.value.rate >= 1500000) {
       console.log('HERE');
-      this.router.navigate(['/personal-accident', {page: 'find-yourjob'}], {queryParams: {dateOfBirth: this.convertDate(form.value.indAge), job: form.value.job, sum_insured: form.value.rate}});
+      // console.log(this.getTitleJobId(form.value.job));
+      this.router.navigate(['/personal-accident', {page: 'find-yourjob'}], {queryParams: {dateOfBirth: this.convertDate(form.value.indAge), job: this.getTitleJobId(form.value.job), sum_insured: form.value.rate}});
       return;
     } else {
       this.router.navigate(['/personal-result']);
     }
   });
   }
+
+  getTitleJobId(jobId) {
+    let title = '';
+    this.jobs.find(val => {
+      if(val.id === jobId) {
+        title = val.display_name;
+      }
+    });
+
+    return title;
+  }
+
   showField(event) {
     const valueField = event.value;
     this.type = valueField;
