@@ -17,6 +17,7 @@ export class TravelerService {
     expirationDate: null,
     cvCode: null
   };
+  lang: 'en' | 'ar';
 
   constructor(private http: HttpClient, private uiService: UIService, private odoo: OdooService) {
 
@@ -45,33 +46,72 @@ export class TravelerService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-    const data = {paramlist: {filter: [],
-      need: []}};
-    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
-     'travel.benefits', 'search_read', data).subscribe(res => {
-      for (const x in res) {
-        const cover = res[x].cover;
-        const limit = res[x].limit;
-        this.listBenfilts.push({
-          cover,
-          limit
-        });
-      }
+    this.lang = 'en';
+    if (this.lang === 'en') {
+      const data = {paramlist: {filter: [],
+        need: []}};
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'travel.benefits', 'search_read', data).subscribe(res => {
+        for (const x in res) {
+          const cover = res[x].cover;
+          const limit = res[x].limit;
+          this.listBenfilts.push({
+            cover,
+            limit
+          });
+        }
 
-      this.loadListBenefits.next(this.listBenfilts);
-      this.uiService.loadingChangedStatus.next(false);
-   });
+        this.loadListBenefits.next(this.listBenfilts);
+        this.uiService.loadingChangedStatus.next(false);
+      });
+    } else {
+      const data = {paramlist: {filter: [],
+        need: ['ar_cover', 'ar_limit']}};
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'travel.benefits', 'search_read', data).subscribe(res => {
+        for (const x in res) {
+          res[x].cover = res[x].ar_cover;
+          delete res[x].ar_cover;
+          res[x].limit = res[x].ar_limit;
+          delete res[x].ar_limit;
+          const cover = res[x].cover;
+          const limit = res[x].limit;
+          this.listBenfilts.push({
+            cover,
+            limit
+          });
+        }
+
+        this.loadListBenefits.next(this.listBenfilts);
+        this.uiService.loadingChangedStatus.next(false);
+      });
+    }
   }
 
   fetchExcess() {
     this.uiService.loadingChangedStatus.next(true);
-    const data = {paramlist: {filter: [],
-      need: []}};
-    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
-    'travel.excess', 'search_read', data).subscribe(res => {
-      this.loadResObjExcess.next(res);
-      this.uiService.loadingChangedStatus.next(false);
-    });
+    this.lang = 'en';
+    if (this.lang === 'en') {
+      const data = {paramlist: {filter: [],
+        need: []}};
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'travel.excess', 'search_read', data).subscribe(res => {
+        this.loadResObjExcess.next(res);
+        this.uiService.loadingChangedStatus.next(false);
+      });
+    } else {
+      const data = {paramlist: {filter: [],
+        need: ['ar_rule', 'amount']}};
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'travel.excess', 'search_read', data).subscribe(res => {
+        for (const x of res) {
+          x.rule = x.ar_rule;
+          delete x.ar_rule;
+        }
+        this.loadResObjExcess.next(res);
+        this.uiService.loadingChangedStatus.next(false);
+      });
+    }
   }
 
   onClear() {

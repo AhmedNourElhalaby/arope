@@ -1,14 +1,19 @@
 <mat-card>
 
         <h2 class="special-title">Plan Benefits</h2>
-        <table  mat-table [dataSource]="covers.name" class="mat-elevation-z8">
+        <table  mat-table [dataSource]="covers" class="mat-elevation-z8">
             <!-- Item Column -->
             <ng-container matColumnDef="cover">
                 <th mat-header-cell *matHeaderCellDef> Cover </th>
-                <td mat-cell *matCellDef="let transaction"> {{transaction}} </td>
+                <td mat-cell *matCellDef="let item"> {{item.cover_id}} </td>
     
             </ng-container>
+            
+            <ng-container matColumnDef="descriptions">
+                <th mat-header-cell *matHeaderCellDef> descriptions </th>
+                <td mat-cell *matCellDef="let item"> {{item.desc}} </td>
     
+            </ng-container>
 
     
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
