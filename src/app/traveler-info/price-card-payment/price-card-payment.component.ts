@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { WelcomeService } from '../../welcome/welcome.service';
 import { TravelerService } from '../traveler.service';
@@ -6,7 +6,8 @@ import { NgForm } from '@angular/forms';
 import { OdooService } from '../../shared/odoo.service';
 import { Subscription } from 'rxjs';
 import { UIService } from 'src/app/shared/ui.services';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-price-card-payment',
   templateUrl: './price-card-payment.component.html',
@@ -42,13 +43,22 @@ export class PriceCardPaymentComponent implements OnInit {
   }
 
   submitFormPriceCard(form: NgForm) {
+    ;
+
+
     this.isLoading = true;
     console.log('ay kala,');
     if (form.valid) {
       console.log('ayyy');
       const formData = JSON.parse(localStorage.getItem('formData'));
       const data = { paramlist: {data: formData.data} };
+      console.log('data', data);
       if (formData.key === 'travel') {
+        //setup download file
+        let headers = new HttpHeaders();
+        headers = headers.set('Accept', 'application/pdf')
+
+
         this.odoo.call_odoo_function(
             'travel_agency',
             'online',
@@ -60,6 +70,13 @@ export class PriceCardPaymentComponent implements OnInit {
           .subscribe(res => {
             console.log('ressss', res);
             // this.testDownload();
+
+            //download file
+            this.http.get('http://207.154.195.214:8070/report/46', { headers: headers, responseType: 'blob' }).subscribe(res => {
+              console.log(res);
+              saveAs(res, `terms and conditions (AROPE).pdf`)
+            });
+
             this.whenSucceed();
           });
         } else {

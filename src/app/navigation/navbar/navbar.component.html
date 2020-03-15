@@ -1,25 +1,31 @@
-<section class='navbar-header'>
-    <mat-toolbar class=" navbar-navigation container">
+<section class='navbar-header' style="height: 70px;position: relative;box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+    <mat-toolbar class=" navbar-navigation container" style="">
 
         <div class="logo">
             <a routerLink="/"><img fxFlex="300px" style="height:65px;" class="img-responsive" src="assets/images/logo.png"></a>
         </div>
+
+
 
         <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.lt-lg>
             <ul fxLayout fxLayoutGap="20px" class="navigation-links">
 
                 <li><a class="link" routerLink="" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"><span class="mdi mdi-airplane-takeoff "></span>  Travel Insurance</a></li>
                 <li><a class="link" routerLink="/car-insurance" routerLinkActive="active-link"><span class="mdi mdi-car "></span>  Car Insurance</a></li>
-                <li><a class="link"><span class="mdi mdi-medical-bag "></span>  Medical Insurance</a></li>
+                <li><a class="link" routerLink="/medical-insurance" routerLinkActive="active-link"><span class="mdi mdi-medical-bag "></span>  Medical Insurance</a></li>
                 <li><a class="link" routerLink="/personal-accident" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"><span class="mdi mdi-wheelchair-accessibility "></span>  Personal Accident </a></li>
             </ul>
         </div>
+
+        <div style="clear: both"></div>
 
         <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.gt-md>
             <button mat-icon-button (click)="onToggleSideNav()">
         <mat-icon class="icon-menu">menu</mat-icon>
       </button>
         </div>
+
+
     </mat-toolbar>
 
 </section>

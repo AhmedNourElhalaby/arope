@@ -40,14 +40,7 @@ export class PersonalAccidentComponent implements OnInit {
     this.minDate = this.site.getDateInYears(75);
     /* end max and min date */
 
-    this.activateRouter.paramMap.subscribe(param => {
-      console.log('param', param.get('page'));
-      if ((param.get('page') === 'find-yourjob') || (param.get('page') == 'car-insurance')) {
-        this.isOn = false;
-      } else if (param.get('page') == null) {
-        this.isOn = true;
-      }
-    });
+  
     this.isShow = false;
 
     const data = {paramlist: {filter: [],

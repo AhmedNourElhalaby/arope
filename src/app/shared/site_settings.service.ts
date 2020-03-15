@@ -19,6 +19,12 @@ export class SiteSettingsService{
         return [year, month, day].join('-');
     }
 
+
+
+    convertToArray(number) {
+        return new Array(number);
+    }
+
     isEmpty(obj) {
         for(var key in obj) {
             if(obj.hasOwnProperty(key)){

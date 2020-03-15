@@ -367,14 +367,21 @@ export class CarInsuranceService {
   get Brands() {
       return this.brands;
   }
+  downloadFile(data: Response) {
+    // const blob = new Blob([data], { type: 'text/csv' });
+    // const url= window.URL.createObjectURL(blob);
+    // window.open(url);
+  }
 
   getCovers(type) {
+
     this.uiService.loadingChangedStatus.next(true);
     const data = {paramlist: { data: { type: type } } };
     return this.odoo.call_odoo_function('travel_agency', 'online', 'online',
      'motor.api', 'get_covers', data).subscribe(res => {
        this.loadCovers.next(this.convertFromArrayToObject(res));
        this.uiService.loadingChangedStatus.next(false);
+    
      });
 
   }

@@ -10,6 +10,9 @@ import { GroupResComponent } from './group-res/group-res.component';
 import { ThanksComponent } from './thanks/thanks.component';
 import { CarInsuranceComponent } from './car-insurance/car-insurance.component';
 import { InsuranceInfoComponent } from './car-insurance/insurance-info/insurance-info.component';
+import { MedicalInsuranceComponent } from './medical-insurance/medical-insurance.component';
+import { MedicalInfoComponent } from './medical-insurance/medical-info/medical-info.component';
+import { TicketFormComponent } from './ticket-form/ticket-form.component';
 
 
 const routes: Routes = [
@@ -20,9 +23,12 @@ const routes: Routes = [
   {path: 'personal-result', component: PersonalResultComponent},
   {path: 'group-travel', component: GroupResComponent},
   {path: 'group-res', component: GroupTicketComponent},
+  {path: 'get_ticket', component: TicketFormComponent},
   {path: 'thanks', component: ThanksComponent},
   {path: 'car-insurance', component: CarInsuranceComponent},
-  {path: 'insurance-info/:brandCar/:brand/:product/:price', component: InsuranceInfoComponent}
+  {path: 'insurance-info/:brandCar/:brand/:product/:price', component: InsuranceInfoComponent},
+  {path: 'medical-insurance', component: MedicalInsuranceComponent},
+  {path: 'medical-info', component: MedicalInfoComponent}
 ];
 
 @NgModule({

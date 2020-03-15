@@ -1,0 +1,84 @@
+table {
+    width: 100%;
+    text-align: center;
+    font-family: 'Tajawal' !important;
+    font-size: normal;
+}
+
+mat-card-title {
+    font-family: 'Tajawal' !important;
+}
+
+.insurance-life {
+    font-family: 'Tajawal' !important;
+}
+
+.mdi-close {
+    color: red !important;
+}
+
+.mdi-check {
+    color: #22bb33;
+}
+
+.mdi {
+    font-size: 35px;
+}
+
+th.mat-header-cell {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    background-color: #073e89;
+    color: #fff;
+}
+
+td.mat-cell {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+td.mat-cell.cdk-column-features {
+    color: #073e89;
+}
+
+th.mat-header-cell.cdk-column-Diamond,
+th.mat-header-cell.cdk-column-Platinum,
+th.mat-header-cell.cdk-column-Golden {
+    padding: 12px;
+}
+
+th.mat-header-cell.cdk-column-Diamond button,
+th.mat-header-cell.cdk-column-Platinum button,
+th.mat-header-cell.cdk-column-Golden button {
+    margin-top: 8px;
+    color: #073e89;
+}
+
+td.mat-cell.cdk-column-cover.mat-column-cover {
+    color: #073e89;
+}
+
+th.mat-header-cell.cdk-column-Golden,
+th.mat-header-cell.cdk-column-Platinum,
+th.mat-header-cell.cdk-column-Diamond {
+    padding: 12px;
+}
+
+td.mat-cell.cdk-column-cover,
+td.mat-cell.cdk-column-Golden,
+td.mat-cell.cdk-column-Platinum,
+td.mat-cell.cdk-column-Diamond {
+    width: 25%;
+    border-left: .5px solid #073e89;
+    ;
+}
+
+td.mat-cell.cdk-column-Diamond {
+    width: 25%;
+    border-left: 0px;
+}
+
+.insurance-life {
+    direction: rtl;
+}

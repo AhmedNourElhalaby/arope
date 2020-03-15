@@ -1,5 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+/* @import url('https://fonts.googleapis.com/css?family=Tajawal:400,500,700&display=swap&subset=arabic'); */
+
+@font-face {
+    font-family: Tajawal;
+    src: url('assets/fonts/Tajawal-Regular.ttf') format("opentype");
+}
+
 html,
 body {
     height: 100%;
@@ -107,4 +115,36 @@ body {
     .container-welcome {
         margin: auto 10px !important;
     }
+}
+
+.medical-quote .mat-form-field-wrapper {
+    padding: 0px !important;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.full-width-field {
+    width: 100%;
+}
+
+.half-width-field {
+    width: 50%;
+}
+
+.form-field:not(:last-child) {
+    margin-right: 20px;
+}
+
+.form-field {
+    width: 100%;
+}
+
+form-field:not(:last-child) {
+    margin-right: 20px;
+}
+
+.form-field {
+    width: 100%;
 }

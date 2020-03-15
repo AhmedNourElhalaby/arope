@@ -67,7 +67,7 @@
                             </ng-container>
                         </div>
                         <div>
-                            <a style="margin: 20px 0; display: block;font-weight: 500;" [routerLink]="['/', 'personal-accident', {page: 'find-yourjob'}]">If you can't find your job?</a>
+                            <a style="margin: 20px 0; display: block;font-weight: 500;" [routerLink]="[ '/','get_ticket', {page: 'find-yourjob'}]">If you can't find your job?</a>
                         </div>
                         <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid">{{ 'Get A Quote' | uppercase }}</button>
                         <div *ngIf="isLoading" fxLayoutAlign="center center">

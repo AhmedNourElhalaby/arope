@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { CarInsuranceService } from '../car-insurance.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UIService } from 'src/app/shared/ui.services';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-insurance-info',
@@ -21,7 +22,7 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
   brand;
   price;
   brandCar;
-  constructor(private carService: CarInsuranceService, private route: ActivatedRoute, private router: Router, private uiService: UIService) { }
+  constructor(private http: HttpClient ,private carService: CarInsuranceService, private route: ActivatedRoute, private router: Router, private uiService: UIService) { }
 
   ngOnInit(){
     
@@ -47,6 +48,7 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
     });
     this.carService.getCovers(this.type);
     this.loadPriceSub = this.carService.loadPrice.subscribe(res => {
+
       this.totalPrice = res;
     });
     const data = {

@@ -1,0 +1,58 @@
+<section class="medical-quote">
+    <form [formGroup]="form">
+
+
+        <mat-card fxLayout="column" fxFlex="700px" fxFlex.xs="100%" class='overlay'>
+            <mat-card-title fxLayoutAlign="flex-start">Get a Medical Insurance Quote</mat-card-title>
+            <mat-card-content class="make-scroll">
+                <div class="options">
+
+                    <mat-radio-group aria-label="Select an option" color="primary" (change)="getVal($event.value)" required>
+                        <mat-radio-button value="individual" checked>Individual</mat-radio-button>
+                        <mat-radio-button value="family">Family</mat-radio-button>
+                        <mat-radio-button value="smes">SMEs</mat-radio-button>
+                        <mat-radio-button value="corporate">Corporate</mat-radio-button>
+                    </mat-radio-group>
+
+
+                </div>
+
+                <br><br>
+
+                <app-individual-medical *ngIf="type === 'individual'" [form]="form"></app-individual-medical>
+
+
+                <app-family-medical [form]="form" [datesCount]="dates" *ngIf="type === 'family'"></app-family-medical>
+
+
+                <app-smes-medical [form]="form" [numGroup]="groups" *ngIf="type === 'smes'"></app-smes-medical>
+
+
+            </mat-card-content>
+            <div class="add-person" *ngIf="type === 'family'">
+
+                <button type="button" mat-button (click)="onIncrement()">
+                    <mat-icon>add</mat-icon>
+                    Add Addtional Person
+                </button>
+            </div>
+
+            <div class="add-person" *ngIf="type === 'smes'">
+
+                <button type="button" mat-button (click)="onIncrementGroup()">
+                    <mat-icon>add</mat-icon>
+                    Add Addtional Group
+                </button>
+            </div>
+
+
+
+
+            <br>
+            <button type="submit" style="margin-bottom: 10px;" class='button-quote' mat-button color="primary" type="submit" [disabled]="!form.valid" (click)="onRequest()">GET A
+                QUOTE</button>
+
+
+        </mat-card>
+    </form>
+</section>

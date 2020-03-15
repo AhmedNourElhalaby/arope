@@ -63,13 +63,15 @@ export class PersonalInfoComponent implements OnInit {
     const coversId = coversData.id;
     const formData = {data: {
       c_name: this.fullNameText(form.value.firstName, form.value.middleName, form.value.lastName),
-      mail: this.emailFormControl.value,
+      mail: form.value.emailAddress,
       phone: form.value.phoneNumber,
       id: form.value.id,
       sum_insured: sum,
       job: Job,
       cover: coversId
     }, key: 'personal'};
+
+    console.log('form data',formData);
     localStorage.setItem('formData', JSON.stringify(formData));
     this.changeShowValue();
     this.changeStatus.emit(true);

@@ -1,6 +1,6 @@
 <div class="insurance-life" style="margin-bottom: 60px;">
     <div class='wrapper-img'>
-        <img class="img-responsive" src="assets/images/Untitled.png" style="    max-width: 107%;
+        <img class="img-responsive" src="assets/images/bk.png" style="    max-width: 107%;
         margin-left: -4px;
         width: 107%;" height="250">
     </div>
@@ -9,8 +9,6 @@
         <div fxFlex="75%">
             <h2 class="special-title">Covers</h2>
             <table *ngIf="!isLoading" mat-table [dataSource]="objCovers" class="mat-elevation-z8">
-
-
 
                 <ng-container matColumnDef="cover">
                     <th mat-header-cell *matHeaderCellDef> Cover </th>
@@ -37,7 +35,7 @@
                         <div class="total-quote">
                             <h4 class='title'>Your Total Quote</h4>
                             <h3 class="price">EGP {{totalPrice}}</h3>
-                            <button mat-button class="button-quote" [routerLink]="['/', 'personal-accident', {page: 'car-insurance', brandCar: brandCar,type: type, brand: brand, product: type, price: price}]"> BUY </button>
+                            <button mat-button class="button-quote" [routerLink]="['/', 'get_ticket', {page: 'car-insurance', brandCar: brandCar,type: type, brand: brand, product: type, price: price}]"> BUY </button>
                         </div>
                     </form>
 

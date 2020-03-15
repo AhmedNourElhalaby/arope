@@ -24,7 +24,7 @@ export class TicketFormComponent implements OnInit {
   dateOfBirth;
   job;
   sum_insured;
-  
+  plan: string;
   constructor(
     private odoo: OdooService,
     private router: Router,
@@ -36,10 +36,11 @@ export class TicketFormComponent implements OnInit {
   ngOnInit() {
     
     this.routerActivated.paramMap.subscribe(paramMap=> {
-      
+      this.pageStr = paramMap.get('page');
       if( paramMap.get('page') == 'car-insurance' ) {
+        console.log('sdfsdf');
         this.isShow = false;
-        this.pageStr = paramMap.get('page');
+       
         this.product = paramMap.get('product');
         this.brand = paramMap.get('brand');
         this.price = paramMap.get('price');
@@ -47,21 +48,19 @@ export class TicketFormComponent implements OnInit {
       } else if(
         (paramMap.get('page') == 'find-yourjob') 
       ){
-        this.routerActivated.queryParamMap.subscribe(params => {
-          if(
-            !params.has('dateOfBirth') &&
-            !params.has('job') &&
-            !params.has('sum_insured') 
-          ) {
-            this.router.navigate(['/personal-accident']);
-            return;
-          }
-          this.isShow = false;
-          this.pageStr = paramMap.get('page');
+       
+
+          this.isShow = true;
+         
           this.dateOfBirth = paramMap.get('dateOfBirth');
           this.job = paramMap.get('job');
           this.sum_insured = paramMap.get('sum_insured'); 
-        });
+       
+      }else if(
+        paramMap.get('page') == 'medical-insurance'
+      ){
+        this.isShow = false;
+        this.plan = paramMap.get('plan');
       }
 
       
@@ -91,7 +90,17 @@ export class TicketFormComponent implements OnInit {
         mail: form.value.emailAddress,
         sum_insured: Number(this.sum_insured)
       });
-    } else  {
+    } 
+    else if(this.pageStr == 'medical-insurance') {
+      this.getTicketMedicalIsurance({
+        
+        name: form.value.name,
+        phone: form.value.prefixNum + form.value.phoneNumber,
+        mail: form.value.emailAddress,
+        product: this.plan
+      });
+    }
+    else  {
       this.getTicket({
         type: "pa",
         job: form.value.job,
@@ -100,6 +109,27 @@ export class TicketFormComponent implements OnInit {
         mail: form.value.emailAddress
       });
     }
+  }
+
+  getTicketMedicalIsurance(dataList) {
+    const data = {
+      paramlist: {
+        data: dataList
+      }
+    };
+    this.odoo
+      .call_odoo_function(
+        "travel_agency",
+        "online",
+        "online",
+        "ticket.api",
+        "create_medical_ticket",
+        data
+      )
+      .subscribe(res => {
+        console.log('medical insurance', res);
+        this.router.navigate(["/thanks"]);
+      });
   }
 
   getTicketOverPrice(dataList) {
