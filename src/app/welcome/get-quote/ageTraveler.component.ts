@@ -25,7 +25,8 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
               font-weight: normal;"
                   fxFlex="21%"
                 >
-                  Primary Traveler's Age:
+                  
+                  {{ 'traveler.key1' | translate }}
                 </div>
               </ng-template>
               <ng-template #elseBlock>
@@ -33,7 +34,8 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   style="color: #565656;     font-size:14px;margin-top: 11px !important;font-weight: normal;"
                   fxFlex="30%"
                 >
-                  Additional Traveler's Age:
+                {{ 'traveler.key2' | translate }}
+                  
                 </div>
               </ng-template>
 
@@ -216,7 +218,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
               <ng-template #thenBlock1>
                 <div ngModelGroup="types" fxFlex="20%" class="margin-right-fix">
                   <mat-form-field *ngIf="i != 0">
-                    <mat-label>Type</mat-label>
+                    <mat-label>{{ 'traveler.type' | translate }}</mat-label>
                     <mat-select
                       name="type-{{ i }}"
                       ngModel
@@ -236,7 +238,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
               <ng-template #elseBlock1>
                 <div ngModelGroup="types" fxFlex="20%" class="margin-right-fix">
                   <mat-form-field *ngIf="i != 0">
-                    <mat-label>Type</mat-label>
+                  <mat-label>{{ 'traveler.type' | translate }}</mat-label>
                     <mat-select
                       name="type-{{ i }}"
                       [(ngModel)]="dataList.types['type-' + i]"
@@ -296,7 +298,8 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
             style="    font-size: 15px;"
             icon-margin
           ></span>
-          Add Additional Traveler
+          {{ 'traveler.add_addtional' | translate }}
+         
         </div>
         <div fxFlex fxLayout fxLayoutAlign="flex-end">
           <button
@@ -306,7 +309,8 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
             color: #E4EAF2;"
             [disabled]="fDialog.invalid"
           >
-            Done
+            
+            {{ 'traveler.done' | translate }}
           </button>
         </div>
       </div>

@@ -3,12 +3,12 @@
 
 
         <mat-card fxFlex="700px" fxFlex.xs="100%" class='overlay'>
-            <mat-card-title fxLayoutAlign="flex-start">Get a Car Insurance Quote</mat-card-title>
+            <mat-card-title fxLayoutAlign="flex-start">{{ 'car.title' | translate }}</mat-card-title>
             <mat-card-content>
 
                 <mat-radio-group aria-label="Select an option" color="primary" name="type" ngModel="General" #typeInput="ngModel" required>
-                    <mat-radio-button value="General">General</mat-radio-button>
-                    <mat-radio-button value="Total Loss Only">Total Loss Only</mat-radio-button>
+                    <mat-radio-button value="General">{{ 'car.general' | translate }}</mat-radio-button>
+                    <mat-radio-button value="Total Loss Only">{{ 'car.total_loss' | translate }}</mat-radio-button>
                 </mat-radio-group>
 
 
@@ -18,7 +18,7 @@
 
                     <mat-grid-tile colspan="2">
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label>{{ 'Brands' | uppercase }}</mat-label>
+                            <mat-label>{{ 'car.brands' | translate }}</mat-label>
                             <mat-select name="brandCar" ngModel #brandCar="ngModel" required>
                                 <mat-option *ngFor="let brand of brands" [value]="brand.id">
                                     {{brand.title}}
@@ -29,7 +29,7 @@
 
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'price' | uppercase }}</mat-label>
+                            <mat-label>{{ 'car.price' | translate }} </mat-label>
                             <input type="text" matInput ngModel name="price" #price="ngModel" required>
 
                         </mat-form-field>
@@ -40,11 +40,13 @@
                             <mat-label>{{ 'Country of Origin' | uppercase }}</mat-label>
                             <mat-select name="brand" ngModel #brand="ngModel" required>
                                 <mat-option value="all brands">
-                                    All Brands (except Chinese & East Asia)
+                                    {{ 'car.brand1' | translate }}
+
                                 </mat-option>
 
                                 <mat-option value="chinese cars & east asia">
-                                    Chinese cars & East Asia
+                                    {{ 'car.brand2' | translate }}
+
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -52,7 +54,7 @@
                 </mat-grid-list>
 
                 <br><br>
-                <button class='button-quote' mat-button color="primary" type="submit" [disabled]="!f.valid">GET A QUOTE</button>
+                <button class='button-quote' mat-button color="primary" type="submit" [disabled]="!f.valid">{{ 'car.get_quote' | translate }}</button>
 
             </mat-card-content>
         </mat-card>

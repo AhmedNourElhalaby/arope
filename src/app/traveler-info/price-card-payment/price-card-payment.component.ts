@@ -43,7 +43,7 @@ export class PriceCardPaymentComponent implements OnInit {
   }
 
   submitFormPriceCard(form: NgForm) {
-    ;
+    
 
 
     this.isLoading = true;

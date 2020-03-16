@@ -10,7 +10,7 @@
             <ng-container matColumnDef="cover">
                 <th mat-header-cell *matHeaderCellDef>
 
-                    المزايا
+                    {{"medical.covers" | translate}}
 
                 </th>
 
@@ -22,7 +22,7 @@
             </ng-container>
 
             <ng-container matColumnDef="Golden">
-                <th mat-header-cell *matHeaderCellDef> Golden
+                <th mat-header-cell *matHeaderCellDef> {{"medical.golden" | translate}}
 
                     <br> <button mat-raised-button [routerLink]="['/', 'get_ticket', {page: 'medical-insurance', type: 'Golden'}]">Buy Now</button>
                 </th>
@@ -37,7 +37,7 @@
             </ng-container>
 
             <ng-container matColumnDef="Platinum">
-                <th mat-header-cell *matHeaderCellDef> Platinum
+                <th mat-header-cell *matHeaderCellDef> {{"medical.platinum" | translate}}
                     <br> <button mat-raised-button [routerLink]="['/', 'get_ticket', {page: 'medical-insurance', type: 'Platinum'}]">Buy Now</button>
                 </th>
                 <td mat-cell *matCellDef="let item">
@@ -51,7 +51,7 @@
             </ng-container>
 
             <ng-container matColumnDef="Diamond">
-                <th mat-header-cell *matHeaderCellDef> Diamond
+                <th mat-header-cell *matHeaderCellDef> {{"medical.diamond" | translate}}
                     <br> <button mat-raised-button [routerLink]="['/', 'get_ticket', {page: 'medical-insurance', type: 'Diamond'}]">Buy Now</button>
                 </th>
                 <td mat-cell *matCellDef="let item">

@@ -3,13 +3,13 @@
 
         <input type="hidden" name="types" [ngModel]="familyDataString" #types="ngModel">
         <mat-card fxFlex="700px" fxFlex.xs="100%" class='overlay'>
-            <mat-card-title fxLayoutAlign="flex-start">Get a Travel Insurance Quote</mat-card-title>
+            <mat-card-title fxLayoutAlign="flex-start">{{ 'traveler.title' | translate }}</mat-card-title>
             <mat-card-content>
 
                 <mat-radio-group aria-label="Select an option" color="primary" name="type" [(ngModel)]="formFields.typeTraveler" #typeInput="ngModel" (change)="showField($event)" required>
-                    <mat-radio-button value="individual">Individual</mat-radio-button>
-                    <mat-radio-button value="family">Family</mat-radio-button>
-                    <mat-radio-button value="group">Group</mat-radio-button>
+                    <mat-radio-button value="individual">{{ 'traveler.indi' | translate }}</mat-radio-button>
+                    <mat-radio-button value="family">{{ 'traveler.family' | translate }}</mat-radio-button>
+                    <mat-radio-button value="group">{{ 'traveler.group' | translate }}</mat-radio-button>
                 </mat-radio-group>
 
 
@@ -19,7 +19,7 @@
 
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label>{{ 'Zone' | uppercase }}</mat-label>
+                            <mat-label>{{ 'traveler.zone' | translate }}</mat-label>
                             <mat-select name="zone" [(ngModel)]="formFields.zone" #zoneInput="ngModel" required>
                                 <mat-option *ngFor="let country of countries" [value]="country.value">
                                     {{country.viewValue}}
@@ -29,7 +29,7 @@
                     </mat-grid-tile>
                     <mat-grid-tile *ngIf="isFamly">
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'Date Of Birth' | uppercase }}</mat-label>
+                            <mat-label> {{ 'traveler.dob' | translate }}</mat-label>
                             <input type="text" matInput (click)="this.showPopup()" [(ngModel)]="formFields.dates" name="familyAges" #familyAges="ngModel" required>
 
                         </mat-form-field>
@@ -38,7 +38,7 @@
 
                     <mat-grid-tile *ngIf="isIndividual">
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'Date Of Birth' | uppercase }}</mat-label>
+                            <mat-label> {{ 'traveler.dob' | translate }}</mat-label>
                             <input type="text" matInput [matDatepicker]="agePicker" (focus)="agePicker.open()" [(ngModel)]="formFields.date" #inputAge placeholder="Date Of Birth" [max]="minDate" name="indAge" #indAge="ngModel" required>
                             <mat-datepicker-toggle matSuffix [for]="agePicker"></mat-datepicker-toggle>
                             <mat-datepicker (closed)="inputAge.blur()" startView="multi-year" #agePicker [startAt]="formFields.date" #agePicker></mat-datepicker>
@@ -47,7 +47,7 @@
 
                     <mat-grid-tile *ngIf="isGroup">
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'number of travelers' | uppercase }}</mat-label>
+                            <mat-label> {{ 'traveler.numOfTravelers' | translate }}</mat-label>
                             <input type="text" matInput (click)="this.showGrpupPopup()" [ngModel]="groupAge" name="groupAges" #groupAges="ngModel" required>
 
                             <!-- <input type="number" matInput placeholder="number of group" ngModel name="numOfGroup" #numOfGroup="ngModel" required> -->
@@ -60,7 +60,7 @@
                     <mat-grid-tile>
 
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'From' | uppercase }}</mat-label>
+                            <mat-label> {{ 'traveler.from' | translate }}</mat-label>
                             <!-- <input matInput > -->
 
 
@@ -75,7 +75,7 @@
 
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label> {{ 'To' | uppercase }}</mat-label>
+                            <mat-label> {{ 'traveler.to' | translate }}</mat-label>
                             <!-- <input matInput > -->
 
                             <input type="text" matInput [matDatepicker]="picker1" name="dateTill" #inputTill [(ngModel)]="formFields.till" #dateTill="ngModel" required [min]="dateWhen.value" (focus)="picker1.open()" placeholder="To">
@@ -91,9 +91,9 @@
 
                 </mat-grid-list>
 
-                <mat-checkbox color="primary" ngModel #checkbox name="egyptian" [checked]="isEgyption" (change)="isEgyption = !isEgyption">I confirm that i am a resident in Egypt</mat-checkbox>
+                <mat-checkbox color="primary" ngModel #checkbox name="egyptian" [checked]="isEgyption" (change)="isEgyption = !isEgyption">{{ 'traveler.alert' | translate }}</mat-checkbox>
                 <br><br>
-                <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid || isEgyption !== true">{{ 'Get A Quote' | uppercase }}</button>
+                <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid || isEgyption !== true">{{ 'traveler.get_quote' | translate }}</button>
                 <div *ngIf="isLoading" fxLayoutAlign="center center">
                     <mat-spinner [diameter]="40"></mat-spinner>
                 </div>

@@ -18,7 +18,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
                   style="color: #565656;     font-size:14px;margin-top: 11px !important;font-weight: normal;"
                   fxFlex="10%"
                 >
-                  Group {{i + 1}}:
+                  {{'group.group'|translate}} {{i + 1}}:
                 </div>
               </ng-template>
 
@@ -28,7 +28,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
               <ng-template #thenBlock1>
                 <div ngModelGroup="ranges" fxFlex="25%" class="margin-right-fix">
                   <mat-form-field>
-                    <mat-label>Age (From - To)</mat-label>
+                    <mat-label>{{'medical.age'|translate}}</mat-label>
                     <mat-select
                       name="range-{{ i }}"
                       ngModel
@@ -120,7 +120,8 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
             style="    font-size: 15px;"
             icon-margin
           ></span>
-          Add Additional Group
+          {{'traveler.add_group' | translate}}
+          
         </div>
         <div fxFlex fxLayout fxLayoutAlign="flex-end">
           <button
@@ -130,7 +131,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
             color: #E4EAF2;"
             [disabled]="fDialog.invalid"
           >
-            Done
+            {{'traveler.done' | translate}}
           </button>
         </div>
       </div>

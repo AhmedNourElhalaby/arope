@@ -1,7 +1,7 @@
 <mat-card fxFlex.xs="100%">
 
     <mat-toolbar>
-        <span>Payment Details</span>
+        <span>{{'results_info.payment_title' | translate}}</span>
         <span class="example-fill-remaining-space"></span>
         <span>
                     <img src="https://i76.imgup.net/accepted_c22e0.png">
@@ -14,7 +14,7 @@
             <mat-grid-list cols="1" rowHeight="88px" gutterSize="10px">
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class='form-field'>
-                        <mat-label>{{'Card Number' | uppercase }}</mat-label>
+                        <mat-label>{{'results_info.card_number' | translate}}</mat-label>
                         <input type="number" matInput placeholder="Card Number" name="cardNumber" [(ngModel)]="paymentForm.cardNumber" #cardNumber="ngModel" required>
                         <mat-icon matSuffix>credit_card</mat-icon>
 
@@ -24,7 +24,7 @@
             <mat-grid-list cols="2" rowHeight="88px" gutterSize="10px">
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class='form-field'>
-                        <mat-label>{{ 'Expiration Date' | uppercase }}</mat-label>
+                        <mat-label>{{'results_info.exp' | translate}}</mat-label>
                         <input type="text" matInput [matDatepicker]="picker" placeholder="MM / YY" name="expirationDate" [(ngModel)]="paymentForm.expirationDate" #expirationDate="ngModel" (click)="picker.open()" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker startView="multi-year" panelClass="example-month-picker"></mat-datepicker>
@@ -32,7 +32,7 @@
                 </mat-grid-tile>
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class='form-field'>
-                        <mat-label>{{'cv code' | uppercase }}</mat-label>
+                        <mat-label>{{'results_info.cv_code' | translate}}</mat-label>
                         <input type="number" matInput placeholder="CV Code" name="cvCode" [(ngModel)]="paymentForm.cvCode" #cvCode="ngModel" required>
                     </mat-form-field>
                 </mat-grid-tile>

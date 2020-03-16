@@ -1,24 +1,24 @@
 <mat-card>
-    <h2 class="special-title">TRAVELLER Info</h2>
+    <h2 class="special-title">{{ 'results_info.title3' | translate }}</h2>
 
     <form #fInfo="ngForm" (ngSubmit)="submitTravelerInfo(fInfo)">
 
         <mat-grid-list cols="3" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> First Name</mat-label>
+                    <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
                     <input matInput type="text" name="firstName" ngModel #firstName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Middle Name</mat-label>
+                    <mat-label> {{ 'results_info.middleName' | translate }}</mat-label>
                     <input matInput type="text" name="middleName" ngModel #middleName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Last Name</mat-label>
+                    <mat-label> {{ 'results_info.lastName' | translate }}</mat-label>
                     <input matInput type="text" name="lastName" ngModel #lastName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
@@ -26,20 +26,20 @@
         <mat-grid-list cols="2" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label>Gender</mat-label>
+                    <mat-label>{{ 'results_info.gender' | translate }}</mat-label>
                     <mat-select name="gender" ngModel #gender="ngModel" required>
                         <mat-option value="male">
-                            Male
+                            {{ 'results_info.male' | translate }}
                         </mat-option>
                         <mat-option value="female">
-                            Female
+                            {{ 'results_info.female' | translate }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label>Date Of Birth</mat-label>
+                    <mat-label>{{ 'traveler.dob' | translate }}</mat-label>
                     <input *ngIf="indi" matInput type="text" name="dateBirth" [matDatepicker]="dateBirthPicker" ngModel [(ngModel)]="date" #dateBirth="ngModel" required>
                     <input *ngIf="!indi" matInput type="text" name="dateBirth" [matDatepicker]="dateBirthPicker" ngModel [(ngModel)]="datesList['date-0']" #dateBirth="ngModel" required>
                     <mat-datepicker-toggle matSuffix [for]="dateBirthPicker"></mat-datepicker-toggle>
@@ -49,7 +49,7 @@
             <mat-grid-tile>
 
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Email Address</mat-label>
+                    <mat-label> {{ 'results_info.email' | translate }}</mat-label>
                     <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email>
                     <mat-error *ngIf="emailAddress.hasError('required')">Email is <strong>required</strong></mat-error>
                     <!-- <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p> -->
@@ -59,7 +59,7 @@
 
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Phone Number</mat-label>
+                    <mat-label> {{ 'results_info.phone' | translate }}</mat-label>
                     <input matInput type="tel" name="phoneNumber" ngModel #phoneNumber="ngModel" required>
                 </mat-form-field>
 
@@ -69,20 +69,20 @@
 
             <mat-grid-tile hintLabel="Should It Be 14 number">
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> National ID Number</mat-label>
+                    <mat-label> {{ 'results_info.id' | translate }}</mat-label>
 
                     <input matInput name="id" ngModel minlength="14" maxlength="14" #id="ngModel" (blur)="checkId()">
 
 
-                    <p *ngIf="cid === false" class="custom-error">ID is not matching date of birth</p>
-                    <p *ngIf="cid && id.errors?.minlength" class="custom-error">ID must be 14 Number</p>
+                    <p *ngIf="cid === false" class="custom-error">{{ 'results_info.id_alert' | translate }}</p>
+                    <p *ngIf="cid && id.errors?.minlength" class="custom-error">{{ 'results_info.id_alert2' | translate }}</p>
                 </mat-form-field>
 
             </mat-grid-tile>
 
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Passport Number</mat-label>
+                    <mat-label> {{ 'results_info.passport' | translate }}</mat-label>
                     <input matInput type="text" name="Passport" maxlength="14" ngModel #Passport="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
@@ -90,7 +90,7 @@
         <mat-grid-list cols="1" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Enter Your Address</mat-label>
+                    <mat-label> {{ 'results_info.enter_address' | translate }}</mat-label>
                     <input matInput type="text" name="address" ngModel #address="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
@@ -100,16 +100,16 @@
         <div ngModelGroup="additionalTravelers" #additionalTravelers="ngModelGroup" *ngIf="numOfTravelers.length > 1">
 
             <section class="additional-travelers">
-                <h2 class="title">Additional Traveler Information</h2>
+                <h2 class="title">{{ 'results_info.additional_traveler' | translate }}</h2>
 
                 <ng-container *ngFor="let traveler of numOfTravelers | slice:1; let i = index">
                     <div class="typeSection">
 
-                        <h2 class="title">Traveller {{i+1}}</h2>
+                        <h2 class="title">{{ 'results_info.traveler' | translate }} {{i+1}}</h2>
                         <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
                             <div fxFlex="33.33333%">
                                 <mat-form-field appearance="outline" class='form-field'>
-                                    <mat-label> First Name</mat-label>
+                                    <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
                                     <input matInput type="text" name="tfirstName{{traveler}}" ngModel #tfirstName="ngModel" required>
                                 </mat-form-field>
 
@@ -118,7 +118,7 @@
                             </div>
                             <div fxFlex="33.33333%">
                                 <mat-form-field appearance="outline" class='form-field'>
-                                    <mat-label> Middle Name</mat-label>
+                                    <mat-label> {{ 'results_info.middleName' | translate }}</mat-label>
                                     <input matInput type="text" name="tmiddleName{{traveler}}" ngModel #tmiddleName="ngModel" required>
                                 </mat-form-field>
 
@@ -128,7 +128,7 @@
 
                             <div fxFlex="33.33333%">
                                 <mat-form-field appearance="outline" class='form-field'>
-                                    <mat-label> Last Name</mat-label>
+                                    <mat-label>{{ 'results_info.lastName' | translate }}</mat-label>
                                     <input matInput type="text" name="tlastName{{traveler}}" ngModel #tlastName="ngModel" required>
                                 </mat-form-field>
 
@@ -141,7 +141,7 @@
                             <div fxFlex="50%">
                                 <div class="form-group" *ngIf="typesList['type-'+traveler] == 'kid'">
                                     <mat-form-field appearance="outline" class='form-field'>
-                                        <mat-label> Date Of Birth</mat-label>
+                                        <mat-label> {{ 'results_info.dob' | translate }}</mat-label>
                                         <input matInput type="text" [min]="minDateKid" [max]="maxDateKid" [matDatepicker]="birthDatePicker" name="tbirthDate{{traveler}}" [(ngModel)]="datesList['date-'+traveler]" #tbirthDate="ngModel">
                                         <mat-datepicker-toggle matSuffix [for]="birthDatePicker" onkeydown="return false"></mat-datepicker-toggle>
                                         <mat-datepicker [startAt]="datesList['date-'+traveler]" #birthDatePicker onkeydown="return false"></mat-datepicker>
@@ -150,7 +150,7 @@
                                 <!-- end form-group -->
                                 <div class="form-group" *ngIf="typesList['type-'+traveler] == 'spouse'">
                                     <mat-form-field appearance="outline" class='form-field'>
-                                        <mat-label> Date Of Birth</mat-label>
+                                        <mat-label> {{ 'results_info.dob' | translate }}</mat-label>
                                         <input matInput type="text" [matDatepicker]="birthDatePicker" [max]="maxDateKid" name="tbirthDate{{traveler}}" [(ngModel)]="datesList['date-'+traveler]" #tbirthDate="ngModel">
                                         <mat-datepicker-toggle matSuffix [for]="birthDatePicker" onkeydown="return false"></mat-datepicker-toggle>
                                         <mat-datepicker [startAt]="datesList['date-'+traveler]" #birthDatePicker onkeydown="return false"></mat-datepicker>
@@ -160,7 +160,7 @@
                             </div>
                             <div fxFlex="50%">
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Type</mat-label>
+                                    <mat-label>{{ 'results_info.type' | translate }}</mat-label>
                                     <mat-select name="type{{traveler}}" class="selectOptionType" [(ngModel)]="typesList['type-'+traveler]" #type="ngModel">
                                         <mat-option *ngFor="let type of types" [value]="type.value">
                                             {{type.viewValue}}
@@ -179,13 +179,13 @@
 
                             <div fxFlex="50%">
                                 <mat-form-field appearance="outline" class='form-field'>
-                                    <mat-label> National ID Number</mat-label>
+                                    <mat-label> {{ 'results_info.id' | translate }}</mat-label>
                                     <input matInput type="number" name="tid{{traveler}}" ngModel #tid="ngModel" required>
                                 </mat-form-field>
                             </div>
                             <div fxFlex="50%">
                                 <mat-form-field appearance="outline" class='form-field'>
-                                    <mat-label> Passport Number</mat-label>
+                                    <mat-label> {{ 'results_info.passport' | translate }}</mat-label>
                                     <input matInput type="text" name="tpassport{{traveler}}" ngModel #tpassport="ngModel" required>
                                 </mat-form-field>
                             </div>
@@ -201,7 +201,7 @@
 
         </div>
 
-        <mat-checkbox ngModel #checkbox name="terms" [checked]="isConfrim" (change)="isConfrim = !isConfrim" color="primary">I have read and accepted <a href="http://207.154.195.214/TravelWording.pdf" download target="_blank">Terms& Conditions.</a></mat-checkbox>
+        <mat-checkbox ngModel #checkbox name="terms" [checked]="isConfrim" (change)="isConfrim = !isConfrim" color="primary"> {{ 'results_info.alert2' | translate }} <a href="http://207.154.195.214/TravelWording.pdf" download target="_blank">{{ 'results_info.terms' | translate }}</a></mat-checkbox>
         <br> <br>
         <button type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'complete purchase' | uppercase }} <mat-icon>arrow_right_alt</mat-icon></button>
     </form>

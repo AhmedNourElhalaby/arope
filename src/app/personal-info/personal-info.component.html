@@ -1,24 +1,24 @@
 <mat-card>
-    <h2 class="special-title">Please fill out the form below</h2>
+    <h2 class="special-title">{{ 'results_info.title2' | translate }}</h2>
 
     <form #fInfo="ngForm" (ngSubmit)="submitPersonalInfo(fInfo)">
 
         <mat-grid-list cols="3" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> First Name</mat-label>
+                    <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
                     <input matInput type="text" name="firstName" ngModel #firstName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Middle Name</mat-label>
+                    <mat-label> {{ 'results_info.middleName' | translate }}</mat-label>
                     <input matInput type="text" name="middleName" ngModel #middleName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Last Name</mat-label>
+                    <mat-label> {{ 'results_info.lastName' | translate }}</mat-label>
                     <input matInput type="text" name="lastName" ngModel #lastName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
@@ -26,20 +26,20 @@
         <mat-grid-list cols="2" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label>Gender</mat-label>
+                    <mat-label>{{ 'results_info.gender' | translate }}</mat-label>
                     <mat-select name="gender" ngModel #gender="ngModel" required>
                         <mat-option value="male">
-                            Male
+                            {{ 'results_info.male' | translate }}
                         </mat-option>
                         <mat-option value="female">
-                            Female
+                            {{ 'results_info.female' | translate }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> {{ 'Date Of Birth' | uppercase }}</mat-label>
+                    <mat-label> {{ 'traveler.dob' | translate }}</mat-label>
                     <input type="text" matInput [matDatepicker]="agePicker" (focus)="agePicker.open()" #inputAge placeholder="Date Of Birth" [max]="minDate" ngModel name="indAge" [(ngModel)]="date" #indAge="ngModel" required>
                     <mat-datepicker-toggle matSuffix [for]="agePicker"></mat-datepicker-toggle>
                     <mat-datepicker (closed)="inputAge.blur()" #agePicker></mat-datepicker>
@@ -47,33 +47,33 @@
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Email Address</mat-label>
+                    <mat-label> {{ 'results_info.email' | translate }}</mat-label>
                     <input matInput placeholder="Email" name="emailAddress" ngModel #emailAddress="ngModel" required email>
-                    <mat-error *ngIf="emailAddress.hasError('required')">Email is <strong>required</strong></mat-error>
+                    <mat-error *ngIf="emailAddress.hasError('required')">{{ 'results_info.email_alert' | translate }} <strong>{{ 'results_info.required' | translate }}</strong></mat-error>
                     <!-- <p *ngIf="mail === false" class="custom-error">Please enter a valid email address</p>                 -->
                 </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
-                    <mat-form-field appearance="outline" class='form-field'>
-                        <mat-label> Phone Number</mat-label>
-                        <input matInput type="tel" name="phoneNumber" ngModel #phoneNumber="ngModel" required>
-                    </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> National ID Number</mat-label>
-                    <input matInput type="number" name="id" ngModel #id="ngModel" required (blur)="checkId()">
-                    <p *ngIf="cid === false" class="custom-error">ID is not matching date of birth</p>
+                    <mat-label> {{ 'results_info.phone' | translate }}</mat-label>
+                    <input matInput type="tel" name="phoneNumber" ngModel #phoneNumber="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
-                    <mat-label> Enter Your Address</mat-label>
+                    <mat-label> {{ 'results_info.id' | translate }}</mat-label>
+                    <input matInput type="number" name="id" ngModel #id="ngModel" required (blur)="checkId()">
+                    <p *ngIf="cid === false" class="custom-error"> {{ 'results_info.id_alert' | translate }}</p>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class='form-field'>
+                    <mat-label> {{ 'results_info.enter_address' | translate }}</mat-label>
                     <input matInput type="text" name="address" ngModel #address="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
-    <button type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || cid !== true">{{ 'complete purchase' | uppercase }} <mat-icon>arrow_right_alt</mat-icon></button>
+        <button type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
     </form>
 </mat-card>

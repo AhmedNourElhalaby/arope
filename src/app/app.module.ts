@@ -18,6 +18,7 @@ import { HeaderComponent } from "./navigation/header/header.component";
 import { NavbarComponent } from "./navigation/navbar/navbar.component";
 import { GetQuoteComponent } from "./welcome/get-quote/get-quote.component";
 import { HttpClientModule } from "@angular/common/http";
+import { TranslateConfigModule } from './translate-config.module';
 
 // services
 import { WelcomeService } from "./welcome/welcome.service";
@@ -28,6 +29,7 @@ import { OdooService } from "./shared/odoo.service";
 import { ValidationService } from "./shared/validation.service";
 import { CarInsuranceService } from "./car-insurance/car-insurance.service";
 import { MedicalService } from './medical-insurance/medical.service';
+import { TranslateConfigService } from './shared/translate-config.service';
 // components
 import { TripDetailsComponent } from "./traveler-info/trip-details/trip-details.component";
 import { PriceCardComponent } from "./traveler-info/price-card/price-card.component";
@@ -37,7 +39,6 @@ import { ThankyouComponent } from "./traveler-info/thankyou/thankyou.component";
 import { ExcessComponent } from "./traveler-info/excess/excess.component";
 import { ListNavComponent } from "./navigation/list-nav/list-nav.component";
 import { PriceCardPaymentComponent } from "./traveler-info/price-card-payment/price-card-payment.component";
-import { from } from "rxjs";
 import { PersonalAccidentComponent } from "./personal-accident/personal-accident.component";
 import { PersonalResultComponent } from "./personal-result/personal-result.component";
 import { PersonalQuoteComponent } from "./personal-quote/personal-quote.component";
@@ -104,7 +105,8 @@ import { SmesTableComponent } from './medical-insurance/medical-info/smes-table/
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateConfigModule
   ],
   providers: [
     CarInsuranceService,
@@ -114,7 +116,8 @@ import { SmesTableComponent } from './medical-insurance/medical-info/smes-table/
     OdooService,
     SiteSettingsService,
     ValidationService,
-    MedicalService
+    MedicalService,
+    TranslateConfigService
   ],
   bootstrap: [AppComponent],
   entryComponents: [AgeTravelerComponent, GroupAgeComponent]
