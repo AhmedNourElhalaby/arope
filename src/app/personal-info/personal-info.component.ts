@@ -89,6 +89,7 @@ export class PersonalInfoComponent implements OnInit {
   //     this.mail = res[key];
   //   });
   // }
+  get lang() { return localStorage.getItem("lang"); }
   convertDate(dateAge) {
     let d = new Date(dateAge),
       month = '' + (d.getMonth() + 1),

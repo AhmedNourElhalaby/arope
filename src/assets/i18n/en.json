@@ -16,7 +16,8 @@
         "key2": "Additional Traveler's Age:",
         "add_addtional": "Add Additional Traveler",
         "done": "Done",
-        "add_group": "Add Additional Group"
+        "add_group": "Add Additional Group",
+        "btn": "Edit your trip details"
     },
     "stepper": {
         "step1": "Quote Result",
@@ -45,7 +46,7 @@
         "id_alert": "ID is not matching date of birth",
         "id_alert2": "ID must be 14 Number",
         "enter_address": "Enter Your Address",
-        "complate": "complete purchase",
+        "complate": "COMPALTE PURCHASE",
         "title3": "TRAVELLER Info",
         "passport": "Passport Number",
         "additional_traveler": "Additional Traveler Information",

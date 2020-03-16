@@ -40,12 +40,18 @@ td.mat-cell {
 
 td.mat-cell.cdk-column-features {
     color: #073e89;
+    text-align: center !important;
+}
+
+th.mat-header-cell.cdk-column-cover.mat-column-cover {
+    text-align: center !important;
 }
 
 th.mat-header-cell.cdk-column-Blue,
 th.mat-header-cell.cdk-column-Prestige,
 th.mat-header-cell.cdk-column-Elite {
     padding: 12px;
+    text-align: center !important;
 }
 
 th.mat-header-cell.cdk-column-Blue button,
@@ -71,14 +77,9 @@ td.mat-cell.cdk-column-Prestige,
 td.mat-cell.cdk-column-Blue {
     width: 25%;
     border-left: .5px solid #073e89;
-    ;
 }
 
 td.mat-cell.cdk-column-Blue {
     width: 25%;
     border-left: 0px;
-}
-
-.insurance-life {
-    direction: rtl;
 }
