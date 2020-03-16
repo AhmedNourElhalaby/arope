@@ -364,6 +364,8 @@ export class CarInsuranceService {
   loadCovers = new Subject<any>();
   constructor(private odoo: OdooService, private uiService: UIService ) {}
 
+  get lang() { return localStorage.getItem("lang"); }
+
   get Brands() {
       return this.brands;
   }
@@ -375,8 +377,10 @@ export class CarInsuranceService {
 
   getCovers(type) {
 
+
+
     this.uiService.loadingChangedStatus.next(true);
-    const data = {paramlist: { data: { type: type } } };
+    const data = {paramlist: { data: { type: type, lang:  this.lang} } };
     return this.odoo.call_odoo_function('travel_agency', 'online', 'online',
      'motor.api', 'get_covers', data).subscribe(res => {
        this.loadCovers.next(this.convertFromArrayToObject(res));

@@ -16,17 +16,14 @@
         "key2": "Additional Traveler's Age:",
         "add_addtional": "Add Additional Traveler",
         "done": "Done",
-        "add_group": "Add Additional Group",
-        "": ""
+        "add_group": "Add Additional Group"
     },
     "stepper": {
         "step1": "Quote Result",
         "step2": "Info",
         "step3": "Payment Info",
         "step4": "You'r Protected",
-        "step5": "Traveler Info",
-        "": "",
-        "": ""
+        "step5": "Traveler Info"
 
     },
     "results_info": {
@@ -73,13 +70,7 @@
         "age": "Age",
         "departure_date": "Departure Date",
         "return_date": "Return Date",
-        "submit": "SUBMIT",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": ""
+        "submit": "SUBMIT"
     },
     "car": {
         "title": "Get a Car Insurance Quote",
@@ -102,13 +93,10 @@
         "name": "Name",
         "numOfGroups": "NUMBER OF GROUP",
         "title2": "Get a Medical Insurance Quote",
-        "group": "Group",
-        "": "",
-        "": "",
-        "": ""
+        "group": "Group"
     },
     "medical": {
-        "cover": "",
+        "cover": "Cover",
         "golden": "Golden",
         "platinum": "Platinum",
         "diamond": "Diamond",
@@ -129,17 +117,7 @@
         "nav1": "Travel Insurance",
         "nav2": "Car Insurance",
         "nav3": "Medical Insurance",
-        "nav4": "Personal Accident",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": ""
+        "nav4": "Personal Accident"
     },
     "personal": {
         "title": "Get Personal Accident Quote",
@@ -150,9 +128,6 @@
         "question": "If you can't find your job?",
         "thankyou": "THANK YOU!",
         "title2": "Thank you for asking AROPE EGYPT It means a lot to us, We will come back to you shortly with an offer.",
-        "": "",
-        "": "",
-        "": "",
-        "": ""
+        "desc": "Description"
     }
 }

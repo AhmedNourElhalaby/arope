@@ -21,6 +21,7 @@ export class QuoteComponent implements OnInit, OnDestroy {
     this.loadBenefitsSub = this.travelerService.loadListBenefits.subscribe(
       result => {
         this.transactions = result;
+        console.log(result);
       }
     );
     this.isLoadingSubs = this.uiService.loadingChangedStatus.subscribe(res => {

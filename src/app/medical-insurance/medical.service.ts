@@ -17,7 +17,7 @@ export class MedicalService {
 
     loadMedicalInfo = new Subject<any>();
     constructor(private odooService: OdooService, private router: Router) {}
-
+    get lang() { return localStorage.getItem("lang"); }
     get Types() {
         return this._types;
     }
@@ -32,17 +32,20 @@ export class MedicalService {
         if(type === 'individual') {
           resultObj = {
               type: type,
-              dob: [dob]
+              dob: [dob],
+              lang: this.lang
           };
         } else if(type === 'family') {
           resultObj = {
               type: type,
-              dob: dob
+              dob: dob,
+              lang: this.lang
           };
         } else if(type === 'smes') {
           resultObj = {
             type: 'sme',
-            dob: dob
+            dob: dob,
+            lang: this.lang
         };
         }
 
