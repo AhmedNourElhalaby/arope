@@ -102,6 +102,7 @@ export class InfoComponent implements OnInit {
     this.datesList = this.dataJson.dates;
   }
 
+  get lang() { return localStorage.getItem("lang"); }
 
 
   fullNameText(firstName, middleName , LastName) {

@@ -35,6 +35,8 @@ export class TripDetailsComponent implements OnInit {
 
 
   }
+  get lang() { return localStorage.getItem("lang"); }
+
 
   getFromLocalStorage(name: string)  {
     return localStorage.getItem(name);

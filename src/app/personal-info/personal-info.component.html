@@ -74,6 +74,7 @@
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
-        <button type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
+        <button *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
+        <button *ngIf="lang =='ar'" style="direction: rtl;" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_left_alt</mat-icon></button>
     </form>
 </mat-card>

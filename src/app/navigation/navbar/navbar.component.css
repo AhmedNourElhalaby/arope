@@ -6,6 +6,24 @@
     transition: background-color color 2s;
 }
 
+mat-toolbar {
+    direction: ltr !important;
+}
+
+.navigation-links {
+    color: red;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.nav-item {
+    margin: auto 10px;
+}
+
+.nav-item:first-child {
+    margin: auto 0px;
+}
+
 a {
     cursor: pointer;
     transition: height .5s ease-out 1s;
@@ -62,7 +80,8 @@ a:hover {
     background: #073e89;
     color: #e4eaf2;
 }
-.link{
-    color: #A09F9D ;
-    text-decoration: none ;
+
+.link {
+    color: #A09F9D;
+    text-decoration: none;
 }

@@ -7,7 +7,7 @@
         <app-header></app-header>
 
         <app-navbar (toggleSideNav)="drawer.toggle()"></app-navbar>
-        <main class="img-background">
+        <main class="img-background" [dir]="currentDir">
 
             <router-outlet></router-outlet>
         </main>
