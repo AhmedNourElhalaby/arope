@@ -1,6 +1,6 @@
 <mat-card>
 
-    <h2 class="special-title">Plan Benefits</h2>
+    <h2 class="special-title">{{'traveler.plan_benfits' | translate}}</h2>
     <table *ngIf="!isLoading" mat-table [dataSource]="transactions" class="mat-elevation-z8">
         <!-- Item Column -->
         <ng-container matColumnDef="cover">

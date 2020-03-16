@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UIService } from '../shared/ui.services';
 import { OdooService } from '../shared/odoo.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class WelcomeService {
@@ -16,9 +17,16 @@ export class WelcomeService {
     { value: 'zone 2', viewValue: 'Worldwide excluding USA & CANADA' },
     { value: 'zone 3', viewValue: 'Worldwide' }
   ];
+
+
   resultData;
   priceLoad = new Subject<any>();
-  constructor(private http: HttpClient, private router: Router, private uiService: UIService, private odoo: OdooService) {}
+  constructor(private translate: TranslateService,private http: HttpClient, private router: Router, private uiService: UIService, private odoo: OdooService) {
+
+  }
+
+
+
 
   setListDates(data) {
     this.resultData = data;

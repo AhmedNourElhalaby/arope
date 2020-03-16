@@ -22,8 +22,14 @@
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label>{{ 'traveler.zone' | translate }}</mat-label>
                             <mat-select name="zone" [(ngModel)]="formFields.zone" #zoneInput="ngModel" required>
-                                <mat-option *ngFor="let country of countries" [value]="country.value">
-                                    {{country.viewValue}}
+                                <mat-option value="zone 1">
+                                    {{'traveler.opt1' | translate}}
+                                </mat-option>
+                                <mat-option value="zone 2">
+                                    {{'traveler.opt2'| translate}}
+                                </mat-option>
+                                <mat-option value="zone 3">
+                                    {{'traveler.opt3'| translate}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
