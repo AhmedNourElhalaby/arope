@@ -43,7 +43,6 @@ export class PriceCardPaymentComponent implements OnInit {
   }
 
   submitFormPriceCard(form: NgForm) {
-    ;
 
 
     this.isLoading = true;
@@ -54,9 +53,9 @@ export class PriceCardPaymentComponent implements OnInit {
       const data = { paramlist: {data: formData.data} };
       console.log('data', data);
       if (formData.key === 'travel') {
-        //setup download file
+        // setup download file
         let headers = new HttpHeaders();
-        headers = headers.set('Accept', 'application/pdf')
+        headers = headers.set('Accept', 'application/pdf');
 
 
         this.odoo.call_odoo_function(
@@ -71,11 +70,12 @@ export class PriceCardPaymentComponent implements OnInit {
             console.log('ressss', res);
             // this.testDownload();
 
-            //download file
-            this.http.get('http://207.154.195.214:8070/report/46', { headers: headers, responseType: 'blob' }).subscribe(res => {
+            // download file
+            this.http.get('http://207.154.195.214:8070/report/' + res, { headers, responseType: 'blob' }).subscribe(res => {
               console.log(res);
-              saveAs(res, `terms and conditions (AROPE).pdf`)
+              saveAs(res, `Policy (AROPE).pdf`);
             });
+            saveAs('http://207.154.195.214/TravelWording.pdf', 'Terms & Conditions (AROPE).pdf');
 
             this.whenSucceed();
           });
