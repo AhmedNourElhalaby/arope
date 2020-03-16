@@ -57,14 +57,6 @@ export class MedicalService {
         console.log('datelist', dataList);
         return this.odooService.call_odoo_function('travel_agency', 'online', 'online', 'medical.api',
           'get_price', dataList).subscribe(res => {
-            for (const item of res) {
-              for ( let i = 0; i < item.plans.length; i++) {
-                if ( item.plans.cover === false) {
-                  item.plans.splice(i, 1);
-                  }
-              }
-            }
-
             console.log(res);
             this.loadMedicalInfo.next(res);
             console.log('HERE', JSON.stringify(res));

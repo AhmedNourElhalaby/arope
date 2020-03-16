@@ -30,15 +30,15 @@ export class PersonalQuoteComponent implements OnInit {
         this.covers = res;
       });
     } else {
-      const ardata = {paramlist: {filter: [['cover_id', '=', this.filters.name]], need: ['ar_cover_id', 'ar_desc']}};
+      const ardata = {paramlist: {filter: [['ar_cover_id', '=', this.filters.name]], need: ['ar_cover_id', 'ar_desc']}};
       this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'cover.table', 'search_read', ardata ).subscribe(res => {
         this.covers = res;
-        for ( let i = 0; i < this.covers.length; i++) {
-          if ( this.covers[i].ar_cover_id === false) {
-            this.covers.splice(i, 1);
-            }
-        }
+        // for ( let i = 0; i < this.covers.length; i++) {
+        //   if ( this.covers[i].ar_cover_id === false) {
+        //     this.covers.splice(i, 1);
+        //     }
+        // }
         for (const result of this.covers) {
           result.cover_id = result.ar_cover_id;
           delete result.ar_cover_id;

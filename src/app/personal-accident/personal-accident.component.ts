@@ -32,15 +32,14 @@ export class PersonalAccidentComponent implements OnInit {
   minDate: Date;
   type;
   isShow = true;
-  constructor(private odoo: OdooService, private router: Router, private site: SiteSettingsService, private activateRouter: ActivatedRoute) { }
+  constructor(private odoo: OdooService, private router: Router, private site: SiteSettingsService,
+              private activateRouter: ActivatedRoute) { }
 
   ngOnInit() {
     /* max and min date */
     this.maxDate = this.site.getDateInYears(18);
     this.minDate = this.site.getDateInYears(75);
     /* end max and min date */
-
-  
     this.isShow = false;
 
     const data = {paramlist: {filter: [],
@@ -54,25 +53,52 @@ export class PersonalAccidentComponent implements OnInit {
       this.jobs = res;
       console.log('jobs', res);
     });
-    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
-    'cover.table', 'search_read', basicData ).subscribe(res => {
-      console.log(res);
-      this.basicCovers = res;
-      this.isShow = true;
+    if (this.lang === 'en') {
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'cover.table', 'search_read', basicData ).subscribe(res => {
+        console.log(res);
+        this.basicCovers = res;
+        this.isShow = true;
 
-    });
-    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
-    'cover.table', 'search_read', optionalData ).subscribe(res => {
-      console.log(res);
-      this.optionalCovers = res;
-      this.isShow = true;
-    });
+      });
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'cover.table', 'search_read', optionalData ).subscribe(res => {
+        console.log(res);
+        this.optionalCovers = res;
+        this.isShow = true;
+      });
+    } else {
+      const arBasicData = {paramlist: {filter: [['basic', '=', true]],
+      need: ['ar_cover_id']}};
+      const arOptionalData = {paramlist: {filter: [['basic', '=', false]],
+      need: ['ar_cover_id']}};
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'cover.table', 'search_read', arBasicData ).subscribe(res => {
+        for (const x in res) {
+          res[x].cover_id = res[x].ar_cover_id;
+          delete res[x].ar_cover_id;
+        }
+        this.basicCovers = res;
+        this.isShow = true;
+
+      });
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'cover.table', 'search_read', arOptionalData ).subscribe(res => {
+        for (const x in res) {
+          res[x].cover_id = res[x].ar_cover_id;
+          delete res[x].ar_cover_id;
+        }
+        this.optionalCovers = res;
+        this.isShow = true;
+      });
+    }
   }
   onResize(event) {
     console.log('yeah', event);
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
   }
 
+  get lang() { return localStorage.getItem('lang'); }
 
 
   submitForm(form: NgForm) {
@@ -104,7 +130,7 @@ export class PersonalAccidentComponent implements OnInit {
   'policy.personal', 'get_qouate', data ).subscribe(res => {
     console.log(res);
     localStorage.setItem('total_price', parseInt(res).toString());
-    if(form.value.rate >= 1500000) {
+    if (form.value.rate >= 1500000) {
       console.log('HERE');
       // console.log(this.getTitleJobId(form.value.job));
       this.router.navigate(['/personal-accident', {page: 'find-yourjob'}], {queryParams: {dateOfBirth: this.convertDate(form.value.indAge), job: this.getTitleJobId(form.value.job), sum_insured: form.value.rate}});
@@ -118,7 +144,7 @@ export class PersonalAccidentComponent implements OnInit {
   getTitleJobId(jobId) {
     let title = '';
     this.jobs.find(val => {
-      if(val.id === jobId) {
+      if (val.id === jobId) {
         title = val.display_name;
       }
     });
