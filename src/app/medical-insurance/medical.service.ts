@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 @Injectable()
 export class MedicalService {
     private _types: object[] = [
-        { value: "spouse", viewValue: "Spouse" },
-        { value: "kid", viewValue: "Kid" }
+        { value: 'spouse', viewValue: 'Spouse' },
+        { value: 'kid', viewValue: 'Kid' }
       ];
-    
-    private _groupSizes =[
+
+    private _groupSizes = [
         { value: '5', viewValue: '1-10' },
         { value: '15', viewValue: '11-18' },
         { value: '25', viewValue: '19-70' },
@@ -17,7 +17,7 @@ export class MedicalService {
 
     loadMedicalInfo = new Subject<any>();
     constructor(private odooService: OdooService, private router: Router) {}
-    get lang() { return localStorage.getItem("lang"); }
+    get lang() { return localStorage.getItem('lang'); }
     get Types() {
         return this._types;
     }
@@ -26,25 +26,25 @@ export class MedicalService {
         return this._groupSizes;
     }
 
-    
+
     getTabels(type: string, dob: any) {
         let resultObj;
-        if(type === 'individual') {
+        if (type === 'individual') {
           resultObj = {
-              type: type,
+              type,
               dob: [dob],
               lang: this.lang
           };
-        } else if(type === 'family') {
+        } else if (type === 'family') {
           resultObj = {
-              type: type,
-              dob: dob,
+              type,
+              dob,
               lang: this.lang
           };
-        } else if(type === 'smes') {
+        } else if (type === 'smes') {
           resultObj = {
             type: 'sme',
-            dob: dob,
+            dob,
             lang: this.lang
         };
         }
@@ -54,21 +54,30 @@ export class MedicalService {
               data: resultObj
             }
           };
-          console.log('datelist',dataList);
-          return this.odooService.call_odoo_function('travel_agency', 'online', 'online', 'medical.api',
+        console.log('datelist', dataList);
+        return this.odooService.call_odoo_function('travel_agency', 'online', 'online', 'medical.api',
           'get_price', dataList).subscribe(res => {
+            for (const item of res) {
+              for ( let i = 0; i < item.plans.length; i++) {
+                if ( item.plans.cover === false) {
+                  item.plans.splice(i, 1);
+                  }
+              }
+            }
+
+            console.log(res);
             this.loadMedicalInfo.next(res);
-           console.log('HERE',JSON.stringify(res));
-          });;
+            console.log('HERE', JSON.stringify(res));
+          });
     }
 
     convertStringInArrayToInteger(listArr: Array<any>) {
-      let newArr = [];
-      for(let i in listArr) {
+      const newArr = [];
+      for (const i in listArr) {
           newArr.push({
             age: parseInt(listArr[i].age),
             num: parseInt(listArr[i].num)
-          })
+          });
         }
 
       return newArr;
@@ -79,7 +88,7 @@ export class MedicalService {
     // }
 
     onClickPlan(plan: string) {
-      this.router.navigate(['personal-accident'], {queryParams: {page: 'medical-insurance', plan: plan}})
+      this.router.navigate(['personal-accident'], {queryParams: {page: 'medical-insurance', plan}});
     }
-    
+
 }

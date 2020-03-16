@@ -17,7 +17,7 @@ export class TravelerService {
     expirationDate: null,
     cvCode: null
   };
-  
+
 
   constructor(private http: HttpClient, private uiService: UIService, private odoo: OdooService) {
 
@@ -36,7 +36,7 @@ export class TravelerService {
     return this.fire;
   }
 
-  get lang() { return localStorage.getItem("lang"); }
+  get lang() { return localStorage.getItem('lang'); }
 
   changeStatusShowValue() {
     this.fire.emit(true);
@@ -48,12 +48,17 @@ export class TravelerService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-   
+
     if (this.lang === 'en') {
       const data = {paramlist: {filter: [],
         need: []}};
       this.odoo.call_odoo_function('travel_agency', 'online', 'online',
       'travel.benefits', 'search_read', data).subscribe(res => {
+        for ( let i = 0; i < res.length; i++) {
+          if ( res[i].cover === false) {
+              res.splice(i, 1);
+            }
+        }
         for (const x in res) {
           const cover = res[x].cover;
           const limit = res[x].limit;
@@ -71,6 +76,11 @@ export class TravelerService {
         need: ['ar_cover', 'ar_limit']}};
       this.odoo.call_odoo_function('travel_agency', 'online', 'online',
       'travel.benefits', 'search_read', data).subscribe(res => {
+        for ( let i = 0; i < res.length; i++) {
+          if ( res[i].cover === false) {
+              res.splice(i, 1);
+            }
+        }
         for (const x in res) {
           res[x].cover = res[x].ar_cover;
           delete res[x].ar_cover;
@@ -92,7 +102,7 @@ export class TravelerService {
 
   fetchExcess() {
     this.uiService.loadingChangedStatus.next(true);
-   
+
     if (this.lang === 'en') {
       const data = {paramlist: {filter: [],
         need: []}};

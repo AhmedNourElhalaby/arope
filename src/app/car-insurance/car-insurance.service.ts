@@ -181,9 +181,9 @@ export class CarInsuranceService {
       { id: 520, title: "MercedesC180" },
       { id: 521, title: "MercedesC200" },
       { id: 522, title: "MercedesC200K" },
-      { id: 523, title: "MercedesC240" },
-      { id: 524, title: "MercedesC250" },
-      { id: 525, title: "MercedesC280" },
+      { id: 523, title: 'MercedesC240' },
+      { id: 524, title: 'MercedesC250' },
+      { id: 525, title: 'MercedesC280' },
       { id: 526, title: "MercedesC300" },
       { id: 527, title: "MercedesC350" },
       { id: 528, title: "MercedesCLA180" },
@@ -380,21 +380,25 @@ export class CarInsuranceService {
 
 
     this.uiService.loadingChangedStatus.next(true);
-    const data = {paramlist: { data: { type: type, lang:  this.lang} } };
+    const data = {paramlist: { data: { type, lang:  this.lang} } };
     return this.odoo.call_odoo_function('travel_agency', 'online', 'online',
      'motor.api', 'get_covers', data).subscribe(res => {
-       this.loadCovers.next(this.convertFromArrayToObject(res));
-       this.uiService.loadingChangedStatus.next(false);
-    
+      for ( let i = 0; i < res.length; i++) {
+        if ( res === false) {
+            res.splice(i, 1);
+          }
+      }
+      this.loadCovers.next(this.convertFromArrayToObject(res));
+      this.uiService.loadingChangedStatus.next(false);
      });
 
   }
 
   convertFromArrayToObject(dataList: string[]) {
-    let obj = [];
+    const obj = [];
     dataList.map(ele => {
       obj.push({cover: ele});
-      
+
     });
     return obj;
   }
@@ -403,27 +407,27 @@ export class CarInsuranceService {
      this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'motor.api',
     'get_price', data).subscribe(res => {
        this.loadPrice.next(res);
-     
+
     }, error => console.log(error));
   }
 
   getTicketCar(data) {
     const dataList = {
       paramlist: {
-        data: data
+        data
       }
     };
     return this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'ticket.api',
     'create_motor_ticket', dataList);
   }
 
-  getValueBrand(brandId:number) {
+  getValueBrand(brandId: number) {
     let title = '';
-    this.brands.find(val=> {
-      if(val.id === brandId) {
+    this.brands.find(val => {
+      if (val.id === brandId) {
         title = val.title;
       }
-      
+
     });
 
     return title;
