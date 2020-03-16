@@ -51,7 +51,7 @@ export class WelcomeService {
         localStorage.setItem('total_price', parseInt(x.toString(), 10).toString());
         this.priceValue = res;
         this.uiService.loadingChangedStatus.next(false);
-        this.router.navigate(['/traveler-info']);
+        this.router.navigate(['/','traveler-insurance','traveler-info']);
      }, error => this.handleError(error.statusText));
 
   }

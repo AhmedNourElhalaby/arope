@@ -22,6 +22,7 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
   brand;
   price;
   brandCar;
+  direction: 'rtl' | 'ltr';
   constructor(private http: HttpClient ,private carService: CarInsuranceService, private route: ActivatedRoute, private router: Router, private uiService: UIService) { }
 
   ngOnInit(){
@@ -57,7 +58,16 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
       }
     };
     this.carService.sendPriceAndGetPrice(data);
+
+    if(this.lang == 'en') {
+      this.direction="ltr";
+    } else {
+      this.direction = "rtl";
+    }
   }
+
+  get lang() { return localStorage.getItem("lang"); }
+
 
   ngOnDestroy() {
     if(this.loadPriceSub) this.loadPriceSub.unsubscribe();

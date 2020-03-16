@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateConfigService } from './shared/translate-config.service';
+import { Router, UrlTree, UrlSegmentGroup, UrlSegment, PRIMARY_OUTLET } from '@angular/router';
 
 @Component({
   selector: "app-root",
@@ -9,13 +10,24 @@ import { TranslateConfigService } from './shared/translate-config.service';
 export class AppComponent implements OnInit{
   title = "arope";
 
-  constructor(private translateService: TranslateConfigService) {}
+  constructor(private translateService: TranslateConfigService, private router: Router) {}
 
   get lang() { return localStorage.getItem("lang"); }
   currentDir : 'rtl' | 'ltr';
   ngOnInit() {
     this.translateService.setLanguage(this.lang);
     this.translateService.setDefault(this.lang);
+
+    //get segments
+    const tree: UrlTree = this.router.parseUrl(this.router.url);
+    const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
+   // const s: UrlSegment[] = g.segments;
+
+    if(g) {
+      this.router.navigateByUrl('/traveler-insurance');
+      console.log('HERE');
+    }
+   
 
     this.currentDir = this.currentDir === 'ltr' ? 'rtl' : 'ltr';
 

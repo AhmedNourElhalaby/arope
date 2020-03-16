@@ -52,7 +52,8 @@ th.mat-header-cell.cdk-column-Diamond button,
 th.mat-header-cell.cdk-column-Platinum button,
 th.mat-header-cell.cdk-column-Golden button {
     margin-top: 8px;
-    color: #073e89;
+    color: #fff;
+    background-color: #e77a11;
 }
 
 td.mat-cell.cdk-column-cover.mat-column-cover {
@@ -63,6 +64,11 @@ th.mat-header-cell.cdk-column-Golden,
 th.mat-header-cell.cdk-column-Platinum,
 th.mat-header-cell.cdk-column-Diamond {
     padding: 12px;
+    text-align: center !important;
+}
+
+th.mat-header-cell.cdk-column-cover.mat-column-cover {
+    text-align: center !important;
 }
 
 td.mat-cell.cdk-column-cover,

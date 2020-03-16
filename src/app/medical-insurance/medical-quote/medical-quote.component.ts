@@ -124,13 +124,13 @@ export class MedicalQuoteComponent implements OnInit {
         date.push(this.site_settings.convertDate(this.form.value.dates[dob]));
         this.medicalService.getTabels(this.type, date);
         const date_str = date.join(',');
-        this.router.navigate(['medical-info'], {queryParams: {type: this.type, date: date_str}})
+        this.router.navigate(['/','medical-insurance','medical-info'], {queryParams: {type: this.type, date: date_str}})
       }
       this.medicalService.getTabels(this.type, date);
     } else if(this.type === 'individual') {
       const date = this.site_settings.convertDate(this.form.value.date);
       this.medicalService.getTabels(this.type, date);
-      this.router.navigate(['medical-info'], {queryParams: {type: this.type, date: date}})
+      this.router.navigate(['/','medical-insurance','medical-info'], {queryParams: {type: this.type, date: date}})
     } else if(this.type === 'smes') {
       const newArr = this.medicalService.convertStringInArrayToInteger(this.form.value.groups);
       this.medicalService.getTabels(this.type, newArr);
@@ -145,7 +145,7 @@ export class MedicalQuoteComponent implements OnInit {
           }
 
       } 
-      this.router.navigate(['medical-info'], {queryParams: {type: this.type, date: target_url}})
+      this.router.navigate(['/','medical-insurance','medical-info'], {queryParams: {type: this.type, date: target_url}})
     }
 
 
