@@ -73,8 +73,8 @@ export class PriceCardPaymentComponent implements OnInit {
             this.http.get('http://207.154.195.214:8070/report/' + res, { headers, responseType: 'blob' }).subscribe(res => {
               console.log(res);
               saveAs(res, `Policy (AROPE).pdf`);
+              this.http.get('http://207.154.195.214:8070/Terms/');
             });
-            saveAs('http://207.154.195.214/TravelWording.pdf', 'Terms & Conditions (AROPE).pdf');
 
             this.whenSucceed();
           });
