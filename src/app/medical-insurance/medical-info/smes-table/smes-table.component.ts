@@ -16,7 +16,7 @@ export class SmesTableComponent implements OnInit {
     // })
 
     // console.log(this.objMedicalInfo);
-    //console.log('here2', this.objMedicalInfo);
+    console.log('here2', this.objMedicalInfo);
   }
 
 

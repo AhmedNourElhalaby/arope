@@ -1,8 +1,7 @@
-<h2 class="special-title">خطة الاسعار</h2>
 <mat-card *ngFor="let info of objMedicalInfo; let i = index">
     <mat-card-title *ngIf="info.name != 'main'">{{info.name}}</mat-card-title>
-    <div *ngIf="i == 0 ;then thenBlock1 else elseBlock1"></div>
-    <ng-template #thenBlock1>
+    <div *ngIf="i == 0 ;then thenBlock11 else elseBlock11"></div>
+    <ng-template #thenBlock11>
         <table mat-table [dataSource]="info.plans" class="mat-elevation-z8">
 
 
@@ -71,7 +70,7 @@
 
         </table>
     </ng-template>
-    <ng-template #elseBlock1>
+    <ng-template #elseBlock11>
         <table mat-table [dataSource]="info.plans" class="mat-elevation-z8">
 
 
