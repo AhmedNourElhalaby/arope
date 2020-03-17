@@ -58,7 +58,15 @@ th.mat-header-cell.cdk-column-Blue button,
 th.mat-header-cell.cdk-column-Prestige button,
 th.mat-header-cell.cdk-column-Elite button {
     margin-top: 8px;
-    color: #073e89;
+    color: #fff;
+    background-color: #e77a11;
+}
+
+td.mat-cell.cdk-column-Elite:first-of-type,
+td.mat-cell.cdk-column-Prestige:first-of-type,
+td.mat-cell.cdk-column-Blue:first-of-type {
+    font-weight: bold;
+    font-size: 20px;
 }
 
 td.mat-cell.cdk-column-cover.mat-column-cover {

@@ -10,6 +10,7 @@ export class CarInsuranceComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+       
   }
 
 }

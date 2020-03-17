@@ -17,18 +17,19 @@ import { TicketFormComponent } from './ticket-form/ticket-form.component';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
-  {path: 'traveler-info', component: TravelerInfoComponent},
+  {path: 'traveler-insurance', component: WelcomeComponent},
+  {path: 'traveler-insurance/traveler-info', component: TravelerInfoComponent},
   {path: 'page/terms-of-service', component: TermsOfServicesComponent},
   {path: 'personal-accident', component: PersonalAccidentComponent},
-  {path: 'personal-result', component: PersonalResultComponent},
+  {path: 'personal-accident/personal-result', component: PersonalResultComponent},
   {path: 'group-travel', component: GroupResComponent},
   {path: 'group-res', component: GroupTicketComponent},
   {path: 'get_ticket', component: TicketFormComponent},
   {path: 'thanks', component: ThanksComponent},
   {path: 'car-insurance', component: CarInsuranceComponent},
-  {path: 'insurance-info/:brandCar/:brand/:product/:price', component: InsuranceInfoComponent},
+  {path: 'car-insurance/insurance-info/:brandCar/:brand/:product/:price', component: InsuranceInfoComponent},
   {path: 'medical-insurance', component: MedicalInsuranceComponent},
-  {path: 'medical-info', component: MedicalInfoComponent}
+  {path: 'medical-insurance/medical-info', component: MedicalInfoComponent}
 ];
 
 @NgModule({

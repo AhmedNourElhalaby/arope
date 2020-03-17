@@ -2,15 +2,14 @@
     <div class='wrapper-img' style="  direction: ltr;">
         <img class="img-responsive" src="assets/images/bk.png" style=" 
       
-        max-width: 107%;
-        margin-left: -4px;
-        width: 107%;" height="250">
+        
+        width: 100%;" height="250">
     </div>
     <div class='container' fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
 
         <div fxFlex="75%">
             <h2 class="special-title">{{ 'car.covers' | translate }}</h2>
-            <table *ngIf="!isLoading" mat-table [dataSource]="objCovers" class="mat-elevation-z8">
+            <table [dir]="direction" *ngIf="!isLoading" mat-table [dataSource]="objCovers" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="cover">
                     <th mat-header-cell *matHeaderCellDef>{{ 'car.cover' | translate }} </th>

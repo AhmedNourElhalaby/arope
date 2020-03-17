@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
     
   }
 
+
   chkIsUrl(url) {
     this.tree = this.router.parseUrl(this.location.path());
     this.urlTarget = this.tree.root.children.primary.segments[0].path;

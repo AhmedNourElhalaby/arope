@@ -17,7 +17,12 @@
         "add_addtional": "Add Additional Traveler",
         "done": "Done",
         "add_group": "Add Additional Group",
-        "btn": "Edit your trip details"
+        "btn": "Edit your trip details",
+        "opt1": "Europe",
+        "opt2": "Worldwide excluding USA & CANADA",
+        "opt3": "Worldwide",
+        "excess": "Excess",
+        "plan_benfits": "Plan Benefits"
     },
     "stepper": {
         "step1": "Quote Result",

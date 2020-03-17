@@ -136,7 +136,7 @@ export class PersonalAccidentComponent implements OnInit {
       this.router.navigate(['/personal-accident', {page: 'find-yourjob'}], {queryParams: {dateOfBirth: this.convertDate(form.value.indAge), job: this.getTitleJobId(form.value.job), sum_insured: form.value.rate}});
       return;
     } else {
-      this.router.navigate(['/personal-result']);
+      this.router.navigate(['/','personal-accident','personal-result']);
     }
   });
   }

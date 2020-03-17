@@ -25,7 +25,7 @@ export class CarQuoteComponent implements OnInit {
     }
     console.log(form.value.type, form.value.brand, form.value.price);
     
-    this.router.navigate(['/', 'insurance-info', this.carService.getValueBrand(Number(form.value.brandCar)),form.value.brand, form.value.type, form.value.price]);
+    this.router.navigate(['/', 'car-insurance','insurance-info', this.carService.getValueBrand(Number(form.value.brandCar)),form.value.brand, form.value.type, form.value.price]);
   }
 
 
