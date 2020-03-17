@@ -16,7 +16,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
       <div mat-dialog-content>
         <div *ngFor="let element of elements; let i = index">
           <span id="field-{{ i }}">
-            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
+            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%" dir="auto">
               <div *ngIf="i == 0; then thenBlock; else elseBlock"></div>
               <ng-template #thenBlock>
                 <div
@@ -43,7 +43,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 
               <!-- Start Section Dates -->
 
-              <div ngModelGroup="dates" fxFlex="20%" class="margin-right-fix">
+              <div ngModelGroup="dates" fxFlex="20%" [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }">
 
             
                 <div class="form-group" *ngIf="i == 0">
@@ -216,7 +216,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
               <!-- Start Secion Types -->
               <div *ngIf="!result; then thenBlock1; else elseBlock1"></div>
               <ng-template #thenBlock1>
-                <div ngModelGroup="types" fxFlex="20%" class="margin-right-fix">
+                <div ngModelGroup="types" fxFlex="20%" [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }" >
                   <mat-form-field *ngIf="i != 0">
                     <mat-label>{{ 'traveler.type' | translate }}</mat-label>
                     <mat-select
@@ -236,7 +236,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                 </div>
               </ng-template>
               <ng-template #elseBlock1>
-                <div ngModelGroup="types" fxFlex="20%" class="margin-right-fix">
+                <div ngModelGroup="types" fxFlex="20%" [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }" >
                   <mat-form-field *ngIf="i != 0">
                   <mat-label>{{ 'traveler.type' | translate }}</mat-label>
                     <mat-select
@@ -261,7 +261,8 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
               <!-- Start Section Delete Field-->
               <div
                 fxFlex="10%"
-                class="margin-right-fix"
+               
+                [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }"
                 style="   cursor: pointer;"
                 (click)="deleteElement(i)"
                 *ngIf="i != 0"
@@ -317,7 +318,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
     </form>
   `,
   styles: [
-    ".margin-right-fix:not(:last-child) { margin-right: 70px !important }; button.margin-right-fix.mat-raised-button.mat-button-base.mat-warn.ng-star-inserted { max-width: 7% !important }"
+    ".margin-right-fix:not(:last-child) { margin-right: 70px !important }; button.margin-right-fix.mat-raised-button.mat-button-base.mat-warn.ng-star-inserted { max-width: 7% !important } .margin-left-fix:not(:last-child) { margin-left: 70px !important }"
   ],
   providers: [
     {
@@ -371,6 +372,8 @@ export class AgeTravelerComponent implements OnInit {
     this.result = result;
     console.log('result', result);
   }
+
+  get lang() { return localStorage.getItem("lang"); }
 
   clickMe() {
     this.elements.push(this.elements.length);

@@ -186,3 +186,7 @@ form-field:not(:last-child) {
 .form-field {
     width: 100%;
 }
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #073e89 !important;
+}

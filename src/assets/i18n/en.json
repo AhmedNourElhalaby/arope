@@ -52,6 +52,7 @@
         "id_alert2": "ID must be 14 Number",
         "enter_address": "Enter Your Address",
         "complate": "COMPALTE PURCHASE",
+        "submit2": "SUBMIT",
         "title3": "TRAVELLER Info",
         "passport": "Passport Number",
         "additional_traveler": "Additional Traveler Information",
@@ -76,7 +77,9 @@
         "age": "Age",
         "departure_date": "Departure Date",
         "return_date": "Return Date",
-        "submit": "SUBMIT"
+        "submit": "SUBMIT",
+        "years": "Years",
+        "year": "Year"
     },
     "car": {
         "title": "Get a Car Insurance Quote",
@@ -136,4 +139,5 @@
         "title2": "Thank you for asking AROPE EGYPT It means a lot to us, We will come back to you shortly with an offer.",
         "desc": "Description"
     }
+
 }

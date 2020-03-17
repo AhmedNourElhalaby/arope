@@ -10,8 +10,8 @@
                 <input type="hidden" name="cvCode" [(ngModel)]="formList.cvCode" #cvCode="ngModel" minlength="4" required />
                 <!-- end form input hiddens -->
                 <h3 class="price">{{ 'results_info.currency' | translate }} {{ totalPrice }}</h3>
-                <button *ngIf="!isLoading" type="submit" mat-button class="button-quote" [disabled]="fPriceCard.invalid || isDisabled"> {{ !isDisabled ?  '': 'results_info.paid' | translate }} </button>
-                <button *ngIf="!isLoading" type="submit" mat-button class="button-quote" [disabled]="fPriceCard.invalid || isDisabled"> {{ isDisabled ? '' : 'results_info.pay' | translate  }} </button>
+                <button *ngIf="!isLoading && isDisabled" type="submit" mat-button class="button-quote" [disabled]="isDisabled"> {{ !isDisabled ?  '': 'results_info.paid' | translate }} </button>
+                <button *ngIf="!isLoading && !isDisabled" type="submit" mat-button class="button-quote" [disabled]="fPriceCard.invalid"> {{ isDisabled ? '' : 'results_info.pay' | translate  }} </button>
                 <div *ngIf="isLoading" fxLayoutAlign="center center">
                     <mat-spinner></mat-spinner>
                 </div>

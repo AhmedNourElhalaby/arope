@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MedicalService } from '../medical.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-medical-info',
@@ -10,11 +11,14 @@ import { Subscription } from 'rxjs';
 })
 export class MedicalInfoComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
+  infoStatus = false;
+  travelerInfoStatus = false;
   displayedColumns: string[] = ['cover', 'Elite', 'Prestige', 'Blue'];
   loadMedicalInfoSub: Subscription;
   type: string;
   date: string;
   objMedicalInfo;
+  @ViewChild('stepper', {static: true}) stepper: MatStepper;
   constructor(private medicalService: MedicalService, private router: Router, private activatedParam: ActivatedRoute) { 
   }
 
@@ -64,6 +68,28 @@ export class MedicalInfoComponent implements OnInit, OnDestroy {
 
   onClick(type) {
     this.medicalService.onClickPlan(type);
+  }
+
+  goToNextStepper(page:string, planType:string, stepper: MatStepper) {
+    localStorage.setItem('planType', planType);
+      console.log('HERE', planType);
+    this.infoStatus = true;
+
+    setTimeout(() => {
+      if(this.infoStatus) { stepper.next(); }
+    }, 100);
+   
+  }
+
+
+
+  goForwardToPayment(stepper: MatStepper, event) {
+    
+    this.travelerInfoStatus = true;
+    setTimeout(() => {
+      if(this.travelerInfoStatus) { stepper.next(); }
+    }, 100);
+
   }
 
   ngOnDestroy() {

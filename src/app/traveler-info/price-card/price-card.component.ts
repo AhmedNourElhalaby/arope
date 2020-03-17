@@ -46,15 +46,10 @@ export class PriceCardComponent implements OnInit {
   }
 
   goNextStepper() {
-    if (this.type === 'group') {
-      this.router.navigate(['/group-res']);
-      localStorage.removeItem('type');
-    } else {
+
     this.isDisabled = true;
     this.clicked.emit(true);
     window.scrollTo(0, 0);
-  }
-
   }
 
   ngOnDestroy() {

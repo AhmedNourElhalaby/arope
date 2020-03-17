@@ -57,6 +57,7 @@ import { IndividualMedicalComponent } from './medical-insurance/medical-quote/in
 import { FamilyMedicalComponent } from './medical-insurance/medical-quote/family-medical/family-medical.component';
 import { SmesMedicalComponent } from './medical-insurance/medical-quote/smes-medical/smes-medical.component';
 import { SmesTableComponent } from './medical-insurance/medical-info/smes-table/smes-table.component';
+import { GetTicketComponent } from './get-ticket/get-ticket.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { SmesTableComponent } from './medical-insurance/medical-info/smes-table/
     IndividualMedicalComponent,
     FamilyMedicalComponent,
     SmesMedicalComponent,
-    SmesTableComponent
+    SmesTableComponent,
+    GetTicketComponent
   ],
   imports: [
     BrowserModule,

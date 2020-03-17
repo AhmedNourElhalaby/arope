@@ -281,7 +281,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
         localStorage.setItem('groupDetails', groubLocal);
         this.priceValue = res;
         this.uiService.loadingChangedStatus.next(false);
-        this.router.navigate(['/group-travel']);
+        this.router.navigate(['/', 'traveler-insurance','group-travel']);
      }, error => this.welcomeService.handleError(error.statusText));
     }
   }

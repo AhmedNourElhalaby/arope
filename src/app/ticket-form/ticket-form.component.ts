@@ -35,32 +35,23 @@ export class TicketFormComponent implements OnInit {
   @ViewChild("fInfo", { static: false }) customForm: NgForm;
   ngOnInit() {
     
-    this.routerActivated.paramMap.subscribe(paramMap=> {
+    this.routerActivated.queryParamMap.subscribe(paramMap=> {
+      console.log('params', paramMap);
       this.pageStr = paramMap.get('page');
-      if( paramMap.get('page') == 'car-insurance' ) {
-        console.log('sdfsdf');
-        this.isShow = false;
-       
-        this.product = paramMap.get('product');
-        this.brand = paramMap.get('brand');
-        this.price = paramMap.get('price');
-        this.brandCar = paramMap.get('brandCar');
-      } else if(
-        (paramMap.get('page') == 'find-yourjob') 
+      console.log(this.pageStr);
+      if(
+        (this.pageStr == 'find-yourjob') 
       ){
-       
-
-          this.isShow = true;
+        
+        if(paramMap.has('dateOfBirth') && paramMap.has('job') && paramMap.has('sum_insured')) {
+          
+          this.isShow = false;
          
           this.dateOfBirth = paramMap.get('dateOfBirth');
           this.job = paramMap.get('job');
           this.sum_insured = paramMap.get('sum_insured'); 
+        }
        
-      }else if(
-        paramMap.get('page') == 'medical-insurance'
-      ){
-        this.isShow = false;
-        this.plan = paramMap.get('plan');
       }
 
       
@@ -69,18 +60,7 @@ export class TicketFormComponent implements OnInit {
   submitForm(form: NgForm) {
     let obj;
 
-    if(this.pageStr == 'car-insurance') {
-      this.getTicketCar({
-        name: form.value.name,
-        phone: form.value.prefixNum + form.value.phoneNumber,
-        mail: form.value.emailAddress,
-        price: Number(this.price),
-        brand: this.brandCar,
-        product: this.product
-      });
-
-    
-    } else if(this.pageStr == 'find-yourjob' && this.dateOfBirth &&  this.job && this.sum_insured) {
+ if(this.pageStr == 'find-yourjob' && this.dateOfBirth &&  this.job && this.sum_insured) {
       console.log('yes');
       this.getTicketOverPrice({
         type: "pa",
@@ -91,15 +71,7 @@ export class TicketFormComponent implements OnInit {
         sum_insured: Number(this.sum_insured)
       });
     } 
-    else if(this.pageStr == 'medical-insurance') {
-      this.getTicketMedicalIsurance({
-        
-        name: form.value.name,
-        phone: form.value.prefixNum + form.value.phoneNumber,
-        mail: form.value.emailAddress,
-        product: this.plan
-      });
-    }
+
     else  {
       this.getTicket({
         type: "pa",
@@ -111,26 +83,7 @@ export class TicketFormComponent implements OnInit {
     }
   }
 
-  getTicketMedicalIsurance(dataList) {
-    const data = {
-      paramlist: {
-        data: dataList
-      }
-    };
-    this.odoo
-      .call_odoo_function(
-        "travel_agency",
-        "online",
-        "online",
-        "ticket.api",
-        "create_medical_ticket",
-        data
-      )
-      .subscribe(res => {
-        console.log('medical insurance', res);
-        this.router.navigate(["/thanks"]);
-      });
-  }
+
 
   getTicketOverPrice(dataList) {
     const data = {
@@ -149,7 +102,7 @@ export class TicketFormComponent implements OnInit {
       )
       .subscribe(res => {
         console.log(res);
-        this.router.navigate(["/thanks"]);
+        this.router.navigate(['/','personal-accident',"thanks"]);
       });
   }
 
@@ -170,7 +123,7 @@ export class TicketFormComponent implements OnInit {
       )
       .subscribe(res => {
         console.log(res);
-        this.router.navigate(["/thanks"]);
+        this.router.navigate(['/','personal-accident',"thanks"]);
       });
   }
 
@@ -178,7 +131,7 @@ export class TicketFormComponent implements OnInit {
     console.log('ticket data', data);
     this.carService.getTicketCar(data).subscribe(res => {
       if(res) {
-        this.router.navigate(["/thanks"]);
+        this.router.navigate(['/','personal-accident',"thanks"]);
       }
     }, error => console.log(error));
   }

@@ -14,7 +14,7 @@
         "type": "نوع",
         "key1": "عمر المسافر الأساسي:",
         "key2": "عمر المسافر الإضافي:",
-        "add_addtional": "إضافة مسافر إضافيr",
+        "add_addtional": "إضافة مسافر إضافي",
         "done": "تم",
         "add_group": "أضف مجموعة إضافية",
         "btn": "تعديل تفاصيل رحلتك",
@@ -52,6 +52,7 @@
         "id_alert2": "رقم القومى يجب ان يكون 14 رقم",
         "enter_address": "ادخل عنوانك",
         "complate": "تكملة عملية الشراء",
+        "submit2": "اتمام العملية",
         "title3": "معلومات المسافر",
         "passport": "رقم جواز السفر",
         "additional_traveler": "معلومات المسافر الإضافية",
@@ -76,7 +77,9 @@
         "age": "العمر",
         "departure_date": "تاريخ المغادرة",
         "return_date": "تاريخ العودة",
-        "submit": "اضغط"
+        "submit": "اضغط",
+        "years": "سنة",
+        "year": "سنين"
     },
     "car": {
         "title": "الحصول على عرض أسعار التأمين على السيارات",
@@ -103,10 +106,10 @@
     },
     "medical": {
         "cover": "ميزة",
-        "golden": "ذهبى",
-        "platinum": "بلاتين",
-        "diamond": "الماس",
-        "plans_price": "أسعار الخطة",
+        "golden": "Golden",
+        "platinum": "Platinum",
+        "diamond": "Diamond",
+        "plans_price": "برامج اسعار التأمين",
         "elite": "Elite",
         "prestige": "Prestige",
         "blue": "Blue",

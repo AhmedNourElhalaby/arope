@@ -36,6 +36,13 @@ export class PersonalAccidentComponent implements OnInit {
               private activateRouter: ActivatedRoute) { }
 
   ngOnInit() {
+    this.activateRouter.queryParamMap.subscribe(paramMap=> {
+      if(paramMap.has('page')) {
+        this.isOn = false;
+      }
+    });
+
+
     /* max and min date */
     this.maxDate = this.site.getDateInYears(18);
     this.minDate = this.site.getDateInYears(75);
@@ -82,6 +89,7 @@ export class PersonalAccidentComponent implements OnInit {
         this.isShow = true;
 
       });
+
       this.odoo.call_odoo_function('travel_agency', 'online', 'online',
       'cover.table', 'search_read', arOptionalData ).subscribe(res => {
         for (const x in res) {
@@ -133,7 +141,8 @@ export class PersonalAccidentComponent implements OnInit {
     if (form.value.rate >= 1500000) {
       console.log('HERE');
       // console.log(this.getTitleJobId(form.value.job));
-      this.router.navigate(['/personal-accident', {page: 'find-yourjob'}], {queryParams: {dateOfBirth: this.convertDate(form.value.indAge), job: this.getTitleJobId(form.value.job), sum_insured: form.value.rate}});
+      this.isOn = false;
+      this.router.navigate(['/personal-accident'], {queryParams: {page: 'find-yourjob',dateOfBirth: this.convertDate(form.value.indAge), job: this.getTitleJobId(form.value.job), sum_insured: form.value.rate}});
       return;
     } else {
       this.router.navigate(['/','personal-accident','personal-result']);

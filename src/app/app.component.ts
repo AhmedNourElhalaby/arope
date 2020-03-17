@@ -22,11 +22,12 @@ export class AppComponent implements OnInit{
     const tree: UrlTree = this.router.parseUrl(this.router.url);
     const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
    // const s: UrlSegment[] = g.segments;
+    console.log('save', this.router.url);
 
-    if(g) {
+    if(location.pathname === '/') {
       this.router.navigateByUrl('/traveler-insurance');
       console.log('HERE');
-    }
+    } 
    
 
     this.currentDir = this.currentDir === 'ltr' ? 'rtl' : 'ltr';

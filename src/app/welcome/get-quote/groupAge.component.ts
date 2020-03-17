@@ -11,12 +11,12 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
       <div mat-dialog-content>
         <div *ngFor="let element of elements; let i = index">
           <span id="field-{{ i }}">
-            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
+            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%" dir="auto">
               <div *ngIf="i >= 0; then thenBlock;"></div>
               <ng-template #thenBlock>
                 <div
-                  style="color: #565656;     font-size:14px;margin-top: 11px !important;font-weight: normal;"
-                  fxFlex="10%"
+                  style="color: #565656;  line-height: 63px;   font-size:14px;margin-top: 11px !important;font-weight: normal;"
+                  fxFlex="15%"
                 >
                   {{'group.group'|translate}} {{i + 1}}:
                 </div>
@@ -26,7 +26,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
               <!-- Start Secion ranges -->
               <div *ngIf="!result || result; then thenBlock1;"></div>
               <ng-template #thenBlock1>
-                <div ngModelGroup="ranges" fxFlex="25%" class="margin-right-fix">
+                <div ngModelGroup="ranges" fxFlex="25%" [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }">
                   <mat-form-field>
                     <mat-label>{{'medical.age'|translate}}</mat-label>
                     <mat-select
@@ -50,7 +50,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
               <!-- End Section ranges -->
               <!-- Start Section sizes -->
 
-              <div ngModelGroup="sizes" fxFlex="25%" class="margin-right-fix">
+              <div ngModelGroup="sizes" fxFlex="25%" [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }">
 
                 <div class="form-group" >
 
@@ -83,7 +83,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
               <!-- Start Section Delete Field-->
               <div
                 fxFlex="10%"
-                class="margin-right-fix"
+                [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }"
                 style="   cursor: pointer;"
                 (click)="deleteElement(i)"
                 *ngIf="i != 0"
@@ -138,7 +138,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
     </form>
   `,
   styles: [
-    '.margin-right-fix:not(:last-child) { margin-right: 70px !important }; button.margin-right-fix.mat-raised-button.mat-button-base.mat-warn.ng-star-inserted { max-width: 7% !important }'
+    ".margin-right-fix:not(:last-child) { margin-right: 70px !important }; button.margin-right-fix.mat-raised-button.mat-button-base.mat-warn.ng-star-inserted { max-width: 7% !important } .margin-left-fix:not(:last-child) { margin-left: 70px !important }"
   ]
 })
 export class GroupAgeComponent implements OnInit {
@@ -182,6 +182,8 @@ export class GroupAgeComponent implements OnInit {
     this.result = result;
     console.log('result', result);
   }
+  get lang() { return localStorage.getItem("lang"); }
+
 
   clickMe() {
     this.elements.push(this.elements.length);

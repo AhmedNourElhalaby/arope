@@ -4,6 +4,7 @@ import { CarInsuranceService } from '../car-insurance.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UIService } from 'src/app/shared/ui.services';
 import { HttpClient } from '@angular/common/http';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-insurance-info',
@@ -23,6 +24,8 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
   price;
   brandCar;
   direction: 'rtl' | 'ltr';
+  infoStatus = false;
+  travelerInfoStatus = false;
   constructor(private http: HttpClient ,private carService: CarInsuranceService, private route: ActivatedRoute, private router: Router, private uiService: UIService) { }
 
   ngOnInit(){
@@ -46,6 +49,7 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
 
     this.carService.loadCovers.subscribe(covers=> {
       this.objCovers = covers;
+      console.log('covers', covers);
     });
     this.carService.getCovers(this.type);
     this.loadPriceSub = this.carService.loadPrice.subscribe(res => {
@@ -67,6 +71,35 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
   }
 
   get lang() { return localStorage.getItem("lang"); }
+
+  goForward(stepper: MatStepper, event){
+
+    this.infoStatus = true;
+    setTimeout(() => {
+      if(this.infoStatus) { stepper.next(); }
+    }, 100);
+
+  }
+
+  goForwardToPayment(stepper: MatStepper, event) {
+    
+    this.travelerInfoStatus = true;
+    setTimeout(() => {
+      if(this.travelerInfoStatus) { stepper.next(); }
+    }, 100);
+
+  }
+
+  goToNextStepper(stepper: MatStepper) {
+    
+    this.infoStatus = true;
+
+    setTimeout(() => {
+      if(this.infoStatus) { stepper.next(); }
+    }, 100);
+   
+  }
+
 
 
   ngOnDestroy() {

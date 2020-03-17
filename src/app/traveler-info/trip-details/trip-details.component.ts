@@ -14,13 +14,28 @@ export class TripDetailsComponent implements OnInit {
   when;
   till;
   numOfTraveler;
+  countries;
   constructor(private welService: WelcomeService, private router: Router) { }
 
   ngOnInit() {
 
+    if(this.lang == 'en') {
+      this.countries = [
+        { value: 'zone 1', viewValue: 'Europe' },
+        { value: 'zone 2', viewValue: 'Worldwide excluding USA & CANADA' },
+        { value: 'zone 3', viewValue: 'Worldwide' }
+      ];
+    } else if(this.lang == 'ar') {
+      this.countries = [
+        { value: 'zone 1', viewValue: 'أوروبا' },
+        { value: 'zone 2', viewValue: 'في جميع أنحاء العالم باستثناء الولايات المتحدة وكندا' },
+        { value: 'zone 3', viewValue: 'في جميع أنحاء العالم' }
+      ];
+    }
+
     const zoneValue = localStorage.getItem('zone');
 
-    const countries = this.welService.getAllCountries();
+    const countries = this.countries;
     countries.forEach(x => {
       if (x.value === zoneValue) {
         this.zone = x.viewValue;
@@ -41,6 +56,7 @@ export class TripDetailsComponent implements OnInit {
   getFromLocalStorage(name: string)  {
     return localStorage.getItem(name);
   }
+
 
   onClick() {
     let type = this.getFromLocalStorage('type');
