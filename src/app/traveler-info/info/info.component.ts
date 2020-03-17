@@ -39,6 +39,7 @@ export class InfoComponent implements OnInit {
     private welService: WelcomeService,
     private travelerService: TravelerService,
     private validation: ValidationService,
+    private dateAdapter: DateAdapter<Date>
     // private save: saveAs
   ) {
   }
@@ -80,6 +81,11 @@ export class InfoComponent implements OnInit {
 
 
   ngOnInit() {
+    if(this.lang == 'en') {
+      this.dateAdapter.setLocale('en');   
+    } else if(this.lang == 'ar') {
+      this.dateAdapter.setLocale('ar');   
+    }
     // this.mail = false;
     // this.checkMail('ahmednourelhalaby@gmail.com');
     this.minDateKid = this.setting.getDateInYears(18);
@@ -116,6 +122,11 @@ export class InfoComponent implements OnInit {
       console.log('show event value', event);
     });
 
+  }
+
+  setLocale(val){
+    console.log(val);
+    this.dateAdapter.setLocale(val); 
   }
 
   submitTravelerInfo(form: NgForm) {

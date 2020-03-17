@@ -71,10 +71,16 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     private welcomeService: WelcomeService,
     private uiService: UIService,
     private odoo: OdooService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dateAdapter: DateAdapter<Date>
   ) {}
 
   ngOnInit() {
+    if(this.lang == 'en') {
+      this.dateAdapter.setLocale('en');   
+    } else if(this.lang == 'ar') {
+      this.dateAdapter.setLocale('ar');   
+    }
     // get query params
     const data = {paramlist: { data: [] } };
     this.odoo.call_odoo_function('travel_agency', 'online', 'online',
@@ -127,6 +133,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
   }
 
+  get lang() { return localStorage.getItem("lang"); }
   showPopup() {
     console.log(this.familyDataString);
     const dialogRef = this.dialog.open(AgeTravelerComponent, {
@@ -135,7 +142,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
       },
 
 
-      width: '550px',
+      width: '600px',
 
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -357,6 +364,11 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     const date = form.value.dateWhen;
     const x = date.getDate() + form.value.period;
     this.newDate = new Date(date.getFullYear(), date.getMonth(), x);
+  }
+
+  setLocale(val){
+    console.log(val);
+    this.dateAdapter.setLocale(val); 
   }
 }
 

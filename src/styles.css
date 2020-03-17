@@ -15,7 +15,7 @@ body {
 
 body {
     margin: 0;
-    /* font-family: Tajawal, Roboto; */
+    font-family: Tajawal, Roboto;
 }
 
 [dir="rtl"] mat-label,
@@ -33,7 +33,10 @@ body {
 [dir="rtl"] mat-card-title,
 [dir="rtl"] mat-card-content,
 [dir="rtl"] mat-button,
-[dir="rtl"] button {
+[dir="rtl"] button,
+div,
+span,
+mat-select {
     font-family: Tajawal !important;
 }
 
@@ -52,7 +55,9 @@ body {
 [dir="ltr"] mat-card-title,
 [dir="ltr"] mat-card-content,
 [dir="ltr"] mat-button,
-[dir="ltr"] button {
+[dir="ltr"] button div,
+span,
+mat-select {
     font-family: Arial !important;
 }
 
