@@ -26,6 +26,7 @@ export class MedicalInfoComponent implements OnInit, OnDestroy {
     this.activatedParam.queryParamMap.subscribe(param => {
         this.type = param.get('type');
         this.date = param.get('date');
+        console.log('type => ', this.type);
 
       this.loadMedicalInfoSub = this.medicalService.loadMedicalInfo.subscribe(info => {
         this.objMedicalInfo = info;

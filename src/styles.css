@@ -61,6 +61,10 @@ mat-select {
     font-family: Arial !important;
 }
 
+.mat-step-icon-content>span {
+    line-height: 55px;
+}
+
 .mat-button.mat-primary[disabled],
 .mat-button.mat-accent[disabled],
 .mat-button.mat-warn[disabled],
