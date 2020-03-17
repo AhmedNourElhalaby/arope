@@ -53,7 +53,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   class="form-age-traveler"
                   style="
                   width: 162px;"
-                
+               
                 >
                   <!-- Input Date -->
 
@@ -94,7 +94,8 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   class="form-age-traveler"
                   style="
                   width: 162px;"
-                  *ngIf="fDialog.value.types['type-'+i] == 'kid'"                    
+                  *ngIf="fDialog.value.types['type-'+i] == 'kid'" 
+                                    
                 >
 
                 
@@ -111,6 +112,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     [max]="minDate"
                     [min]="maxDateKid"
                     required
+                   
                   />
                   <!-- End Input Date -->
 
@@ -131,7 +133,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   style="
                   width: 162px;"
                  *ngIf="fDialog.value.types['type-'+i] == 'spouse'"  
-                    
+                
                 >
 
                 
@@ -146,7 +148,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     name="date-{{ i }}"
                     #ages="ngModel"
                     [max]="maxDateKid"
-                   
+                    
                     required
                   />
                   <!-- End Input Date -->
@@ -171,7 +173,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   style="
                   width: 162px;"
                   *ngIf="!fDialog.value.types['type-'+i]"
-
+                 
                 >
 
 
@@ -188,6 +190,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     [max]="minDate"
                     [disabled]="!fDialog.value.types['type-'+i]"
                     required
+                    
                   />
                   <!-- End Input Date -->
 
@@ -298,6 +301,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
             class="mdi mdi-plus"
             style="    font-size: 15px;"
             icon-margin
+            mat-button-raised
           ></span>
           {{ 'traveler.add_addtional' | translate }}
          
@@ -347,10 +351,16 @@ export class AgeTravelerComponent implements OnInit {
     private dialogRef: MatDialogRef<AgeTravelerComponent>,
     @Inject(MAT_DIALOG_DATA) public passedData,
     private welcomeService: WelcomeService,
-    private site_settings: SiteSettingsService
+    private site_settings: SiteSettingsService,
+    private dateAdapter: DateAdapter<Date>
   ) {}
 
   ngOnInit() {
+    if(this.lang == 'en') {
+      this.dateAdapter.setLocale('en');   
+    } else if(this.lang == 'ar') {
+      this.dateAdapter.setLocale('ar');   
+    }
     this.minDate = this.welcomeService.getMinDateBefore30Days();
     this.maxDateKid = this.site_settings.getDateInYears(18);
     const result = this.site_settings.isEmpty(this.passedData);
@@ -397,5 +407,10 @@ export class AgeTravelerComponent implements OnInit {
     const target_id = 'field-' + index;
     const element_id = document.getElementById(target_id);
     element_id.parentNode.removeChild(element_id);
+  }
+
+  setLocale(val){
+    console.log(val);
+    this.dateAdapter.setLocale(val); 
   }
 }
