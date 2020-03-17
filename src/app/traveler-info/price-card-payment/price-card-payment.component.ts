@@ -73,7 +73,12 @@ export class PriceCardPaymentComponent implements OnInit {
             this.http.get('http://207.154.195.214:8070/report/' + res, { headers, responseType: 'blob' }).subscribe(res => {
               console.log(res);
               saveAs(res, `Policy (AROPE).pdf`);
-              this.http.get('http://207.154.195.214:8070/Terms/');
+              // return this.http.get('http://207.154.195.214:8070/Terms/');
+              // const link = document.createElement('a');
+              // link.href = '207.154.195.214/TravelWording.pdf';
+              // link.download = 'file.pdf';
+              // link.dispatchEvent(new MouseEvent('click'));
+              window.open('http://207.154.195.214/TravelWording.pdf', '_blank');
             });
 
             this.whenSucceed();

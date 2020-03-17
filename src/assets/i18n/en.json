@@ -7,8 +7,8 @@
         "zone": "ZONE",
         "dob": "DATE OF BIRTH",
         "numOfTravelers": "NUMBER OF TRAVELERS",
-        "from": "FROM",
-        "to": "TO",
+        "from": "Coverage FROM",
+        "to": "Coverage TO",
         "alert": "I confirm that i am a resident in Egypt",
         "get_quote": "Get A Quote",
         "type": "Type",
@@ -22,7 +22,10 @@
         "opt2": "Worldwide excluding USA & CANADA",
         "opt3": "Worldwide",
         "excess": "Excess",
-        "plan_benfits": "Plan Benefits"
+        "plan_benfits": "Plan Benefits",
+        "period": "Period in Days",
+        "egypt": "Egyptian",
+        "non_egypt" : "Non Egyptian"
     },
     "stepper": {
         "step1": "Quote Result",

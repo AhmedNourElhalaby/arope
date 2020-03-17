@@ -63,6 +63,8 @@ export class InfoComponent implements OnInit {
   date;
   indi;
   cid: boolean;
+  national = 'egyptian';
+  isEgyptian: boolean = true;
   // emailFormControl = new FormControl('', [
   //   Validators.required,
   //   Validators.email,
@@ -102,7 +104,7 @@ export class InfoComponent implements OnInit {
     this.datesList = this.dataJson.dates;
   }
 
-  get lang() { return localStorage.getItem("lang"); }
+  get lang() { return localStorage.getItem('lang'); }
 
 
   fullNameText(firstName, middleName , LastName) {
@@ -264,6 +266,15 @@ export class InfoComponent implements OnInit {
       this.cid = false;
     } else {
       this.cid = true;
+    }
+  }
+  showField(event) {
+    const valueField = event.value;
+    if (valueField === 'egyptian') {
+      this.isEgyptian = true;
+
+    } else {
+      this.isEgyptian = false;
     }
   }
 

@@ -48,3 +48,7 @@ mat-form-field {
     background: #eee;
     border-radius: 10px;
 }
+mat-radio-button {
+    margin-right: 25px;
+    margin-bottom: 5px;
+}

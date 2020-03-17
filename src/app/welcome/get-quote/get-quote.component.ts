@@ -13,6 +13,7 @@ import { OdooService } from '../../shared/odoo.service';
 // FORMATE DATE
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
+import { FocusKeyManager } from '@angular/cdk/a11y';
 
 
 @Component({
@@ -47,7 +48,8 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   isActive = true;
   groupAge;
   priceValue;
-
+  periods;
+  newDate;
   formFields = {
     typeTraveler : 'individual',
     dates: '',
@@ -74,6 +76,12 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // get query params
+    const data = {paramlist: { data: [] } };
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+    'travel.front', 'get_periods', data ).subscribe(res => {
+      this.periods = res;
+      console.log('periods', res);
+    });
     this.route.queryParamMap.subscribe(paramMap => {
       if (!paramMap.has('type')) {
         return;
@@ -344,6 +352,11 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.loadingSubs.unsubscribe();
 
+  }
+  getdate(form) {
+    const date = form.value.dateWhen;
+    const x = date.getDate() + form.value.period;
+    this.newDate = new Date(date.getFullYear(), date.getMonth(), x);
   }
 }
 
