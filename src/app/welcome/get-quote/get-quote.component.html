@@ -64,11 +64,14 @@
                     </mat-grid-tile>
 
 
+                    </mat-grid-list>
+                    <mat-grid-list [cols]="3" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
 
                     <mat-grid-tile>
 
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label> {{ 'traveler.from' | translate }}</mat-label>
+                            
                             <!-- <input matInput > -->
 
 
@@ -80,24 +83,34 @@
 
                         </mat-form-field>
                     </mat-grid-tile>
-
+                    <mat-grid-tile>
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label>{{"traveler.period"| translate}}</mat-label>
+                            <mat-select name="period" ngModel #periodInput="ngModel" (closed)="getdate(f)" required>
+                                <mat-option *ngFor="let period of periods" [value]="period">
+                                    {{period}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    
+                    </mat-grid-tile>
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label> {{ 'traveler.to' | translate }}</mat-label>
                             <!-- <input matInput > -->
 
-                            <input type="text" matInput [matDatepicker]="picker1" name="dateTill" #inputTill [(ngModel)]="formFields.till" #dateTill="ngModel" required [min]="dateWhen.value" (focus)="picker1.open()" placeholder="To">
+                            <input type="text" readonly matInput [matDatepicker]="picker1" name="dateTill" #inputTill [(ngModel)]="newDate" #dateTill="ngModel" required [min]="dateWhen.value" (focus)="picker1.open()" placeholder="To">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker (closed)="inputTill.blur()" #picker1 [startAt]="formFields.till" #picker1></mat-datepicker>
+                            <mat-datepicker (closed)="inputTill.blur()" disabled #picker1 [startAt]="newDate" #picker1></mat-datepicker>
 
 
                         </mat-form-field>
                     </mat-grid-tile>
-
+                </mat-grid-list>
                     <div class="clearfix"></div>
 
 
-                </mat-grid-list>
+                
 
                 <mat-checkbox color="primary" ngModel #checkbox name="egyptian" [checked]="isEgyption" (change)="isEgyption = !isEgyption">{{ 'traveler.alert' | translate }}</mat-checkbox>
                 <br><br>
