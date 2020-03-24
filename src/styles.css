@@ -199,3 +199,10 @@ form-field:not(:last-child) {
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: #073e89 !important;
 }
+.mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
+    background-color: #073e89 !important;
+  }
+  
+.mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+    background-color: #073e89 !important;
+  }

@@ -15,16 +15,14 @@ export class NavbarComponent implements OnInit {
   urlTarget = '';
   constructor(private router: Router, private location: Location) { }
   ngOnInit() {
-    
   }
 
-
+  get lang() { return localStorage.getItem('lang'); }
   chkIsUrl(url) {
     this.tree = this.router.parseUrl(this.location.path());
     this.urlTarget = this.tree.root.children.primary.segments[0].path;
 
-    if(url === this.urlTarget) return true;
-    else return false;
+    if (url === this.urlTarget) { return true; } else { return false; }
   }
 
   onToggleSideNav() {

@@ -50,6 +50,8 @@
 
 .overlay {
     background-color: rgba(255, 255, 255, 0.9);
+    opacity: .9;
+
 }
 
 mat-card-title {
@@ -62,6 +64,8 @@ mat-radio-group {
 
 .get_qoute {
     margin: 50px auto;
+    margin-bottom: 30%;
+
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle,

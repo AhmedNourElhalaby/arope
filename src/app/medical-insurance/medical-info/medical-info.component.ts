@@ -25,6 +25,7 @@ export class MedicalInfoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.activatedParam.queryParamMap.subscribe(param => {
         this.type = param.get('type');
+        localStorage.setItem('medicalType', this.type);
         this.date = param.get('date');
         console.log('type => ', this.type);
 
@@ -71,30 +72,30 @@ export class MedicalInfoComponent implements OnInit, OnDestroy {
     this.medicalService.onClickPlan(type);
   }
 
-  goToNextStepper(page:string, planType:string, stepper: MatStepper) {
+  goToNextStepper(page: string, planType: string, stepper: MatStepper) {
     localStorage.setItem('planType', planType);
-      console.log('HERE', planType);
+    console.log('HERE', planType);
     this.infoStatus = true;
 
     setTimeout(() => {
       if(this.infoStatus) { stepper.next(); }
     }, 100);
-   
+
   }
 
 
 
   goForwardToPayment(stepper: MatStepper, event) {
-    
+
     this.travelerInfoStatus = true;
     setTimeout(() => {
-      if(this.travelerInfoStatus) { stepper.next(); }
+      if (this.travelerInfoStatus) { stepper.next(); }
     }, 100);
 
   }
 
   ngOnDestroy() {
-    if(this.loadMedicalInfoSub) this.loadMedicalInfoSub.unsubscribe();
+    if (this.loadMedicalInfoSub) { this.loadMedicalInfoSub.unsubscribe(); }
   }
 
 }

@@ -11,9 +11,9 @@ import { NgForm, FormGroup , FormControl, Validators, FormArray, FormBuilder } f
 })
 export class MedicalQuoteComponent implements OnInit {
   minDate: Date;
-  num: number = 1;
-  numGroup: number = 1;
-  type: string = 'individual';
+  num = 1;
+  numGroup = 1;
+  type = 'individual';
   form: FormGroup;
 
 
@@ -26,29 +26,29 @@ export class MedicalQuoteComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-   
+
     this.createForm();
-   
+
   }
 
   getVal(val)  {
     this.type = val;
 
-    if(val == 'family') {
+    if (val === 'family') {
       this.form = new FormGroup({
         dates: new FormArray([
           new FormControl('', [Validators.required])
         ])
       });
-    } else if(val == 'individual') {
+    } else if (val === 'individual') {
       this.form = new FormGroup({
         date: new FormControl(null, {
           updateOn: 'blur',
           validators: [Validators.required]
         })
-       
+
       });
-    } else if(val == 'smes') {
+    } else if (val === 'smes' || val === 'corporate') {
       this.form = new FormGroup({
         groups: this.fb.array([
           this.fb.group({
@@ -56,7 +56,7 @@ export class MedicalQuoteComponent implements OnInit {
             num: ''
           })
         ])
-      })
+      });
     }
 
     console.log('new form', this.form);
@@ -64,24 +64,24 @@ export class MedicalQuoteComponent implements OnInit {
 
   createForm() {
     console.log(this.type);
-   
-    if(this.type === 'individual') {
+
+    if (this.type === 'individual') {
       this.form = new FormGroup({
         date: new FormControl(null, {
           updateOn: 'blur',
           validators: [Validators.required]
         })
-       
+
       });
 
-      //end form individual
+      // end form individual
     } else if (this.type === 'family') {
       this.form = new FormGroup({
         dates: new FormArray([
           new FormControl('', [Validators.required])
         ])
       });
-    } else if(this.type === 'smes') {
+    } else if (this.type === 'smes' || this.type === 'corporate') {
 
       this.form = new FormGroup({
         groups: this.fb.array([
@@ -90,15 +90,15 @@ export class MedicalQuoteComponent implements OnInit {
             num: ''
           })
         ])
-      })
+      });
 
     }
 
 
   }
-  
 
-  
+
+
   get dates(): FormArray { return this.form.get('dates') as FormArray; }
   get groups(): FormArray { return this.form.get('groups') as FormArray; }
 
@@ -113,39 +113,42 @@ export class MedicalQuoteComponent implements OnInit {
   }
 
   onRequest() {
-    
-    if(!this.form.valid) {
+
+    if (!this.form.valid) {
       return;
     }
 
-    if(this.type === 'family') {
-      let date = [];
-      for(let dob in this.form.value.dates) {
+    if (this.type === 'family') {
+      const date = [];
+      for (const dob in this.form.value.dates) {
         date.push(this.site_settings.convertDate(this.form.value.dates[dob]));
         this.medicalService.getTabels(this.type, date);
         const date_str = date.join(',');
-        this.router.navigate(['/','medical-insurance','medical-info'], {queryParams: {type: this.type, date: date_str}})
+        this.router.navigate(['/', 'medical-insurance', 'medical-info'], {queryParams: {type: this.type, date: date_str}});
       }
       this.medicalService.getTabels(this.type, date);
-    } else if(this.type === 'individual') {
+    } else if (this.type === 'individual') {
       const date = this.site_settings.convertDate(this.form.value.date);
       this.medicalService.getTabels(this.type, date);
-      this.router.navigate(['/','medical-insurance','medical-info'], {queryParams: {type: this.type, date: date}})
-    } else if(this.type === 'smes') {
+      this.router.navigate(['/', 'medical-insurance', 'medical-info'], {queryParams: {type: this.type, date}});
+    } else if (this.type === 'smes') {
       const newArr = this.medicalService.convertStringInArrayToInteger(this.form.value.groups);
       this.medicalService.getTabels(this.type, newArr);
       let target_url = '';
-      for (let ele in newArr) {
-        
+      for (const ele in newArr) {
 
-          if(!target_url) {
+
+          if (!target_url) {
             target_url = JSON.stringify(newArr[ele]);
           } else {
-            target_url += '-'+JSON.stringify(newArr[ele])
+            target_url += '-' + JSON.stringify(newArr[ele]);
           }
 
-      } 
-      this.router.navigate(['/','medical-insurance','medical-info'], {queryParams: {type: this.type, date: target_url}})
+      }
+      this.router.navigate(['/', 'medical-insurance', 'medical-info'], {queryParams: {type: this.type, date: target_url}});
+    } else if (this.type === 'corporate') {
+        localStorage.setItem('medicalType', 'corporate');
+        this.router.navigate(['get_ticket']);
     }
 
 

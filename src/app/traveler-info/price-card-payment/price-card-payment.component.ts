@@ -70,7 +70,7 @@ export class PriceCardPaymentComponent implements OnInit {
             // this.testDownload();
 
             // download file
-            this.http.get('http://207.154.195.214:8070/report/' + res, { headers, responseType: 'blob' }).subscribe(res => {
+            this.http.get('http://207.154.195.214:8070/report/' + res[0], { headers, responseType: 'blob' }).subscribe(res => {
               console.log(res);
               saveAs(res, `Policy (AROPE).pdf`);
               // return this.http.get('http://207.154.195.214:8070/Terms/');
@@ -78,7 +78,7 @@ export class PriceCardPaymentComponent implements OnInit {
               // link.href = '207.154.195.214/TravelWording.pdf';
               // link.download = 'file.pdf';
               // link.dispatchEvent(new MouseEvent('click'));
-              window.open('http://207.154.195.214/TravelWording.pdf', '_blank');
+              window.open('http://207.154.195.214/TravelWording_General_Conditions.pdf', '_blank');
             });
 
             this.whenSucceed();
@@ -87,6 +87,7 @@ export class PriceCardPaymentComponent implements OnInit {
       this.odoo.call_odoo_function('travel_agency', 'online', 'online',
     'personal.front', 'create_policy', data ).subscribe(res => {
       console.log(res);
+      window.open('http://207.154.195.214/PA_General_Conditions.pdf', '_blank');
       this.whenSucceed();
     });
   }

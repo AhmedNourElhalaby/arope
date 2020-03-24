@@ -1,4 +1,4 @@
-<section class="medical-quote">
+<section class="medical-quote get-qoute">
     <form [formGroup]="form">
 
 
@@ -25,8 +25,9 @@
                 <app-family-medical [form]="form" [datesCount]="dates" *ngIf="type === 'family'"></app-family-medical>
 
 
-                <app-smes-medical [form]="form" [numGroup]="groups" *ngIf="type === 'smes'"></app-smes-medical>
+                <app-smes-medical [form]="form" [numGroup]="groups" *ngIf="type === 'smes' || type === 'corporate'"></app-smes-medical>
 
+                
 
             </mat-card-content>
             <div class="add-person" *ngIf="type === 'family'">
@@ -38,7 +39,7 @@
                 </button>
             </div>
 
-            <div class="add-person" *ngIf="type === 'smes'">
+            <div class="add-person" *ngIf="type === 'smes' || type === 'corporate'">
 
                 <button type="button" mat-button (click)="onIncrementGroup()">
                     <mat-icon>add</mat-icon>

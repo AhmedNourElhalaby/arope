@@ -304,7 +304,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
             mat-button-raised
           ></span>
           {{ 'traveler.add_addtional' | translate }}
-         
+
         </div>
         <div fxFlex fxLayout fxLayoutAlign="flex-end">
           <button
@@ -314,7 +314,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
             color: #E4EAF2;"
             [disabled]="fDialog.invalid"
           >
-            
+
             {{ 'traveler.done' | translate }}
           </button>
         </div>
@@ -357,9 +357,9 @@ export class AgeTravelerComponent implements OnInit {
 
   ngOnInit() {
     if(this.lang == 'en') {
-      this.dateAdapter.setLocale('en');   
+      this.dateAdapter.setLocale('en');
     } else if(this.lang == 'ar') {
-      this.dateAdapter.setLocale('ar');   
+      this.dateAdapter.setLocale('ar');
     }
     this.minDate = this.welcomeService.getMinDateBefore30Days();
     this.maxDateKid = this.site_settings.getDateInYears(18);
@@ -411,6 +411,6 @@ export class AgeTravelerComponent implements OnInit {
 
   setLocale(val){
     console.log(val);
-    this.dateAdapter.setLocale(val); 
+    this.dateAdapter.setLocale(val);
   }
 }

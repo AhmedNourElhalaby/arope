@@ -77,9 +77,9 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if(this.lang == 'en') {
-      this.dateAdapter.setLocale('en');   
+      this.dateAdapter.setLocale('en');
     } else if(this.lang == 'ar') {
-      this.dateAdapter.setLocale('ar');   
+      this.dateAdapter.setLocale('ar');
     }
     // get query params
     const data = {paramlist: { data: [] } };
@@ -368,7 +368,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
   setLocale(val){
     console.log(val);
-    this.dateAdapter.setLocale(val); 
+    this.dateAdapter.setLocale(val);
   }
 }
 
