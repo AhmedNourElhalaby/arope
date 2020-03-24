@@ -7,8 +7,10 @@ mat-form-field {
 }
 
 .button-quote {
-    background-color: #073e89;
+    background-color: #e77a11;
     color: #fff;
+    font-family: Tajawal, Roboto !important;
+    font-size: 20px;
     width: 204px;
     height: 42px;
     line-height: 42px;
@@ -48,6 +50,7 @@ mat-form-field {
     background: #eee;
     border-radius: 10px;
 }
+
 mat-radio-button {
     margin-right: 25px;
     margin-bottom: 5px;

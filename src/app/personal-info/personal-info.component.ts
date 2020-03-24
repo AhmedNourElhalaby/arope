@@ -33,6 +33,7 @@ export class PersonalInfoComponent implements OnInit {
   isConfrim = false;
   mail: boolean;
   cid: boolean;
+  element: number[] = [0];
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -56,11 +57,24 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   submitPersonalInfo(form: NgForm) {
+
+   // console.log(form.value);
     const data = JSON.parse(localStorage.getItem('personalAccData'));
     const sum = data.sum_insured;
     const Job = data.job_id;
     const coversData = JSON.parse(localStorage.getItem('covers'));
     const coversId = coversData.id;
+    const full_name = this.fullNameText(form.value.firstName, form.value.middleName, form.value.lastName);
+    let others;
+
+    localStorage.setItem('fullName', full_name);
+
+    if(!form.value.others) {
+      others = '';
+    } else {
+      others = form.value.others;
+    }
+
     const formData = {data: {
       c_name: this.fullNameText(form.value.firstName, form.value.middleName, form.value.lastName),
       mail: form.value.emailAddress,
@@ -68,7 +82,9 @@ export class PersonalInfoComponent implements OnInit {
       id: form.value.id,
       sum_insured: sum,
       job: Job,
-      cover: coversId
+      cover: coversId,
+      elig_bool: Boolean(form.value.after_die),
+      othere: others
     }, key: 'personal'};
 
     console.log('form data',formData);
@@ -76,7 +92,7 @@ export class PersonalInfoComponent implements OnInit {
     this.changeShowValue();
     this.changeStatus.emit(true);
     this.isValidFormSubmitted = true;
-    // form.resetForm();
+    form.resetForm();
   }
   changeShowValue() {
     this.travelerService.changeStatusShowValue();
@@ -120,6 +136,15 @@ export class PersonalInfoComponent implements OnInit {
     } else {
       this.cid = true;
     }
+  }
+
+  deleteElement(index: number) {
+    const ele = document.getElementById('field-'+index);
+    ele.parentNode.removeChild(ele);
+  }
+
+  increaseElement() {
+    this.element.push(this.element.length);
   }
 
 }

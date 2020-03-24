@@ -135,6 +135,9 @@ export class InfoComponent implements OnInit {
     const age = this.setting.convertDate(form.value.dateBirth);
     const when = this.setting.convertDate(localStorage.getItem('when'));
     const till = this.setting.convertDate(localStorage.getItem('till'));
+
+    const fullName = this.fullNameText(form.value.firstName, form.value.middleName, form.value.lastName);
+    localStorage.setItem('fullName', fullName);
     // console.log(this.emailFormControl);
     if (localStorage.getItem('type') === 'individual') {
       const formData = {data: {

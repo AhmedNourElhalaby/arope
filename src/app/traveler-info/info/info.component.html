@@ -2,7 +2,7 @@
     <h2 class="special-title">{{ 'results_info.title3' | translate }}</h2>
 
     <form #fInfo="ngForm" (ngSubmit)="submitTravelerInfo(fInfo)">
-        <mat-radio-group color="success" aria-label="Select an option" color="primary" name="national" [(ngModel)]="national" #typeInput="ngModel" (change)="showField($event)"  required>
+        <mat-radio-group color="success" aria-label="Select an option" color="primary" name="national" [(ngModel)]="national" #typeInput="ngModel" (change)="showField($event)" required>
             <mat-radio-button value="egyptian">{{ 'traveler.egypt' | translate }}</mat-radio-button>
             <mat-radio-button value="non">{{ 'traveler.non_egypt' | translate }}</mat-radio-button>
         </mat-radio-group>
@@ -212,7 +212,7 @@
 
         <mat-checkbox ngModel #checkbox name="terms" [checked]="isConfrim" (change)="isConfrim = !isConfrim" color="primary"> {{ 'results_info.alert2' | translate }} <a href="http://207.154.195.214/TravelWording.pdf" download target="_blank">{{ 'results_info.terms' | translate }}</a></mat-checkbox>
         <br> <br>
-        <button *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
-        <button *ngIf="lang =='ar'" style="direction: rtl;" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_left_alt</mat-icon></button>
+        <button style="" *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
+        <button style="direction: rtl;" *ngIf="lang =='ar'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_left_alt</mat-icon></button>
     </form>
 </mat-card>

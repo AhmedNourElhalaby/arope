@@ -7,8 +7,10 @@ mat-form-field {
 }
 
 .button-quote {
-    background-color: #073e89;
+    background-color: #e77a11;
     color: #fff;
+    font-family: Tajawal, Roboto !important;
+    font-size: 20px;
     width: 204px;
     height: 42px;
     line-height: 42px;
@@ -27,10 +29,19 @@ mat-form-field {
 mat-grid-list.mat-grid-list.ng-star-inserted {
     height: calc(70px) !important;
 }
+
 .custom-error {
     position: absolute;
     top: 43px;
     left: -11px;
     font-size: 13px;
     color: red;
+}
+
+mat-radio-group {
+    width: 100%;
+}
+
+mat-radio-group mat-radio-button:first-child {
+    margin: auto 10px;
 }

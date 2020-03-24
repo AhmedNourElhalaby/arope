@@ -73,8 +73,87 @@
                     <input matInput type="text" name="address" ngModel #address="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
+
+
+            <mat-grid-tile colspan="2">
+
+                <mat-label style="width: 200px;">
+                    {{"personal.alert_info" | translate}}
+                </mat-label>
+                <mat-radio-group name="after_die" [ngModel]="'true'" #afterDie="ngModel" required>
+                    <mat-radio-button value="true">{{ 'personal.option1' | translate }}</mat-radio-button>
+                    <mat-radio-button value="false">{{ 'personal.option2' | translate }}</mat-radio-button>
+                </mat-radio-group>
+
+            </mat-grid-tile>
+
+
         </mat-grid-list>
-        <button *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
-        <button *ngIf="lang =='ar'" style="direction: rtl;" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || isConfrim !== true || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_left_alt</mat-icon></button>
+
+        <mat-card style="    width: 96%;
+        margin-bottom: 20px;
+        margin-top: 20px; background-color: #f3f3f3;" *ngIf="afterDie.value == 'false'">
+            <!-- Start From Others -->
+
+
+            <div ngModelGroup="others" #others="ngModelGroup">
+
+                <span *ngFor="let count of element; let i = index" class="family">
+                  
+                        <div fxLayout="row" fxLayoutGap="1%" id="field-{{i}}">
+                            <h4 style="width: 250px;">{{'personal.personal' | translate}} #{{i+1}}</h4>
+                        <div ngModelGroup="{{i}}" #num="ngModelGroup" style="width: 100%;">
+                            <div class="left-field" fxFlex="46%" style="    margin: auto 10px;">
+                                <mat-form-field appearance="outline" class="form-field" >
+                                <mat-label>{{ 'personal.name' | translate }}</mat-label>
+                                <input type="text" name="name" matInput  ngModel #name="ngModel" 
+                                        placeholder="{{'personal.name' | translate}}"  required>
+                                    
+                                </mat-form-field>
+                            </div>
+                            <div class="left-field" fxFlex="46%">
+                                <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>{{ 'personal.rate' | translate }}</mat-label>
+                                    <input type="text" name="rate" matInput ngModel  #rate="ngModel" 
+                                        placeholder="{{'personal.rate' | translate}}"  required>
+                                    
+                                </mat-form-field>
+                            </div>
+                            </div>
+                
+                            <div *ngIf="i !== 0" class="right-field" fxFlex="3%" fxLayoutAlign="center center"
+                                (click)="deleteElement(i)">
+                
+                                <mat-icon style="  
+                                line-height: 10px;
+                                border-radius: 5px;
+                                background: salmon;
+                                cursor: pointer;
+                                ">minimize</mat-icon>
+                            </div>
+                        </div>
+                    </span>
+
+            </div>
+
+            <!-- <button mat-raised-button type="button" color="primary" (click)="increaseElement()"> 
+                <mat-icon>add</mat-icon>
+                {{ 'traveler.add_addtional' | translate }}
+            </button> -->
+
+            <div style="cursor: pointer; color: #565656" onMouseOver="this.style.color='#073e89'" onMouseOut="this.style.color='#565656'" (click)="increaseElement()" fxLayout fxLayoutAlign="flex-start">
+                <span class="mdi mdi-plus" style="    font-size: 15px;" icon-margin mat-raise-button color="primary"></span> {{ 'personal.add_addtional' | translate }}
+
+            </div>
+
+            <!-- End Form Others-->
+        </mat-card>
+
+
+
+
+        <button *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid ||  cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
+        <button *ngIf="lang =='ar'" style="direction: rtl;" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid ||  cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_left_alt</mat-icon></button>
+
     </form>
 </mat-card>
