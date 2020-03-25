@@ -64,14 +64,14 @@
                     </mat-grid-tile>
 
 
-                    </mat-grid-list>
-                    <mat-grid-list [cols]="3" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
+                </mat-grid-list>
+                <mat-grid-list [cols]="3" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
 
                     <mat-grid-tile>
 
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label> {{ 'traveler.from' | translate }}</mat-label>
-                            
+
                             <!-- <input matInput > -->
 
 
@@ -92,7 +92,7 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                    
+
                     </mat-grid-tile>
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
@@ -107,10 +107,10 @@
                         </mat-form-field>
                     </mat-grid-tile>
                 </mat-grid-list>
-                    <div class="clearfix"></div>
+                <div class="clearfix"></div>
 
 
-                
+
 
                 <mat-checkbox color="primary" ngModel #checkbox name="egyptian" [checked]="isEgyption" (change)="isEgyption = !isEgyption">{{ 'traveler.alert' | translate }}</mat-checkbox>
                 <br><br>

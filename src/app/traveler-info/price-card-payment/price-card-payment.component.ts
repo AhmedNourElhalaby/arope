@@ -19,7 +19,7 @@ export class PriceCardPaymentComponent implements OnInit {
   isDisabled = false;
   isLoading = false;
   isLoadingSubs: Subscription;
-
+  fullName: string;
   @Output() clickedDone = new EventEmitter();
   constructor(
     private welService: WelcomeService,
@@ -43,12 +43,14 @@ export class PriceCardPaymentComponent implements OnInit {
   }
 
   submitFormPriceCard(form: NgForm) {
+    this.fullName = localStorage.getItem('fullName');
 
     this.isLoading = true;
     console.log('ay kala,');
     if (form.valid) {
       console.log('ayyy');
       const formData = JSON.parse(localStorage.getItem('formData'));
+
       const data = { paramlist: {data: formData.data} };
       console.log('data', data);
       if (formData.key === 'travel') {
@@ -84,12 +86,19 @@ export class PriceCardPaymentComponent implements OnInit {
             this.whenSucceed();
           });
         } else {
-      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
-    'personal.front', 'create_policy', data ).subscribe(res => {
-      console.log(res);
-      window.open('http://207.154.195.214/PA_General_Conditions.pdf', '_blank');
-      this.whenSucceed();
-    });
+          let headers = new HttpHeaders();
+          headers = headers.set('Accept', 'application/pdf');
+          console.log('personal==> ', data);
+          this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+          'personal.front', 'create_policy', data ).subscribe(res => {
+            console.log(res);
+            this.http.get('http://207.154.195.214:8070/report/personal/' + res[0], { headers, responseType: 'blob' }).subscribe(res => {
+              console.log(res);
+              saveAs(res, `Policy (AROPE).pdf`);
+              window.open('http://207.154.195.214/PA_General_Conditions.pdf', '_blank');
+            });
+            this.whenSucceed();
+          });
   }
     }
   }
@@ -100,6 +109,7 @@ export class PriceCardPaymentComponent implements OnInit {
     this.isDisabled = true;
     window.scrollTo(0, 0);
     localStorage.clear();
+    localStorage.setItem('fullName', this.fullName);
   }
   testDownload() {
     // tslint:disable-next-line:max-line-length

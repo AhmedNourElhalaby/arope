@@ -35,8 +35,10 @@
 }
 
 .button-quote {
-    background-color: #073e89;
-    color: #fff;
+    background-color: #e77a11 !important;
+    color: #fff !important;
+    font-family: Tajawal, Roboto !important;
+    font-size: 20px;
     height: 51px;
     line-height: 51px;
     top: -5px;
@@ -49,7 +51,7 @@
 
 .overlay {
     background-color: rgba(255, 255, 255, 0.9);
-    opacity: .9;
+    opacity: .8;
 
 }
 

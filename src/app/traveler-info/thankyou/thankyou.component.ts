@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./thankyou.component.css']
 })
 export class ThankyouComponent implements OnInit {
-
+  fullName: string;
   constructor() { }
 
   ngOnInit() {
+    this.fullName = localStorage.getItem('fullName');
   }
 
 }
