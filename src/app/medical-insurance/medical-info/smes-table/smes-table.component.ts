@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-smes-table',
@@ -8,6 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SmesTableComponent implements OnInit {
   displayedColumns: string[] = ['cover', 'Golden', 'Platinum', 'Diamond'];
   @Input() objMedicalInfo: any;
+  @Input() stepper: MatStepper;
+  infoStatus = false;
   constructor() { }
 
   ngOnInit() {
@@ -35,5 +38,18 @@ export class SmesTableComponent implements OnInit {
       return val;
     }
   }
+
+
+  goToNextStepper(page: string, planType: string) {
+    localStorage.setItem('planType', planType);
+    console.log('HERE', planType);
+    this.infoStatus = true;
+
+    setTimeout(() => {
+      if(this.infoStatus) { this.stepper.next(); }
+    }, 100);
+
+  }
+
 
 }
