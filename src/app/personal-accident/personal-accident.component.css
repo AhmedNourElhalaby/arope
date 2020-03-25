@@ -86,3 +86,16 @@ mat-radio-group {
 .non-float {
     float: none !important;
 }
+.radioFloat {
+    float:left;
+}
+.radioMargin {
+    margin-left: 50%;
+}
+
+.ar_radioFloat {
+    float:right;
+}
+.ar_radioMargin {
+    margin-right: 50%;
+}

@@ -40,7 +40,7 @@
 
 
                         </mat-grid-list>
-                        <div [ngClass]="{'float': this.type !=6, 'non-float': this.type == 6}" style="float:left">
+                        <div [ngClass]="{'radioFloat': this.lang =='en', 'ar_radioFloat': this.lang == 'ar'}">
                             <h3>{{ 'personal.covers' | translate }}</h3>
                             <div *ngIf="!isShow" fxLayoutAlign="center center">
                                 <mat-spinner [diameter]="40"></mat-spinner>
@@ -54,7 +54,7 @@
                             </div>
 
                         </div>
-                        <div style="margin-left: 50%;" *ngIf="this.type != 6">
+                        <div [ngClass]="{'radioMargin': this.lang =='en', 'ar_radioMargin': this.lang == 'ar'}" *ngIf="this.type != 6">
                             <h3>{{ 'personal.covers_optional' | translate }}</h3>
                             <div *ngIf="!isShow" fxLayoutAlign="center center">
                                 <mat-spinner [diameter]="40"></mat-spinner>
