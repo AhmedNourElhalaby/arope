@@ -18,7 +18,7 @@
 
                     <div *ngIf="type === 'smes'">
 
-                        <app-smes-table [objMedicalInfo]="objMedicalInfo"></app-smes-table>
+                        <app-smes-table [objMedicalInfo]="objMedicalInfo" [stepper]="stepper"></app-smes-table>
                     </div>
                     <div *ngIf="type != 'smes'">
                         <mat-card *ngFor="let info of objMedicalInfo; let i = index">
@@ -48,7 +48,7 @@
 
 
                                             <br>
-                                            <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Elite', stepper)">Buy Now</button>
+                                            <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Elite', stepper)">{{'results_info.buy_now' | translate}}</button>
                                         </th>
                                         <td mat-cell *matCellDef="let item">
                                             <div *ngIf="chkIfTrueOrFalse(item.Elite) == true || chkIfTrueOrFalse(item.Elite) == false ; then thenBlock  else elseBlock"></div>
@@ -62,7 +62,7 @@
 
                                     <ng-container matColumnDef="Prestige">
                                         <th mat-header-cell *matHeaderCellDef> {{"medical.prestige" | translate}}
-                                            <br> <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Prestige', stepper)">Buy Now</button>
+                                            <br> <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Prestige', stepper)">{{'results_info.buy_now' | translate}}</button>
                                         </th>
                                         <td mat-cell *matCellDef="let item">
                                             <div *ngIf="chkIfTrueOrFalse(item.Prestige) == true || chkIfTrueOrFalse(item.Prestige) == false ; then thenBlock  else elseBlock"></div>
@@ -76,7 +76,7 @@
 
                                     <ng-container matColumnDef="Blue">
                                         <th mat-header-cell *matHeaderCellDef>{{"medical.blue" | translate}}
-                                            <br> <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Blue', stepper)">Buy Now</button>
+                                            <br> <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Blue', stepper)">{{'results_info.buy_now' | translate}}</button>
                                         </th>
                                         <td mat-cell *matCellDef="let item">
 

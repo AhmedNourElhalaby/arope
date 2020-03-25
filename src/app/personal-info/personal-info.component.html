@@ -40,7 +40,7 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'traveler.dob' | translate }}</mat-label>
-                    <input type="text" matInput [matDatepicker]="agePicker" (focus)="agePicker.open()" #inputAge placeholder="Date Of Birth" [max]="minDate" ngModel name="indAge" [(ngModel)]="date" #indAge="ngModel" required>
+                    <input type="text" matInput [matDatepicker]="agePicker" #inputAge placeholder="Date Of Birth" [max]="minDate" ngModel name="indAge" [(ngModel)]="date" #indAge="ngModel" required>
                     <mat-datepicker-toggle matSuffix [for]="agePicker"></mat-datepicker-toggle>
                     <mat-datepicker (closed)="inputAge.blur()" #agePicker></mat-datepicker>
                 </mat-form-field>

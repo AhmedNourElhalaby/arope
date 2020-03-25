@@ -23,7 +23,7 @@
             <ng-container matColumnDef="Golden">
                 <th mat-header-cell *matHeaderCellDef> {{"medical.golden" | translate}}
 
-                    <br> <button mat-raised-button [routerLink]="['/', 'get_ticket', {page: 'medical-insurance', type: 'Golden'}]">Buy Now</button>
+                    <br> <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Golden')">{{'results_info.buy_now' | translate}}</button>
                 </th>
                 <td mat-cell *matCellDef="let item">
                     <div *ngIf="chkIfTrueOrFalse(item.Golden) == true || chkIfTrueOrFalse(item.Golden) == false ; then thenBlock  else elseBlock"></div>
@@ -37,7 +37,7 @@
 
             <ng-container matColumnDef="Platinum">
                 <th mat-header-cell *matHeaderCellDef> {{"medical.platinum" | translate}}
-                    <br> <button mat-raised-button [routerLink]="['/', 'get_ticket', {page: 'medical-insurance', type: 'Platinum'}]">Buy Now</button>
+                    <br> <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Platinum')">{{'results_info.buy_now' | translate}}</button>
                 </th>
                 <td mat-cell *matCellDef="let item">
                     <div *ngIf="chkIfTrueOrFalse(item.Platinum) == true || chkIfTrueOrFalse(item.Platinum) == false ; then thenBlock  else elseBlock"></div>
@@ -51,7 +51,7 @@
 
             <ng-container matColumnDef="Diamond">
                 <th mat-header-cell *matHeaderCellDef> {{"medical.diamond" | translate}}
-                    <br> <button mat-raised-button [routerLink]="['/', 'get_ticket', {page: 'medical-insurance', type: 'Diamond'}]">Buy Now</button>
+                    <br> <button mat-raised-button (click)="goToNextStepper('medical-insurance', 'Diamond')">{{'results_info.buy_now' | translate}}</button>
                 </th>
                 <td mat-cell *matCellDef="let item">
 
