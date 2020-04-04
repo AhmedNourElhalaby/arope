@@ -37,7 +37,10 @@
                     </mat-form-field>
                 </mat-grid-tile>
             </mat-grid-list>
-            <!-- <button mat-raised-button class="button-quote" [disabled]="f.invalid"> {{'Pay' | uppercase}} </button> -->
+            <!-- <input type="button" value="TEST" (click)="onPay()" />
+            <input type="button" value="Pay with Lightbox" onclick="Checkout.showLightbox();" />
+            <input type="button" value="Pay with Payment Page" onclick="Checkout.showPaymentPage();" /> -->
+            <button mat-raised-button class="button-quote" [disabled]="f.invalid"> {{'Pay' | uppercase}} </button>
         </form>
     </div>
 </mat-card>

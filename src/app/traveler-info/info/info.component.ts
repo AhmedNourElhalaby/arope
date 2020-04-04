@@ -81,6 +81,8 @@ export class InfoComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loadStripe();
+    this.loadData();
     if(this.lang == 'en') {
       this.dateAdapter.setLocale('en');   
     } else if(this.lang == 'ar') {
@@ -128,6 +130,75 @@ export class InfoComponent implements OnInit {
     console.log(val);
     this.dateAdapter.setLocale(val); 
   }
+
+
+loadStripe() {
+     
+  if(!window.document.getElementById('stripe-script')) {
+    var s = window.document.createElement("script");
+    s.id = "stripe-script";
+    s.type = "text/javascript";
+    s.src = "https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js";
+    s.setAttribute("data-error", "errorCallbackn");
+    s.setAttribute("data-cancel", "cancelCallback");
+    window.document.head.appendChild(s);
+  }
+}
+onPay() {
+  
+this.loadData();
+setTimeout(() => {
+  
+  (<any>window).Checkout.showPaymentPage();
+}, 2000);
+}
+ loadData() {
+   
+    (<any>window).Checkout.configure({
+            merchant: 'TESTQNBAATEST001',
+        order: {
+            amount: function() {
+                //Dynamic calculation of amount
+                return 80 + 20;
+            },
+            currency: 'EGP',
+            description: 'Ordered goods',
+            id: ''
+        },
+        interaction: {
+            merchant: {
+                name: 'Your merchant name',
+                address: {
+                    line1: '200 Sample St',
+                    line2: '1234 Example Town'
+                },
+                email: 'order@yourMerchantEmailAddress.com',
+                phone: '+1 123 456 789 012',
+                logo: 'https://imageURL'
+            },
+            locale: 'en_US',
+            theme: 'default',
+            displayControl: {
+                billingAddress: 'HIDE',
+                customerEmail: 'HIDE',
+                orderSummary: 'SHOW',
+                shipping: 'HIDE'
+            }
+        }
+    })
+    console.log('done');
+    
+    }
+
+
+
+     errorCallback(error) {
+      console.log(JSON.stringify(error));
+}
+ cancelCallback() {
+      console.log('Payment cancelled');
+}
+
 
   submitTravelerInfo(form: NgForm) {
     console.log(form.value.additionalTravelers);

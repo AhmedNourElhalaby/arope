@@ -16,11 +16,11 @@
                 <mat-step label="{{ 'stepper.step1' | translate }}" [stepControl]="infoStatus" state="quote">
                     <h2 class="special-title">{{"medical.plans_price" | translate}}</h2>
 
-                    <div *ngIf="type === 'smes'">
+                    <div *ngIf="type === 'smes'" style="overflow-x: scroll;">
 
                         <app-smes-table [objMedicalInfo]="objMedicalInfo" [stepper]="stepper"></app-smes-table>
                     </div>
-                    <div *ngIf="type != 'smes'">
+                    <div *ngIf="type != 'smes'" style="overflow-x: scroll;">
                         <mat-card *ngFor="let info of objMedicalInfo; let i = index">
                             <mat-card-title *ngIf="info.name != 'main'">{{info.name}}</mat-card-title>
                             <div *ngIf="i == 0 ;then thenBlock1 else elseBlock1"></div>

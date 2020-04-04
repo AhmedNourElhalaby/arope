@@ -8,6 +8,9 @@ import { Subscription } from 'rxjs';
 import { UIService } from 'src/app/shared/ui.services';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+
+// declare function Checkout(): any;
+
 @Component({
   selector: 'app-price-card-payment',
   templateUrl: './price-card-payment.component.html',
@@ -117,5 +120,7 @@ export class PriceCardPaymentComponent implements OnInit {
     console.log('Downloaaad', res);
   });
   }
+
+
 }
 
