@@ -11,7 +11,7 @@
                 <!-- end form input hiddens -->
                 <h3 class="price">{{ 'results_info.currency' | translate }} {{ totalPrice }}</h3>
                 <button *ngIf="!isLoading && isDisabled" type="submit" mat-button class="button-quote" [disabled]="isDisabled"> {{ !isDisabled ?  '': 'results_info.paid' | translate }} </button>
-                <a style="text-decoration: none;" href="http://207.154.195.214/TravelWording_General_Conditions.pdf" download target="_blank"><button *ngIf="!isLoading && !isDisabled" type="submit" mat-button class="button-quote" [disabled]="fPriceCard.invalid">{{ isDisabled ? '' : 'results_info.pay' | translate  }}</button></a>
+                <button *ngIf="!isLoading && !isDisabled" type="submit" mat-button class="button-quote" [disabled]="fPriceCard.invalid">{{ isDisabled ? '' : 'results_info.pay' | translate  }}</button>
                 <div *ngIf="isLoading" fxLayoutAlign="center center">
                     <mat-spinner></mat-spinner>
                 </div>

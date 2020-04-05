@@ -90,6 +90,9 @@
         "general": "General",
         "total_loss": "Total Loss Only",
         "brands": "BRANDS",
+        "deductible": "deductible rate",
+        "option1": "250 EGP",
+        "option2": "4 per thousand",
         "price": "PRICE",
         "brand1": "All Brands (except Chinese & East Asia)",
         "brand2": "Chinese cars & East Asia",
@@ -98,7 +101,8 @@
         "cover": "Cover",
         "total_quote": "Your Total Quote",
         "currency": "EGP",
-        "buy": "BUY"
+        "buy": "BUY",
+        "model_year": "Model Year"
 
     },
     "group": {
@@ -122,7 +126,8 @@
         "corporate": "Corporate",
         "add": "Add Addtional Person",
         "add_group": "Add Addtional Group",
-        "get_quote": "GET A QUOTE"
+        "get_quote": "GET A QUOTE",
+        "relase": "Release Date"
 
     },
     "navbar": {

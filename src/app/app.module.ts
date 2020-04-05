@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 import { AgeTravelerComponent } from './welcome/get-quote/ageTraveler.component';
 import { GroupAgeComponent } from './welcome/get-quote/groupAge.component';
@@ -108,7 +109,8 @@ import { GetTicketComponent } from './get-ticket/get-ticket.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    TranslateConfigModule
+    TranslateConfigModule,
+    NgxMatSelectSearchModule
   ],
   providers: [
     CarInsuranceService,

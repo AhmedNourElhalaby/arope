@@ -28,6 +28,7 @@ const routes: Routes = [
   {path: 'personal-accident/thanks', component: ThanksComponent},
   {path: 'car-insurance', component: CarInsuranceComponent},
   {path: 'car-insurance/insurance-info/:brandCar/:brand/:product/:price', component: InsuranceInfoComponent},
+  {path: 'car-insurance/insurance-info/:brandCar/:brand/:product/:price/:deductibleRate', component: InsuranceInfoComponent},
   {path: 'medical-insurance', component: MedicalInsuranceComponent},
   {path: 'medical-insurance/medical-info', component: MedicalInfoComponent}
 ];

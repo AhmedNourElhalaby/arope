@@ -80,7 +80,7 @@ export class PriceCardPaymentComponent implements OnInit {
               // link.href = '207.154.195.214/TravelWording.pdf';
               // link.download = 'file.pdf';
               // link.dispatchEvent(new MouseEvent('click'));
-              // window.open('http://207.154.195.214/TravelWording_General_Conditions.pdf', '_blank');
+              window.open('http://207.154.195.214/TravelWording_General_Conditions.pdf', '_blank');
               this.downloadTerms('http://207.154.195.214/TravelWording_General_Conditions.pdf');
             });
 
@@ -97,7 +97,7 @@ export class PriceCardPaymentComponent implements OnInit {
               console.log(res);
               saveAs(res, `Policy (AROPE).pdf`);
               this.downloadTerms('http://207.154.195.214/PA_General_Conditions.pdf');
-              // window.open('http://207.154.195.214/PA_General_Conditions.pdf', '_blank');
+              window.open('http://207.154.195.214/PA_General_Conditions.pdf', '_blank');
             });
             this.whenSucceed();
           });
