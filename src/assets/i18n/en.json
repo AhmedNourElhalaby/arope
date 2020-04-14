@@ -83,7 +83,8 @@
         "return_date": "Return Date",
         "submit": "SUBMIT",
         "years": "Years",
-        "year": "Year"
+        "year": "Year",
+        "dob":"DATE OF BIRTH"
     },
     "car": {
         "title": "Get a Car Insurance Quote",

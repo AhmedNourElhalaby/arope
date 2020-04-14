@@ -31,6 +31,12 @@ const routes: Routes = [
   {path: 'car-insurance/insurance-info/:brandCar/:brand/:product/:price/:deductibleRate', component: InsuranceInfoComponent},
   {path: 'medical-insurance', component: MedicalInsuranceComponent},
   {path: 'medical-insurance/medical-info', component: MedicalInfoComponent}
+  ,
+  {
+    path: '',
+    redirectTo: '/traveler-insurance',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

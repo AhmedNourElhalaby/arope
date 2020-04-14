@@ -47,9 +47,9 @@
                     <mat-grid-tile *ngIf="isIndividual">
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label> {{ 'traveler.dob' | translate }}</mat-label>
-                            <input type="text" matInput [matDatepicker]="agePicker" [(ngModel)]="formFields.date" #inputAge [max]="minDate" name="indAge" #indAge="ngModel" required>
+                            <input type="text" matInput [matDatepicker]="agePicker" [(ngModel)]="formFields.date" #inputAge [max]="minDate" [min]="indiMaxDate" name="indAge" #indAge="ngModel" required>
                             <mat-datepicker-toggle matSuffix [for]="agePicker"></mat-datepicker-toggle>
-                            <mat-datepicker (closed)="inputAge.blur()" startView="multi-year" #agePicker [startAt]="formFields.date" #agePicker></mat-datepicker>
+                            <mat-datepicker (closed)="inputAge.blur()" (closed)="checkAgeNot85(f)" startView="multi-year" #agePicker [startAt]="formFields.date" #agePicker></mat-datepicker>
                         </mat-form-field>
                     </mat-grid-tile>
 
@@ -77,7 +77,7 @@
 
                             <input type="text" matInput [matDatepicker]="picker" name="dateWhen" #inputWhen [ngModel]="formFields.when" #dateWhen="ngModel" required [min]="maxDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker [startAt]="formFields.when" #picker (closed)="inputWhen.blur()" #picker>
+                            <mat-datepicker [startAt]="formFields.when" #picker (closed)="getdate(f)" (closed)="checkAgeNot85(f)" #picker>
                             </mat-datepicker>
 
 
@@ -86,7 +86,7 @@
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label>{{"traveler.period"| translate}}</mat-label>
-                            <mat-select name="period" ngModel #periodInput="ngModel" (closed)="getdate(f)" required>
+                            <mat-select name="period" ngModel #periodInput="ngModel" (closed)="getdate(f)" (closed)="checkAgeNot85(f)" required>
                                 <mat-option *ngFor="let period of periods" [value]="period">
                                     {{period}}
                                 </mat-option>
@@ -114,7 +114,8 @@
 
                 <mat-checkbox color="primary" ngModel #checkbox name="egyptian" [checked]="isEgyption" (change)="isEgyption = !isEgyption">{{ 'traveler.alert' | translate }}</mat-checkbox>
                 <br><br>
-                <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid || isEgyption !== true">{{ 'traveler.get_quote' | translate }}</button>
+                <div *ngIf="f.invalid" ></div>
+                <button *ngIf="!isLoading" class='button-quote' mat-button color="primary" type="submit" [disabled]="f.invalid || isEgyption !== true || isNotMore85 !== true">{{ 'traveler.get_quote' | translate }}</button>
                 <div *ngIf="isLoading" fxLayoutAlign="center center">
                     <mat-spinner [diameter]="40"></mat-spinner>
                 </div>

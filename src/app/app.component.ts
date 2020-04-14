@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
    // const s: UrlSegment[] = g.segments;
     console.log('save', this.router.url);
-    this.router.navigateByUrl('/traveler-insurance');
+    // this.router.navigateByUrl('/traveler-insurance');
     if (location.pathname === '/') {
       this.router.navigateByUrl('/traveler-insurance');
       console.log('HERE');

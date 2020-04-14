@@ -1,5 +1,6 @@
 <mat-card>
     <h2 class="special-title">{{ 'results_info.title3' | translate }}</h2>
+    <!-- <input type="button" value="Pay with Lightbox" (click)="onPay()" /> -->
 
     <form #fInfo="ngForm" (ngSubmit)="submitTravelerInfo(fInfo)">
         <mat-radio-group color="success" aria-label="Select an option" color="primary" name="national" [(ngModel)]="national" #typeInput="ngModel" (change)="showField($event)" required>
@@ -10,19 +11,22 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
-                    <input matInput type="text" name="firstName" ngModel #firstName="ngModel" required>
+                    <input matInput type="text" name="firstName" ngModel #firstName="ngModel" pattern="[a-zA-Z ]*" required>
+                    <mat-error *ngIf="firstName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.middleName' | translate }}</mat-label>
-                    <input matInput type="text" name="middleName" ngModel #middleName="ngModel" required>
+                    <input matInput type="text" name="middleName" ngModel #middleName="ngModel" pattern="[a-zA-Z ]*" required>
+                    <mat-error *ngIf="middleName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.lastName' | translate }}</mat-label>
-                    <input matInput type="text" name="lastName" ngModel #lastName="ngModel" required>
+                    <input matInput type="text" name="lastName" ngModel #lastName="ngModel" pattern="[a-zA-Z ]*" required>
+                    <mat-error *ngIf="lastName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
@@ -119,7 +123,8 @@
                             <div fxFlex="33.33333%">
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
-                                    <input matInput type="text" name="tfirstName{{traveler}}" ngModel #tfirstName="ngModel" required>
+                                    <input matInput type="text" name="tfirstName{{traveler}}" ngModel #tfirstName="ngModel" pattern="[a-zA-Z ]*" required>
+                                    <mat-error *ngIf="tfirstName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                                 </mat-form-field>
 
 
@@ -128,7 +133,8 @@
                             <div fxFlex="33.33333%">
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label> {{ 'results_info.middleName' | translate }}</mat-label>
-                                    <input matInput type="text" name="tmiddleName{{traveler}}" ngModel #tmiddleName="ngModel" required>
+                                    <input matInput type="text" name="tmiddleName{{traveler}}" ngModel #tmiddleName="ngModel" pattern="[a-zA-Z ]*" required>
+                                    <mat-error *ngIf="tmiddleName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                                 </mat-form-field>
 
 
@@ -138,7 +144,8 @@
                             <div fxFlex="33.33333%">
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label>{{ 'results_info.lastName' | translate }}</mat-label>
-                                    <input matInput type="text" name="tlastName{{traveler}}" ngModel #tlastName="ngModel" required>
+                                    <input matInput type="text" name="tlastName{{traveler}}" ngModel #tlastName="ngModel" pattern="[a-zA-Z ]*" required>
+                                    <mat-error *ngIf="tlastName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                                 </mat-form-field>
 
 
@@ -147,7 +154,7 @@
                         <!-- end div.flexLayout -->
 
                         <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
-                            <div fxFlex="50%">
+                            <div fxFlex="33.33333%">
                                 <div class="form-group" *ngIf="typesList['type-'+traveler] == 'kid'">
                                     <mat-form-field appearance="outline" class='form-field'>
                                         <mat-label> {{ 'results_info.dob' | translate }}</mat-label>
@@ -167,12 +174,25 @@
                                 </div>
                                 <!-- end form-group -->
                             </div>
-                            <div fxFlex="50%">
+                            <div fxFlex="33.33333%">
                                 <mat-form-field appearance="outline">
                                     <mat-label>{{ 'results_info.type' | translate }}</mat-label>
                                     <mat-select name="type{{traveler}}" class="selectOptionType" [(ngModel)]="typesList['type-'+traveler]" #type="ngModel">
                                         <mat-option *ngFor="let type of types" [value]="type.value">
                                             {{type.viewValue}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="33.33333%">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{ 'results_info.gender' | translate }}</mat-label>
+                                    <mat-select name="tgender{{traveler}}" class="selectOptionType" ngModel #tgender="ngModel">
+                                        <mat-option value="M">
+                                            {{ 'results_info.male' | translate }}
+                                        </mat-option>
+                                        <mat-option value="F">
+                                            {{ 'results_info.female' | translate }}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

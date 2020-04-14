@@ -81,33 +81,37 @@ export class InfoComponent implements OnInit {
 
 
   ngOnInit() {
-    if(this.lang == 'en') {
-      this.dateAdapter.setLocale('en');   
-    } else if(this.lang == 'ar') {
-      this.dateAdapter.setLocale('ar');   
+    this.type = localStorage.getItem('type');
+    if (this.type === 'individual') {
+      this.indi = true;
+      this.date = localStorage.getItem('date');
+    } else {
+      const fJson = JSON.parse(localStorage.getItem('typesDates'));
+      this.dataJson = JSON.parse(fJson);
+      this.typesList = this.dataJson.types;
+      this.datesList = this.dataJson.dates;
+      console.log('DateList', this.datesList);
     }
-    // this.mail = false;
-    // this.checkMail('ahmednourelhalaby@gmail.com');
+    if (this.lang == 'en') {
+      this.dateAdapter.setLocale('en');
+    } else if (this.lang == 'ar') {
+      this.dateAdapter.setLocale('ar');
+    }
     this.minDateKid = this.setting.getDateInYears(18);
     this.maxDateKid = this.welService.getMinDateBefore30Days();
     const emptyArr = new Array(
       parseInt(localStorage.getItem('numOfTraveler'))
     );
-
     for (let i = 0; i < emptyArr.length; i++) {
 
       console.log('count', i);
       this.numOfTravelers.push(i);
    }
-    this.type = localStorage.getItem('type');
-    if (this.type === 'individual') {
-      this.indi = true;
-      this.date = localStorage.getItem('date');
-    }
-    const fJson = JSON.parse(localStorage.getItem('typesDates'));
-    this.dataJson = JSON.parse(fJson);
-    this.typesList = this.dataJson.types;
-    this.datesList = this.dataJson.dates;
+
+    // this.loadStripe();
+    // this.loadData();
+    // this.mail = false;
+    // this.checkMail('ahmednourelhalaby@gmail.com');
   }
 
   get lang() { return localStorage.getItem('lang'); }
@@ -126,8 +130,77 @@ export class InfoComponent implements OnInit {
 
   setLocale(val){
     console.log(val);
-    this.dateAdapter.setLocale(val); 
+    this.dateAdapter.setLocale(val);
   }
+
+
+loadStripe() {
+
+  if(!window.document.getElementById('stripe-script')) {
+    let s = window.document.createElement('script');
+    s.id = 'stripe-script';
+    s.type = 'text/javascript';
+    s.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
+    s.setAttribute('data-error', 'errorCallbackn');
+    s.setAttribute('data-cancel', 'cancelCallback');
+    window.document.head.appendChild(s);
+  }
+}
+onPay() {
+
+this.loadData();
+setTimeout(() => {
+
+  (window as any).Checkout.showPaymentPage();
+}, 2000);
+}
+ loadData() {
+
+    (window as any).Checkout.configure({
+            merchant: 'TESTQNBAATEST001',
+        order: {
+            amount() {
+                // Dynamic calculation of amount
+                return 80 + 20;
+            },
+            currency: 'EGP',
+            description: 'Ordered goods',
+            id: ''
+        },
+        interaction: {
+            merchant: {
+                name: 'Your merchant name',
+                address: {
+                    line1: '200 Sample St',
+                    line2: '1234 Example Town'
+                },
+                email: 'order@yourMerchantEmailAddress.com',
+                phone: '+1 123 456 789 012',
+                logo: 'https://imageURL'
+            },
+            locale: 'en_US',
+            theme: 'default',
+            displayControl: {
+                billingAddress: 'HIDE',
+                customerEmail: 'HIDE',
+                orderSummary: 'SHOW',
+                shipping: 'HIDE'
+            }
+        }
+    });
+    console.log('done');
+
+    }
+
+
+
+     errorCallback(error) {
+      console.log(JSON.stringify(error));
+}
+ cancelCallback() {
+      console.log('Payment cancelled');
+}
+
 
   submitTravelerInfo(form: NgForm) {
     console.log(form.value.additionalTravelers);
@@ -190,12 +263,14 @@ export class InfoComponent implements OnInit {
         const lastName = object['tlastName' + index];
         const dateBirth = object['tbirthDate' + index];
         const passports = object['tpassport' + index];
+        const genders = object['tgender' + index];
         const fullName = ''.concat(' ', firstName, ' ', middleName, ' ', lastName);
         const jsonData = {
           name: fullName,
           dob: dateBirth,
           type: types,
-          passport_num: passports
+          passport_num: passports,
+          gender: genders
         };
         emptyArr.push(jsonData);
         if (types === 'kid') {
