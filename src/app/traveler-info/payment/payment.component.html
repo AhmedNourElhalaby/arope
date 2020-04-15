@@ -6,10 +6,16 @@
         <span>
                     <img src="https://i76.imgup.net/accepted_c22e0.png">
                 </span>
+                
     </mat-toolbar>
-    <div class="example-container">
-
-        <form #f="ngForm" (ngSubmit)="submitPayment(f)">
+    <div class="example-container" style="text-align: center;">
+        
+       
+        <button mat-raised-button (click)="onClick()" style="margin: 20px auto;">
+            <img style="width: 125px;
+            height: 80px;" src="assets/images/logo_qnp.png" alt="qnp bank" />
+        </button>
+        <!-- <form #f="ngForm" (ngSubmit)="submitPayment(f)">
 
             <mat-grid-list cols="1" rowHeight="88px" gutterSize="10px">
                 <mat-grid-tile>
@@ -37,10 +43,8 @@
                     </mat-form-field>
                 </mat-grid-tile>
             </mat-grid-list>
-            <!-- <input type="button" value="TEST" (click)="onPay()" />
-            <input type="button" value="Pay with Lightbox" onclick="Checkout.showLightbox();" />
-            <input type="button" value="Pay with Payment Page" onclick="Checkout.showPaymentPage();" /> -->
+          
             <button mat-raised-button class="button-quote" [disabled]="f.invalid"> {{'Pay' | uppercase}} </button>
-        </form>
+        </form> -->
     </div>
 </mat-card>

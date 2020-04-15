@@ -5,7 +5,7 @@
 
 @font-face {
     font-family: Tajawal;
-    src: url('assets/fonts/Tajawal-Regular.ttf') format("opentype");
+    src: url('assets/fonts/Circle-Light.otf') format("opentype");
 }
 
 html,
@@ -34,9 +34,9 @@ body {
 [dir="rtl"] mat-card-content,
 [dir="rtl"] mat-button,
 [dir="rtl"] button,
-div,
-span,
-mat-select {
+[dir="rtl"] div,
+[dir="rtl"] span,
+[dir="rtl"] mat-select {
     font-family: Tajawal !important;
 }
 
@@ -56,8 +56,8 @@ mat-select {
 [dir="ltr"] mat-card-content,
 [dir="ltr"] mat-button,
 [dir="ltr"] button div,
-span,
-mat-select {
+[dir="ltr"] span,
+[dir="ltr"] mat-select {
     font-family: Arial !important;
 }
 
@@ -199,10 +199,12 @@ form-field:not(:last-child) {
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: #073e89 !important;
 }
-.mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
+
+.mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
     background-color: #073e89 !important;
-  }
-  
+}
+
 .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
     background-color: #073e89 !important;
-  }
+}

@@ -1,6 +1,5 @@
 <mat-card>
     <h2 class="special-title">{{ 'results_info.title3' | translate }}</h2>
-    <!-- <input type="button" value="Pay with Lightbox" (click)="onPay()" /> -->
 
     <form #fInfo="ngForm" (ngSubmit)="submitTravelerInfo(fInfo)">
         <mat-radio-group color="success" aria-label="Select an option" color="primary" name="national" [(ngModel)]="national" #typeInput="ngModel" (change)="showField($event)" required>

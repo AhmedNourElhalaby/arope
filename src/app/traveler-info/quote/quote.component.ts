@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TravelerService } from '../traveler.service';
 import { Subscription } from 'rxjs';
 import { UIService } from '../../shared/ui.services';
+
 @Component({
   selector: 'app-quote',
   templateUrl: './quote.component.html',
@@ -14,6 +15,9 @@ export class QuoteComponent implements OnInit, OnDestroy {
   isLoading = false;
   isLoadingSubs: Subscription;
   resObjExcess;
+
+
+
   constructor(private travelerService: TravelerService, private uiService: UIService) {
    }
 
@@ -33,6 +37,7 @@ export class QuoteComponent implements OnInit, OnDestroy {
       this.isLoading = res;
     });
   }
+
 
 
   /** Gets the total cost of all transactions. */

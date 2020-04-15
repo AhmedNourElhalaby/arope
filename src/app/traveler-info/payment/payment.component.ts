@@ -2,6 +2,7 @@ import {
   Component,
   OnInit,
   Output,
+  AfterViewChecked,
   EventEmitter,
   Renderer2,
   Inject
@@ -18,9 +19,9 @@ import {
 } from "@angular/material/core";
 import { NgForm, NgModel } from "@angular/forms";
 import { OdooService } from "src/app/shared/odoo.service";
-import { NgControl } from "@angular/forms";
 import { TravelerService } from "../traveler.service";
 import { PaymentModel } from "../payment.model";
+declare let Checkout: any;
 export const MY_FORMATS = {
   parse: {
     dateInput: "MM/YYYY"
@@ -47,10 +48,12 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
   ]
 })
-export class PaymentComponent implements OnInit {
+
+export class PaymentComponent implements OnInit, AfterViewChecked {
   paymentForm: PaymentModel;
   loadAPI: Promise<any>;
   @Output() paymentStatus = new EventEmitter();
+  qnbConfig ;
   constructor(
     private odoo: OdooService,
     private travelerService: TravelerService,
@@ -59,6 +62,41 @@ export class PaymentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    //amount, name, adress, email, phone
+    const data_info  = this.getInfoTraveller();
+    this.qnbConfig = {
+      merchant: 'TESTQNBAATEST001',
+      order: {
+          amount: function() {
+              //Dynamic calculation of amount
+              return data_info.total_price;
+          },
+          currency: 'EGP',
+          description: data_info.package,
+        id: ''
+      },
+        interaction: {
+          merchant      : {
+          name   : data_info.full_name,
+          address: {
+                        line1: data_info.address           
+          },
+          email  : data_info.mail,
+          phone  : data_info.phone,
+          
+          logo   : 'https://imageURL'
+          },
+          locale        : 'ar_EG',
+          theme         : 'default',
+          displayControl: {
+              billingAddress  : 'HIDE',
+              customerEmail   : 'HIDE',
+              orderSummary    : 'SHOW',
+              shipping        : 'HIDE'
+            }
+          }
+  };
+
     this.paymentForm = this.travelerService.paymentForm;
     console.log("", this.paymentForm);
 
@@ -66,6 +104,27 @@ export class PaymentComponent implements OnInit {
     // let script = this._render2.createElement('script');
     // script.type = `application/ld+json`;
     // script.src = "https://qnbalahli.test.gateway.mastercard.com/checkout/version/55/checkout.js";
+  }
+
+  getInfoTraveller() {
+    const info = JSON.parse(localStorage.getItem('formData'));
+    const total_price = Number(localStorage.getItem('total_price'));
+    const type = info.data.package;
+
+    const phone = info.data.phone;
+    const full_name = info.data.c_name;
+    const mail = info.data.mail;
+    const address = info.data.add;
+
+    return {
+        phone: phone,
+        full_name: full_name,
+        mail: mail,
+        address: address,
+        total_price: total_price,
+        package: 'your package: ' + type
+    };
+    
   }
 
 loadStripe() {
@@ -117,7 +176,22 @@ loadStripe() {
     handler.showLightbox();
     }
 
-
+    ngAfterViewChecked() {
+      // if(!this.addScript) {
+      //   this.qnbScript().then(()=> {
+          Checkout.configure(this.qnbConfig);
+      //   });
+      // }
+    }
+  
+    onClick() {
+      Checkout.showLightbox({
+        onCancel: function() {
+          console.log('error');
+        }
+      });
+    }
+  
   submitPayment(form: NgForm) {
     console.log("ay kalam");
     if (form.valid) {

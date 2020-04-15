@@ -4,7 +4,7 @@ import { WelcomeService } from '../../welcome/welcome.service';
 import { MatStepper } from '@angular/material';
 import { UIService } from '../../shared/ui.services';
 import { Router } from '@angular/router';
-
+// declare var Checkout: any;
 @Component({
   selector: 'app-price-card',
   templateUrl: './price-card.component.html',
@@ -51,6 +51,8 @@ export class PriceCardComponent implements OnInit {
     this.clicked.emit(true);
     window.scrollTo(0, 0);
   }
+
+
 
   ngOnDestroy() {
     if (this.loadPriceSubs) { this.loadPriceSubs.unsubscribe(); }
