@@ -21,15 +21,15 @@ export class TravelerInfoComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private travelerService: TravelerService
-  ) { 
+  ) {
     this.isShow = false;
   }
 
   ngOnInit() {
     this.subscription = this.travelerService.getShowValue()
-      .subscribe(item => this.isShow=item);
+      .subscribe(item => this.isShow = item);
     console.log(this.isShow);
-  
+
 
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ''
@@ -41,11 +41,11 @@ export class TravelerInfoComponent implements OnInit {
     this.direction = event.target.innerWidth <= 1000 ? 'column' : 'row';
   }
 
-  goForward(stepper: MatStepper, event){
+  goForward(stepper: MatStepper, event) {
 
     this.infoStatus = true;
     setTimeout(() => {
-      if(this.infoStatus) { stepper.next(); }
+      if (this.infoStatus) { stepper.next(); }
     }, 100);
 
   }
@@ -53,7 +53,7 @@ export class TravelerInfoComponent implements OnInit {
     console.log('yes');
     this.travelerInfoStatus = true;
     setTimeout(() => {
-      if(this.travelerInfoStatus) { stepper.next(); }
+      if (this.travelerInfoStatus) { stepper.next(); }
     }, 100);
 
   }

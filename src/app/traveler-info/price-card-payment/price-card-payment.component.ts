@@ -84,6 +84,7 @@ export class PriceCardPaymentComponent implements OnInit {
               // link.download = 'file.pdf';
               // link.dispatchEvent(new MouseEvent('click'));
               window.open('http://207.154.195.214/TravelWording_General_Conditions.pdf', '_blank');
+              this.downloadTerms('http://207.154.195.214/TravelWording_General_Conditions.pdf');
             });
 
             this.whenSucceed();
@@ -98,6 +99,7 @@ export class PriceCardPaymentComponent implements OnInit {
             this.http.get('http://207.154.195.214:8070/report/personal/' + res[0], { headers, responseType: 'blob' }).subscribe(res => {
               console.log(res);
               saveAs(res, `Policy (AROPE).pdf`);
+              this.downloadTerms('http://207.154.195.214/PA_General_Conditions.pdf');
               window.open('http://207.154.195.214/PA_General_Conditions.pdf', '_blank');
             });
             this.whenSucceed();
@@ -121,6 +123,14 @@ export class PriceCardPaymentComponent implements OnInit {
   });
   }
 
+  downloadTerms(url) {
+    let header = new HttpHeaders();
+    header = header.set('Accept', 'application/pdf');
+    this.http.get(url, { headers: header, responseType: 'blob' }).subscribe(res => {
+      console.log(res);
+      saveAs(res, `Terms&Conditions.pdf`);
+    });
+  }
 
 }
 

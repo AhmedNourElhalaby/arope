@@ -1,3 +1,4 @@
+import { SiteSettingsService } from './../../shared/site_settings.service';
 import { GroupAgeComponent } from './groupAge.component';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
@@ -38,6 +39,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   isIndividual = true;
   isFamly = false;
   isGroup = false;
+  isNotMore85: boolean;
   agesString: string;
   ageLoadSubs: Subscription;
   loadingSubs: Subscription;
@@ -50,6 +52,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   priceValue;
   periods;
   newDate;
+  indiMaxDate;
   formFields = {
     typeTraveler : 'individual',
     dates: '',
@@ -72,13 +75,14 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     private uiService: UIService,
     private odoo: OdooService,
     private route: ActivatedRoute,
-    private dateAdapter: DateAdapter<Date>
+    private dateAdapter: DateAdapter<Date>,
+    private site_settings: SiteSettingsService
   ) {}
 
   ngOnInit() {
-    if(this.lang == 'en') {
+    if (this.lang === 'en') {
       this.dateAdapter.setLocale('en');
-    } else if(this.lang == 'ar') {
+    } else if (this.lang === 'ar') {
       this.dateAdapter.setLocale('ar');
     }
     // get query params
@@ -117,6 +121,8 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     this.maxDate = new Date();
     this.maxDate.setDate(this.maxDate.getDate() - 0);
     this.minDate = this.welcomeService.getMinDateBefore30Days();
+    const maxindiDate = this.site_settings.getDateInYears(85);
+    this.indiMaxDate = new Date(maxindiDate.getFullYear(), maxindiDate.getMonth(), (maxindiDate.getDate() + 7));
 
     this.loadingSubs = this.uiService.loadingChangedStatus.subscribe(res => {
       this.isLoading = res;
@@ -133,7 +139,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
   }
 
-  get lang() { return localStorage.getItem("lang"); }
+  get lang() { return localStorage.getItem('lang'); }
   showPopup() {
     console.log(this.familyDataString);
     const dialogRef = this.dialog.open(AgeTravelerComponent, {
@@ -296,7 +302,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
         localStorage.setItem('groupDetails', groubLocal);
         this.priceValue = res;
         this.uiService.loadingChangedStatus.next(false);
-        this.router.navigate(['/', 'traveler-insurance','group-travel']);
+        this.router.navigate(['/', 'traveler-insurance', 'group-travel']);
      }, error => this.welcomeService.handleError(error.statusText));
     }
   }
@@ -362,13 +368,75 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   }
   getdate(form) {
     const date = form.value.dateWhen;
-    const x = date.getDate() + form.value.period;
-    this.newDate = new Date(date.getFullYear(), date.getMonth(), x);
+    if (form.value.period) {
+      const x = date.getDate() + form.value.period;
+      this.newDate = new Date(date.getFullYear(), date.getMonth(), x);
+    }
   }
 
-  setLocale(val){
+  setLocale(val) {
     console.log(val);
     this.dateAdapter.setLocale(val);
+  }
+
+  checkAgeNot85(form) {
+    const date = form.value.dateWhen;
+    let yearAge = 0;
+    let dateAge = 0;
+    if (form.value.period) {
+      const x = date.getDate() + form.value.period;
+      const endDate = new Date(date.getFullYear(), date.getMonth(), x);
+      const yearNow = endDate.getFullYear();
+      const monthNow = endDate.getMonth();
+      const dateNow = endDate.getDate();
+      let dob = new Date();
+      if (form.value.type === 'individual') {
+        dob = form.value.indAge;
+      } else if (form.value.type === 'family') {
+        dob = new Date(form.value.familyAges.substring(0, 10));
+      }
+
+      const yearDob = dob.getFullYear();
+      const monthDob = dob.getMonth();
+      const dateDob = dob.getDate();
+      yearAge = yearNow - yearDob;
+      if (monthNow >= monthDob) {
+        let monthAge = monthNow - monthDob;
+        if (dateNow >= dateDob) {
+          dateAge = dateNow - dateDob;
+        } else {
+          monthAge--;
+          dateAge = 31 + dateNow - dateDob;
+          if (monthAge < 0) {
+            monthAge = 11;
+            yearAge--;
+          }
+        }
+      } else {
+        yearAge--;
+        let monthAge = 12 + monthNow - monthDob;
+        if (dateNow >= dateDob) {
+           dateAge = dateNow - dateDob;
+        } else {
+          monthAge--;
+          dateAge = 31 + dateNow - dateDob;
+          if (monthAge < 0) {
+            monthAge = 11;
+            yearAge--;
+          }
+        }
+      }
+
+    }
+    console.log(yearAge, dateAge);
+    if (yearAge < 85 || yearAge === 85 && dateAge === 0 ) {
+      this.isNotMore85 = true;
+      console.log(this.isNotMore85);
+    } else {
+      this.isNotMore85 = false;
+      console.log(this.isNotMore85);
+      const key = 'date-0';
+    }
   }
 }
 

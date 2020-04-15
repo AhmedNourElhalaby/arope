@@ -16,10 +16,12 @@
                 <mat-grid-list cols="2" rowHeight="75px" gutterSize="10px">
 
 
-                    <mat-grid-tile colspan="2">
+                    <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label>{{ 'car.brands' | translate }}</mat-label>
                             <mat-select name="brandCar" ngModel #brandCar="ngModel" required>
+                                <ngx-mat-select-search [placeholderLabel]="'Find Brand'" [noEntriesFoundLabel]="'No matching brands found'" [formControl]="brandFilterCtrl"
+                                    ngDefaultControl></ngx-mat-select-search>
                                 <mat-option *ngFor="let brand of brands" [value]="brand.id">
                                     {{brand.title}}
                                 </mat-option>
@@ -47,6 +49,41 @@
                                 <mat-option value="chinese cars & east asia">
                                     {{ 'car.brand2' | translate }}
 
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="checkDeductibleRateOptions(f) != false" >
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label>{{ 'car.deductible' | translate }}</mat-label>
+                            <mat-select name="deductibleRate" ngModel #deductibleRate="ngModel" required>
+                                <mat-option value="option1">
+                                    {{'car.option1' | translate}}
+                                </mat-option>
+                                <mat-option value="option2">
+                                    {{'car.option2' | translate}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="checkDeductibleRateOptions(f) == false" >
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label>{{ 'car.model_year' | translate }}</mat-label>
+                            <mat-select name="year" ngModel #year="ngModel" required>
+                                <mat-option *ngFor="let year of years" [value]="year">
+                                    {{year}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                </mat-grid-list>
+                <mat-grid-list *ngIf="checkDeductibleRateOptions(f) != false" cols="1" rowHeight="75px" gutterSize="10px">
+                    <mat-grid-tile>
+                        <mat-form-field appearance="outline" class='form-field'>
+                            <mat-label>{{ 'car.model_year' | translate }}</mat-label>
+                            <mat-select name="year" ngModel #year="ngModel" required>
+                                <mat-option *ngFor="let year of years" [value]="year">
+                                    {{year}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

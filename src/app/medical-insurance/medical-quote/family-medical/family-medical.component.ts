@@ -11,18 +11,21 @@ import { FormGroup, FormArray } from '@angular/forms';
 export class FamilyMedicalComponent implements OnInit {
   @Input() datesCount: FormArray;
   @Input() form: FormGroup;
-  
+
   types;
-  minDate; 
+  minDate;
+  maxRelaseDate;
   constructor(private site_settings: SiteSettingsService, private medicalService: MedicalService) { }
 
   ngOnInit() {
     this.types = this.medicalService.Types;
     this.minDate = this.site_settings.getDateInYears(18);
+    // this.maxRelaseDate = new Date();
+    // this.maxRelaseDate.setDate(this.maxRelaseDate.getDate() - 0);
   }
 
   deleteElement(index: number) {
-    const ele = document.getElementById('field-'+index);
+    const ele = document.getElementById('field-' + index);
     ele.parentNode.removeChild(ele);
   }
 

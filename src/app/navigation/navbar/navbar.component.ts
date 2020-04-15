@@ -30,12 +30,22 @@ export class NavbarComponent implements OnInit {
   }
   goToPersonalAccident() {
     this.travel = false;
-    this.router.navigate(['/personal-accident']);
+    // this.router.navigate(['/personal-accident']);
     this.personal = true;
   }
   goToTravel() {
     this.personal = false;
-    this.router.navigate(['']);
+    // this.router.navigate(['']);
     this.travel = true;
+  }
+  goToMedical() {
+    this.personal = false;
+    // this.router.navigate(['medical-insurance']);
+    this.travel = false;
+  }
+  goToMotor() {
+    this.personal = false;
+    // this.router.navigate(['car-insurance']);
+    this.travel = false;
   }
 }

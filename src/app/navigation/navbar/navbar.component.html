@@ -10,10 +10,12 @@
         <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.lt-lg *ngIf="lang == 'en'">
             <ul fxLayout class="navigation-links" dir="auto">
 
-                <li class="nav-item"><a class="link" routerLink="/traveler-insurance" routerLinkActive="active-link"><span class="mdi mdi-airplane-takeoff "></span>  {{'navbar.nav1' | translate}}</a></li>
-                <li class="nav-item"><a class="link" routerLink="/car-insurance" routerLinkActive="active-link"><span class="mdi mdi-car "></span> {{'navbar.nav2' | translate}}</a></li>
-                <li class="nav-item"><a class="link" routerLink="/medical-insurance" routerLinkActive="active-link"><span class="mdi mdi-medical-bag "></span> {{'navbar.nav3' | translate}}</a></li>
-                <li class="nav-item"><a class="link" routerLink="/personal-accident" routerLinkActive="active-link"><span class="mdi mdi-wheelchair-accessibility "></span> {{'navbar.nav4' | translate}}</a></li>
+
+                <li class="nav-item"><a class="link" [ngClass]="{'active-link': travel}" routerLink="/traveler-insurance" routerLinkActive="active-link"><span class="mdi mdi-airplane-takeoff "></span>  {{'navbar.nav1' | translate}}</a></li>
+                <li onclick="goToMotor()" class="nav-item"><a class="link" routerLink="/car-insurance" routerLinkActive="active-link"><span class="mdi mdi-car "></span> {{'navbar.nav2' | translate}}</a></li>
+                <li onclick="goToMedical()" class="nav-item"><a class="link" routerLink="/medical-insurance" routerLinkActive="active-link"><span class="mdi mdi-medical-bag "></span> {{'navbar.nav3' | translate}}</a></li>
+                <li onclick="goToPersonalAccident()" class="nav-item"><a class="link" routerLink="/personal-accident" routerLinkActive="active-link"><span class="mdi mdi-wheelchair-accessibility "></span> {{'navbar.nav4' | translate}}</a></li>
+
             </ul>
         </div>
         <div fxFlex fxLayout fxHide.lt-lg *ngIf="lang == 'ar'">

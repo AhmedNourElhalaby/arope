@@ -26,28 +26,28 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
   direction: 'rtl' | 'ltr';
   infoStatus = false;
   travelerInfoStatus = false;
-  constructor(private http: HttpClient ,private carService: CarInsuranceService, private route: ActivatedRoute, private router: Router, private uiService: UIService) { }
+  deductibleRate;
+  constructor(private http: HttpClient , private carService: CarInsuranceService, private route: ActivatedRoute, private router: Router, private uiService: UIService) { }
 
-  ngOnInit(){
-    
+  ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      if(!paramMap.has('brand') && !paramMap.has('product') && !paramMap.has('price')) {
+      this.deductibleRate = paramMap.get('deductibleRate');
+      if (!paramMap.has('brand') && !paramMap.has('product') && !paramMap.has('price'))  {
         this.router.navigate(['car-insurance']);
         return;
       }
-      
       this.brandCar = paramMap.get('brandCar');
       this.type = paramMap.get('product');
       this.brand = paramMap.get('brand');
       this.price = paramMap.get('price');
-      
-      
+
     });
     this.isLoadingSubs = this.uiService.loadingChangedStatus.subscribe(res => {
       this.isLoading = res;
     });
 
-    this.carService.loadCovers.subscribe(covers=> {
+
+    this.carService.loadCovers.subscribe(covers => {
       this.objCovers = covers;
       console.log('covers', covers);
     });
@@ -56,55 +56,66 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
 
       this.totalPrice = res;
     });
+    if (this.deductibleRate === 'option1' || this.deductibleRate === 'option2') {
+      const data = {
+        paramlist: {
+          data: {brand: this.brand, product: this.type, price: parseInt(this.price), deductible: this.deductibleRate}
+        }
+      };
+      console.log('10');
+      this.carService.sendPriceAndGetPrice(data);
+    } else {
     const data = {
       paramlist: {
         data: {brand: this.brand, product: this.type, price: parseInt(this.price)}
       }
     };
+    console.log(this.deductibleRate);
     this.carService.sendPriceAndGetPrice(data);
+  }
 
-    if(this.lang == 'en') {
-      this.direction="ltr";
+    if (this.lang === 'en') {
+      this.direction = 'ltr';
     } else {
-      this.direction = "rtl";
+      this.direction = 'rtl';
     }
   }
 
-  get lang() { return localStorage.getItem("lang"); }
+  get lang() { return localStorage.getItem('lang'); }
 
-  goForward(stepper: MatStepper, event){
+  goForward(stepper: MatStepper, event) {
 
     this.infoStatus = true;
     setTimeout(() => {
-      if(this.infoStatus) { stepper.next(); }
+      if (this.infoStatus) { stepper.next(); }
     }, 100);
 
   }
 
   goForwardToPayment(stepper: MatStepper, event) {
-    
+
     this.travelerInfoStatus = true;
     setTimeout(() => {
-      if(this.travelerInfoStatus) { stepper.next(); }
+      if (this.travelerInfoStatus) { stepper.next(); }
     }, 100);
 
   }
 
   goToNextStepper(stepper: MatStepper) {
-    
+
     this.infoStatus = true;
 
     setTimeout(() => {
-      if(this.infoStatus) { stepper.next(); }
+      if (this.infoStatus) { stepper.next(); }
     }, 100);
-   
+
   }
 
 
 
   ngOnDestroy() {
-    if(this.loadPriceSub) this.loadPriceSub.unsubscribe();
-    if(this.isLoadingSubs) this.isLoadingSubs.unsubscribe();
+    if (this.loadPriceSub) { this.loadPriceSub.unsubscribe(); }
+    if (this.isLoadingSubs) { this.isLoadingSubs.unsubscribe(); }
   }
 
 }
