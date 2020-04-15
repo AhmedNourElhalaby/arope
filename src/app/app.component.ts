@@ -9,7 +9,7 @@ import { Router, UrlTree, UrlSegmentGroup, UrlSegment, PRIMARY_OUTLET } from '@a
 })
 export class AppComponent implements OnInit {
   title = 'arope';
-
+  position: 'end' | 'start';
   constructor(private translateService: TranslateConfigService, private router: Router) {}
 
   get lang() { return localStorage.getItem('lang'); }
@@ -37,9 +37,11 @@ export class AppComponent implements OnInit {
     }
 
     if (this.lang === 'ar') {
+      this.position = 'start';
       this.currentDir = 'rtl';
       this.translateService.setDir('rtl');
     } else {
+      this.position = 'end';
       this.currentDir = 'ltr';
       this.translateService.setDir('ltr');
     }

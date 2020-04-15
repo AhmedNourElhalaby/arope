@@ -8,7 +8,7 @@
     background-size: cover;
     width: auto;
     background-image: url('/assets/images/background-img.jpg');
-    height: 100vh;
+    height: calc(100vh - 134px);
 }
 
 .container-welcome {
@@ -18,5 +18,11 @@
 @media only screen and (max-width: 1000px) {
     .container-welcome {
         margin: auto 10px !important;
+    }
+}
+
+@media  screen and (max-width: 600px) {
+    .img-background {
+        height: calc(100vh - 100px);
     }
 }

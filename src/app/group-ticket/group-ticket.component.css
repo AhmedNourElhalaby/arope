@@ -8,7 +8,7 @@
     background-size: cover;
     width: auto;
     background-image: url('/assets/images/background-img.jpg');
-    height: 100vh;
+    height: calc(100vh - 134px);: calc(100vh - 135px);
 }
 
 .container-welcome {
@@ -124,7 +124,7 @@ input#phoneInput {
     background-size: cover;
     width: auto;
     background-image: url('/assets/images/background-img.jpg');
-    height: 100vh;
+    height: calc(100vh - 134px);
 }
 
 .container-welcome {

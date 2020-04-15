@@ -6,7 +6,7 @@
     background-size: cover;
     width: auto;
     background-image: url('/assets/images/background-img.jpg');
-    height: 100vh;
+    height: calc(100vh - 134px);
 }
 
 mat-card-title {
