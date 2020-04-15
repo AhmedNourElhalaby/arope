@@ -52,6 +52,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   priceValue;
   periods;
   newDate;
+  breakpoint2;
   indiMaxDate;
   formFields = {
     typeTraveler : 'individual',
@@ -118,6 +119,8 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     });
 
     this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint2 = window.innerWidth <= 700 ? 1 : 3;
+
     this.maxDate = new Date();
     this.maxDate.setDate(this.maxDate.getDate() - 0);
     this.minDate = this.welcomeService.getMinDateBefore30Days();
@@ -137,6 +140,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   onResize(event) {
 
     this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint2 = event.target.innerWidth <= 700 ? 1 : 3;
   }
 
   get lang() { return localStorage.getItem('lang'); }

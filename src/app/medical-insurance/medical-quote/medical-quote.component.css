@@ -53,3 +53,10 @@ mat-radio-button {
     overflow: auto;
     max-height: 300px;
 }
+
+@media screen and (max-width: 600px) {
+    mat-radio-button {
+        display: block;
+        margin-bottom: 10px;
+    }
+}

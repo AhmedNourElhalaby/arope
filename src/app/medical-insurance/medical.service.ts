@@ -10,10 +10,19 @@ export class MedicalService {
       ];
 
     private _groupSizes = [
-        { value: '5', viewValue: '1-10' },
-        { value: '15', viewValue: '11-18' },
-        { value: '25', viewValue: '19-70' },
+
+      { viewValue: '0 - 17', value: 10 },
+      { viewValue: '18 - 24', value: 20 },
+      { viewValue: '25 - 29', value: 27 },
+      { viewValue: '30 - 34', value: 32 },
+      { viewValue: '35 - 39', value: 37 },
+      { viewValue: '40 - 44', value: 42 },
+      { viewValue: '45 - 49', value: 47 },
+      { viewValue: '50 - 54', value: 52 },
+      { viewValue: '55 - 59', value: 57 },
+      { viewValue: '60 - 64', value: 62 },
     ];
+
 
     loadMedicalInfo = new Subject<any>();
     constructor(private odooService: OdooService, private router: Router) {}

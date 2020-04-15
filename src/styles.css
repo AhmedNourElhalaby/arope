@@ -208,3 +208,9 @@ form-field:not(:last-child) {
 .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
     background-color: #073e89 !important;
 }
+
+@media screen and (max-width: 600px) {
+    .half-width-field {
+        width: 100%;
+    }
+} 

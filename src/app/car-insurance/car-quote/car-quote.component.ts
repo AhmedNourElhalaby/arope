@@ -16,6 +16,7 @@ export class CarQuoteComponent implements OnInit, OnDestroy {
   breakpoint;
   brands: Brand[];
   deductibleRate;
+  breackdown;
   price;
   country;
   type;
@@ -43,6 +44,8 @@ export class CarQuoteComponent implements OnInit, OnDestroy {
       const x = this.todayYear - i;
       this.years.push(x.toString());
     }
+
+    this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
 
   }
 
@@ -92,6 +95,13 @@ export class CarQuoteComponent implements OnInit, OnDestroy {
     this.brands = this.carService.Brands;
     this.brands = this.brands.filter(brand => brand.title.toLowerCase().indexOf(search) > -1);
   }
+
+  onResize(event) {
+
+    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
+    // this.breakpoint2 = event.target.innerWidth <= 700 ? 1 : 3;
+  }
+
   ngOnDestroy() {
     this._onDestroy.next();
     this._onDestroy.complete();
