@@ -1,12 +1,11 @@
-import { Component, OnInit, AfterViewChecked } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 declare let Checkout: any;
 @Component({
   selector: "app-welcome",
   templateUrl: "./welcome.component.html",
   styleUrls: ["./welcome.component.css"]
 })
-export class WelcomeComponent implements OnInit, AfterViewChecked {
-  addScript: boolean = false;
+export class WelcomeComponent implements OnInit {
 
   qnbConfig = {
       merchant: 'TESTQNBAATEST001',
@@ -42,13 +41,7 @@ export class WelcomeComponent implements OnInit, AfterViewChecked {
   };
   constructor() {}
   ngOnInit() {}
-  ngAfterViewChecked() {
-    // if(!this.addScript) {
-    //   this.qnbScript().then(()=> {
-        Checkout.configure(this.qnbConfig);
-    //   });
-    // }
-  }
+
 
   onClick() {
     Checkout.showLightbox({
@@ -58,23 +51,6 @@ export class WelcomeComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  errorCallback() {
-    console.log('Payment cancelled');
-}
-cancelRequest() {
-    console.log('Payment cancelled');
-}
 
-  qnbScript() {
-    this.addScript = true;
-    return new Promise((resolve, reject) => {
-      let scriptElement = document.createElement('script');
-      scriptElement.src = "https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js";
-      // scriptElement.setAttribute("data-error", "errorCallback");
-      // scriptElement.setAttribute("data-cancel", "cancelRequest");
-      scriptElement.onload = resolve;
-      document.body.appendChild(scriptElement);
-    })
-  }
 
 }

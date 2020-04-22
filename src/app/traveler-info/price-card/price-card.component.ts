@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { WelcomeService } from '../../welcome/welcome.service';
 import { MatStepper } from '@angular/material';
 import { UIService } from '../../shared/ui.services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 // declare var Checkout: any;
 @Component({
   selector: 'app-price-card',
@@ -18,17 +18,36 @@ export class PriceCardComponent implements OnInit {
   isDisabled = false;
   loadPriceSubs: Subscription;
   type;
+  stepper : boolean;
   @Output() clicked = new EventEmitter();
 
   constructor(
     private welService: WelcomeService,
     private uiService: UIService,
-    private router: Router
+    private router: Router,
+    private routerActivated: ActivatedRoute
   ) {
 
   }
 
   ngOnInit() {
+      //params query 
+  this.routerActivated.queryParamMap.subscribe(param => {
+
+    //start code
+    if(param.has('step')) {
+      console.log('text', param.get('step'));
+      this.clicked.emit(true);
+    }
+    
+  });
+
+  if (localStorage.getItem("stepper") === null) {
+    this.stepper = false;
+  } else if(Boolean(localStorage.getItem("stepper")) === true) {
+    this.stepper = true;
+  }
+
     this.type = localStorage.getItem('type');
 
     this.totalPrice = localStorage.getItem('total_price');
@@ -50,6 +69,8 @@ export class PriceCardComponent implements OnInit {
     this.isDisabled = true;
     this.clicked.emit(true);
     window.scrollTo(0, 0);
+
+    // localStorage.setItem('stepper', 'true');
   }
 
 

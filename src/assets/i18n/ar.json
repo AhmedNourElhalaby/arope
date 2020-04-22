@@ -26,7 +26,8 @@
         "period": "و لمدة",
 
         "egypt": "مصري",
-        "non_egypt": "غير مصري"
+        "non_egypt": "غير مصري",
+        "back_home": "الرجوع للصفحة الرئيسية"
     },
     "stepper": {
         "step1": "المزايا",
@@ -119,7 +120,9 @@
         "golden": "Golden",
         "platinum": "Platinum",
         "diamond": "Diamond",
+        "diamond_elite": "Diamond Elite",
         "plans_price": "برامج اسعار التأمين",
+        "small_text": "السعر هو مجموع جميع الأعمار",
         "elite": "Elite",
         "prestige": "Prestige",
         "blue": "Blue",

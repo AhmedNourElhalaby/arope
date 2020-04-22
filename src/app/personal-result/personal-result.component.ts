@@ -18,6 +18,7 @@ export class PersonalResultComponent implements OnInit {
   isShow: boolean;
   subscription: Subscription;
   direction;
+  selectedIndex: number = 0;
   constructor(
     private _formBuilder: FormBuilder,
     private travelerService: TravelerService
@@ -64,6 +65,30 @@ export class PersonalResultComponent implements OnInit {
       if (this.paymentStatus) { stepper.next(); }
     }, 100);
 
+  }
+
+
+  setIndex(event) {
+    this.selectedIndex = event.selectedIndex;
+  }
+
+  triggerClick() {
+    if(this.selectedIndex === 0) {
+      console.log('remove');
+      localStorage.removeItem('stepper');
+    }
+    console.log(`Selected tab index: ${this.selectedIndex}`);
+  }
+
+  ngOnDestroy() {
+    console.log('component destroy');
+    let myItem = localStorage.getItem('lang');
+    localStorage.clear();
+    localStorage.setItem('lang', myItem);
+
+    let script = document.querySelector("#myscript");
+    script.removeAttribute("data-complete");
+    
   }
 
 }

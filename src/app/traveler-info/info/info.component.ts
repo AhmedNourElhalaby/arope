@@ -1,17 +1,19 @@
 import { WelcomeService } from './../../welcome/welcome.service';
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, AfterViewChecked } from '@angular/core';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {FormControl, FormGroupDirective, NgForm, Validators, AbstractControl} from '@angular/forms';
 import { SiteSettingsService } from 'src/app/shared/site_settings.service';
 import { OdooService } from 'src/app/shared/odoo.service';
 import { TravelerService } from '../traveler.service';
 import { ValidationService } from 'src/app/shared/validation.service';
-// import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
 // FORMATE DATE
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-
+declare let Checkout: any;
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -32,14 +34,18 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     }
   ]
 })
-export class InfoComponent implements OnInit {
+export class InfoComponent implements OnInit, AfterViewChecked {
   constructor(
     private setting: SiteSettingsService,
     private odoo: OdooService,
     private welService: WelcomeService,
     private travelerService: TravelerService,
     private validation: ValidationService,
-    private dateAdapter: DateAdapter<Date>
+    private dateAdapter: DateAdapter<Date>,
+    private router: Router,
+    private routerActivated: ActivatedRoute,
+
+    private http: HttpClient,
     // private save: saveAs
   ) {
   }
@@ -66,6 +72,22 @@ export class InfoComponent implements OnInit {
   cid: boolean;
   national = 'egyptian';
   isEgyptian: boolean = true;
+  data_info = {
+    phone: '',
+    full_name: '',
+    mail: '',
+    address: '',
+    total_price: 0,
+    package: '',
+    first_name: '',
+    middle_name: '',
+    last_name: '',
+    gender: '',
+    id: '',
+    national: 'egyptian',
+    Passport:'',
+    confirm: false
+  }
   // emailFormControl = new FormControl('', [
   //   Validators.required,
   //   Validators.email,
@@ -77,10 +99,67 @@ export class InfoComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
   @Output() changeStatus = new EventEmitter();
-
-
+  qnbConfig;
+  addScript: boolean = false;
 
   ngOnInit() {
+
+
+      // start qnp config
+      this.initQnpConfig();
+      //end qnp config
+  //params query 
+  this.routerActivated.queryParamMap.subscribe(param => {
+
+    //start code
+    if(param.has('step')) {
+      console.log('text', param.get('step'));
+      localStorage.setItem('stepper', 'true');
+      this.changeStatus.emit(true);
+      const formData = JSON.parse(localStorage.getItem('formData'));
+
+      const data = { paramlist: {data: formData.data} };
+      console.log('data', data);
+      if (formData.key === 'travel') {
+        // setup download file
+        let headers = new HttpHeaders();
+        headers = headers.set('Accept', 'application/pdf');
+
+
+        this.odoo.call_odoo_function(
+            'travel_agency',
+            'online',
+            'online',
+            'travel.front',
+            'create_policy',
+            data
+          )
+          .subscribe(res => {
+            console.log('ressss', res);
+            // this.testDownload();
+
+            // download file
+            this.http.get('http://207.154.195.214:8070/report/' + res[0], { headers, responseType: 'blob' }).subscribe(res => {
+              console.log(res);
+              saveAs(res, `Policy (AROPE).pdf`);
+              // return this.http.get('http://207.154.195.214:8070/Terms/');
+              // const link = document.createElement('a');
+              // link.href = '207.154.195.214/TravelWording.pdf';
+              // link.download = 'file.pdf';
+              // link.dispatchEvent(new MouseEvent('click'));
+              window.open('http://207.154.195.214/TravelWording_General_Conditions.pdf', '_blank');
+              this.downloadTerms('http://207.154.195.214/TravelWording_General_Conditions.pdf');
+            });
+
+           
+          });
+        }
+      
+    }
+    
+  });
+
+
     this.type = localStorage.getItem('type');
     if (this.type === 'individual') {
       this.indi = true;
@@ -112,6 +191,83 @@ export class InfoComponent implements OnInit {
     // this.loadData();
     // this.mail = false;
     // this.checkMail('ahmednourelhalaby@gmail.com');
+  }
+  downloadTerms(url) {
+    let header = new HttpHeaders();
+    header = header.set('Accept', 'application/pdf');
+    this.http.get(url, { headers: header, responseType: 'blob' }).subscribe(res => {
+      console.log(res);
+      saveAs(res, `Terms&Conditions.pdf`);
+    });
+  }
+  ngAfterViewChecked() {
+    let script = document.querySelector("#myscript");
+    script.setAttribute("data-complete", "http://localhost:4200/traveler-insurance/traveler-info?step=thankyou");
+
+
+  }
+
+  initQnpConfig() {
+    const data_traveler = JSON.parse(localStorage.getItem('formData'));
+    const session_id = this.travelerService.getJSessionId();
+    const total_price = localStorage.getItem('total_price');
+
+    if(data_traveler) {
+      console.log('data traveler', data_traveler);
+      this.data_info = this.travelerService.getInfoTraveller();
+      console.log('data-info', this.data_info);
+    }
+    
+    this.national = this.data_info.national;
+    //qnp config
+    this.qnbConfig = {
+      merchant: 'TESTQNBAATEST001',
+      session: {
+        id: session_id
+      },
+      order: {
+          amount: function() {
+              //Dynamic calculation of amount
+              return Number(total_price);
+          },
+          currency: 'EGP',
+          description: this.data_info.package,
+        id: session_id
+      },
+        interaction: {
+          merchant      : {
+            name   : 'شركة أروب مصر',
+            address: {
+              line1: '30, Msadak, Ad Doqi Giza 12411'         
+            },
+            phone  : '02 33323299',
+            
+            logo   : 'https://aropeegypt.com.eg/Property/wp-content/uploads/2019/10/Logoz-3.jpg'
+          },
+          locale        : 'ar_EG',
+          theme         : 'default',
+          displayControl: {
+              billingAddress  : 'HIDE',
+              customerEmail   : 'HIDE',
+              orderSummary    : 'SHOW',
+              shipping        : 'HIDE'
+            }
+          }
+  };
+
+  Checkout.configure(this.qnbConfig);
+  }
+
+  qnbScript() {
+    this.addScript = true;
+    return new Promise((resolve, reject) => {
+      let scriptElement = document.createElement('script');
+      scriptElement.src = "https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js";
+      scriptElement.setAttribute("data-complete", "http://localhost:4200/traveler-insurance/traveler-info?step=thankyou");
+      scriptElement.setAttribute("data-error", "errorCallback");
+      scriptElement.onload = resolve;
+      document.head.appendChild(scriptElement);
+    })
   }
 
   get lang() { return localStorage.getItem('lang'); }
@@ -146,63 +302,9 @@ loadStripe() {
     window.document.head.appendChild(s);
   }
 }
-onPay() {
-
-this.loadData();
-setTimeout(() => {
-
-  (window as any).Checkout.showPaymentPage();
-}, 2000);
-}
- loadData() {
-
-    (window as any).Checkout.configure({
-            merchant: 'TESTQNBAATEST001',
-        order: {
-            amount() {
-                // Dynamic calculation of amount
-                return 80 + 20;
-            },
-            currency: 'EGP',
-            description: 'Ordered goods',
-            id: ''
-        },
-        interaction: {
-            merchant: {
-                name: 'Your merchant name',
-                address: {
-                    line1: '200 Sample St',
-                    line2: '1234 Example Town'
-                },
-                email: 'order@yourMerchantEmailAddress.com',
-                phone: '+1 123 456 789 012',
-                logo: 'https://imageURL'
-            },
-            locale: 'en_US',
-            theme: 'default',
-            displayControl: {
-                billingAddress: 'HIDE',
-                customerEmail: 'HIDE',
-                orderSummary: 'SHOW',
-                shipping: 'HIDE'
-            }
-        }
-    });
-    console.log('done');
-
-    }
-
-
-
-     errorCallback(error) {
-      console.log(JSON.stringify(error));
-}
- cancelCallback() {
-      console.log('Payment cancelled');
-}
-
 
   submitTravelerInfo(form: NgForm) {
+    console.log(form.value);
     console.log(form.value.additionalTravelers);
     this.isValidFormSubmitted = false;
     const age = this.setting.convertDate(form.value.dateBirth);
@@ -227,7 +329,9 @@ setTimeout(() => {
         p_to: till,
         family: [],
         id: form.value.id,
-        mail: form.value.emailAddress
+        mail: form.value.emailAddress,
+        national: form.value.national,
+        confirm: true
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));
       const data = {paramlist: {data: {z: localStorage.getItem('zone'), d: [age],
@@ -237,7 +341,9 @@ setTimeout(() => {
           const x = res.gross.toFixed(2);
           localStorage.setItem('total_price', parseInt(x.toString(), 10).toString());
           this.changeShowValue();
-          this.changeStatus.emit(true);
+          
+
+          this.onClickAfterSubmit();
         });
       const caching = {
         fname: form.value.firstName,
@@ -296,7 +402,9 @@ setTimeout(() => {
         p_to: till,
         family: familyD,
         mail: form.value.emailAddress,
-        id: form.value.id
+        id: form.value.id,
+        confirm: true,
+        national: form.value.national
 
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));
@@ -307,12 +415,22 @@ setTimeout(() => {
         // console.log(res);
         localStorage.setItem('total_price', x);
         this.changeShowValue();
-        this.changeStatus.emit(true);
+        
+
+        this.onClickAfterSubmit();
       });
       this.welService.sendQuoteResult('get_family', data);
     }
     this.isValidFormSubmitted = true;
     // form.resetForm();
+
+    
+  }
+
+  onClickAfterSubmit() {
+    this.initQnpConfig();
+    console.log('data start', this.data_info);
+    Checkout.showLightbox();
   }
 
   changeShowValue() {

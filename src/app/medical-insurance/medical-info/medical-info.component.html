@@ -14,7 +14,8 @@
                 </ng-template>
 
                 <mat-step label="{{ 'stepper.step1' | translate }}" [stepControl]="infoStatus" state="quote">
-                    <h2 class="special-title">{{"medical.plans_price" | translate}}</h2>
+                <h2 class=""><span class="big-text">{{"medical.plans_price" | translate}}</span> (<span class="small-text"> {{ 'medical.small_text' | translate }}</span>)</h2>
+
 
                     <div *ngIf="type === 'smes'" style="overflow-x: scroll;">
 

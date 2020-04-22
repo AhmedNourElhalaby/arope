@@ -25,6 +25,7 @@
         "plan_benfits": "Plan Benefits",
         "period": "Period in Days",
         "egypt": "Egyptian",
+        "back_home": "Back To Home page",
         "non_egypt": "Non Egyptian"
     },
     "stepper": {
@@ -118,8 +119,10 @@
         "golden": "Golden",
         "platinum": "Platinum",
         "diamond": "Diamond",
+        "diamond_elite": "Diamond Elite",
         "plans_price": "Plan Prices",
         "elite": "Elite",
+        "small_text": " the price is total all age bands",
         "prestige": "Prestige",
         "blue": "Blue",
         "age": "AGE (FROM-TO)",

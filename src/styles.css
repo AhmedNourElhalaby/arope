@@ -214,3 +214,7 @@ form-field:not(:last-child) {
         width: 100%;
     }
 } 
+
+.info-form .button-quote span.mat-button-wrapper {
+    margin: auto -7px;
+}

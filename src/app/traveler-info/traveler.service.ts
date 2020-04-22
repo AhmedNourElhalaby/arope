@@ -23,6 +23,104 @@ export class TravelerService {
 
   }
 
+  getJSessionId(){
+      let jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+      let dd;
+      if(jsId != null) {
+          if (jsId instanceof Array) {
+              dd = jsId[0].substring(11);
+            }
+          else {
+              dd = String(jsId).substring(11);
+            }
+      }
+      return dd;
+  }
+  
+  getInfoTraveller() {
+    const info = JSON.parse(localStorage.getItem('formData'));
+    const total_price = Number(localStorage.getItem('total_price'));
+    const type = info.data.package;
+
+    const phone = info.data.phone;
+    const full_name = info.data.c_name;
+    const mail = info.data.mail;
+    const address = info.data.add;
+    const national = info.data.national;
+    const gender = info.data.gender;
+    const id = info.data.id;
+    const confirm = info.data.confirm;
+    const Passport = info.data.pass;
+
+    const split_str = full_name.split(' ');
+    const first_name = split_str[0];
+    const middle_name = split_str[1];
+    const last_name = split_str[2];
+
+    return {
+        phone: phone,
+        full_name: full_name,
+        mail: mail,
+        address: address,
+        total_price: total_price,
+        package: 'your package: ' + type,
+        first_name: first_name,
+        middle_name: middle_name,
+        last_name: last_name,
+        gender: gender,
+        id: id,
+        national: national,
+        Passport:Passport,
+        confirm:confirm
+    };
+    
+  }
+
+  getInfoPersonal() {
+    const info = JSON.parse(localStorage.getItem('formData'));
+    const total_price = Number(localStorage.getItem('total_price'));
+    const type = info.key;
+
+    const phone = info.data.phone;
+    const full_name = info.data.c_name;
+    const mail = info.data.mail;
+    const address = info.data.address;
+    const national = info.data.national;
+    const gender = info.data.gender;
+    const id = info.data.id;
+
+
+    
+    
+    const split_str = full_name.split(' ');
+    const first_name = split_str[0];
+    const middle_name = split_str[1];
+    const last_name = split_str[2];
+    
+    const elig_bool = info.data.elig_bool.toString();
+    let others;
+    if(info.data.othere) {
+      console.log('type of othere ', typeof( info.data.othere));
+      others= info.data.othere;
+    }
+    return {
+        phone: phone,
+        full_name: full_name,
+        mail: mail,
+        address: address,
+        total_price: total_price,
+        package: 'your package: '+type,
+        first_name: first_name,
+        middle_name: middle_name,
+        last_name: last_name,
+        gender: gender,
+        id: id,
+        others: others,
+        after_die:elig_bool
+    };
+    
+  }
+
   /* get payment list data */
   getPaymentFormData() {
     return this.firePaymentForm;

@@ -7,7 +7,7 @@ import { MatStepper } from '@angular/material';
   styleUrls: ['./smes-table.component.css']
 })
 export class SmesTableComponent implements OnInit {
-  displayedColumns: string[] = ['cover', 'Golden', 'Platinum', 'Diamond'];
+  displayedColumns: string[] = ['cover', 'Golden', 'Platinum', 'Diamond', 'Diamond_Elite'];
   @Input() objMedicalInfo: any;
   @Input() stepper: MatStepper;
   infoStatus = false;

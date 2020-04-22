@@ -10,7 +10,7 @@ import { Router, UrlTree, UrlSegmentGroup, UrlSegment, PRIMARY_OUTLET } from '@a
 export class AppComponent implements OnInit {
   title = 'arope';
   position: 'end' | 'start';
-  constructor(private translateService: TranslateConfigService, private router: Router) {}
+  constructor(private translateService: TranslateConfigService, private router: Router, private trnaslateService: TranslateConfigService) {}
 
   get lang() { return localStorage.getItem('lang'); }
   currentDir: 'rtl' | 'ltr';
@@ -32,18 +32,36 @@ export class AppComponent implements OnInit {
 
     this.currentDir = this.currentDir === 'ltr' ? 'rtl' : 'ltr';
 
-    if (!localStorage.getItem('lang')) {
-      localStorage.setItem('lang', 'ar');
-    }
+    this.changeLang();
+  }
 
-    if (this.lang === 'ar') {
+  changeLang() {
+    let lang = localStorage.getItem('lang');
+    
+    if(!lang) {
+      
+      this.trnaslateService.setLanguage('ar');
+      this.trnaslateService.setDefault('ar');
+      this.trnaslateService.setDir('rtl');
+      localStorage.setItem('lang', 'ar');
       this.position = 'start';
       this.currentDir = 'rtl';
-      this.translateService.setDir('rtl');
     } else {
-      this.position = 'end';
-      this.currentDir = 'ltr';
-      this.translateService.setDir('ltr');
+      let langStorage = localStorage.getItem('lang');
+      this.trnaslateService.setLanguage(langStorage);
+      this.trnaslateService.setDefault(langStorage);
+
+      if(langStorage === 'ar') {
+        this.trnaslateService.setDir('rtl');
+        this.position = 'start';
+        this.currentDir = 'rtl';
+      }
+      else if(langStorage === 'en') {
+        this.trnaslateService.setDir('ltr');
+        this.position = 'end';
+        this.currentDir = 'ltr';
+      }
+        
     }
   }
 

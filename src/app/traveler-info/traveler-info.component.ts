@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { TravelerService } from './traveler.service';
 import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-traveler-info',
   templateUrl: './traveler-info.component.html',
   styleUrls: ['./traveler-info.component.css']
 })
-export class TravelerInfoComponent implements OnInit {
+export class TravelerInfoComponent implements OnInit, OnDestroy {
   infoStatus = false;
   isCompleted = false;
   travelerInfoStatus = false;
@@ -18,14 +19,20 @@ export class TravelerInfoComponent implements OnInit {
   isShow: boolean;
   subscription: Subscription;
   direction;
+  selectedIndex: number = 0;
   constructor(
     private _formBuilder: FormBuilder,
-    private travelerService: TravelerService
+    private travelerService: TravelerService,
+    private routerActivated: ActivatedRoute
   ) {
     this.isShow = false;
   }
 
   ngOnInit() {
+    if(this.selectedIndex === 0) {
+      localStorage.removeItem('stepper');
+    }
+
     this.subscription = this.travelerService.getShowValue()
       .subscribe(item => this.isShow = item);
     console.log(this.isShow);
@@ -67,4 +74,25 @@ export class TravelerInfoComponent implements OnInit {
 
   }
 
+  setIndex(event) {
+    this.selectedIndex = event.selectedIndex;
+  }
+
+  triggerClick() {
+    if(this.selectedIndex === 0) {
+      console.log('remove');
+      localStorage.removeItem('stepper');
+    }
+    console.log(`Selected tab index: ${this.selectedIndex}`);
+  }
+
+  ngOnDestroy() {
+    console.log('component destroy');
+    let myItem = localStorage.getItem('lang');
+    localStorage.clear();
+    localStorage.setItem('lang', myItem);
+
+    let script = document.querySelector("#myscript");
+    script.removeAttribute("data-complete");
+  }
 }

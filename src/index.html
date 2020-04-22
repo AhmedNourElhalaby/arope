@@ -11,11 +11,24 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.materialdesignicons.com/4.7.95/css/materialdesignicons.min.css" rel="stylesheet">
 
-    <script src="https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js" data-cancel="cancelCallback">
+    <script id="myscript" src="https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js" 
+    data-cancel="cancelCallback" 
+    data-error="errorCallback"
+   
+    >
     </script>
     <script>
         function cancelCallback() {
             console.log('Payment cancelled');
+        }
+
+        function errorCallback(error) {
+            alert('The Operation couldn\'t be complated');
+            console.log(JSON.stringify(error));
+        }
+
+        function timeoutCallback() {
+            alert('Network Error : No Data Received.');
         }
     </script>
 

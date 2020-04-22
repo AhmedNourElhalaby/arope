@@ -13,7 +13,8 @@
 
 
                 <br><br>
-                <mat-grid-list [cols]="breackdown" rowHeight="75px" gutterSize="10px">
+              
+                <mat-grid-list [cols]="breakpoint" rowHeight="75px" gutterSize="10px" (window:resize)="onResize($event)">
 
 
                     <mat-grid-tile>
@@ -53,6 +54,7 @@
                             </mat-select>
                         </mat-form-field>
                     </mat-grid-tile>
+
                     <mat-grid-tile *ngIf="checkDeductibleRateOptions(f) != false" >
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label>{{ 'car.deductible' | translate }}</mat-label>
