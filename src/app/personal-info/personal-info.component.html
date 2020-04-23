@@ -7,19 +7,19 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
-                    <input matInput type="text" name="firstName" [ngModel]="data_info.first_name" #firstName="ngModel" required>
+                    <input matInput type="text" name="firstName" [ngModel]="data_info.first_name" pattern="[a-zA-Z ]*" #firstName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.middleName' | translate }}</mat-label>
-                    <input matInput type="text" name="middleName" [ngModel]="data_info.middle_name" #middleName="ngModel" required>
+                    <input matInput type="text" name="middleName" [ngModel]="data_info.middle_name" pattern="[a-zA-Z ]*" #middleName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.lastName' | translate }}</mat-label>
-                    <input matInput type="text" name="lastName" [ngModel]="data_info.last_name" #lastName="ngModel" required>
+                    <input matInput type="text" name="lastName" [ngModel]="data_info.last_name" pattern="[a-zA-Z ]*" #lastName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
@@ -64,7 +64,7 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.id' | translate }}</mat-label>
-                    <input matInput type="number" name="id" ngModel #id="ngModel" required (blur)="checkId()">
+                    <input matInput type="number" name="id" ngModel #id="ngModel" minlength="14" maxlength="14" required (input)="checkId()">
                     <p *ngIf="cid === false" class="custom-error"> {{ 'results_info.id_alert' | translate }}</p>
                 </mat-form-field>
             </mat-grid-tile>
@@ -96,14 +96,15 @@
         margin-top: 20px; background-color: #f3f3f3;" *ngIf="after_die.value == 'false'">
             <!-- Start From Others -->
 
-
+    
             <div ngModelGroup="others" #others="ngModelGroup">
 
                 <span *ngFor="let count of element; let i = index" class="family">
                   
                         <div fxLayout="row" fxLayoutGap="1%" id="field-{{i}}">
                             <h4 style="width: 250px;">{{'personal.personal' | translate}} #{{i+1}}</h4>
-                        <div ngModelGroup="{{i}}" #num="ngModelGroup" style="width: 100%;">
+
+                        <div ngModelGroup="{{i}}" #num="ngModelGroup" style="width: 100%;" *ngIf="chkOther">
                             <div class="left-field" fxFlex="46%" style="    margin: auto 10px;">
                                 <mat-form-field appearance="outline" class="form-field" >
                                 <mat-label>{{ 'personal.name' | translate }}</mat-label>
@@ -115,12 +116,31 @@
                             <div class="left-field" fxFlex="46%">
                                 <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>{{ 'personal.rate' | translate }}</mat-label>
-                                    <input type="number" name="rate" matInput [ngModel]="othere[i]?.rate"  #rate="ngModel" 
+                                    <input type="text" name="rate" matInput [ngModel]="othere[i]?.rate"  #rate="ngModel" 
                                         placeholder="{{'personal.rate' | translate}}"  required>
                                     
                                 </mat-form-field>
                             </div>
+                        </div>
+
+                        <div ngModelGroup="{{i}}" #num="ngModelGroup" style="width: 100%;" *ngIf="!chkOther">
+                            <div class="left-field" fxFlex="46%" style="    margin: auto 10px;">
+                                <mat-form-field appearance="outline" class="form-field" >
+                                <mat-label>{{ 'personal.name' | translate }}</mat-label>
+                                <input type="text" name="name" matInput  ngModel #name="ngModel" 
+                                        placeholder="{{'personal.name' | translate}}"  required>
+                                    
+                                </mat-form-field>
                             </div>
+                            <div class="left-field" fxFlex="46%">
+                                <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>{{ 'personal.rate' | translate }}</mat-label>
+                                    <input type="text" name="rate" matInput ngModel  #rate="ngModel" 
+                                        placeholder="{{'personal.rate' | translate}}"  required>
+                                    
+                                </mat-form-field>
+                            </div>
+                        </div>
                 
                             <div *ngIf="i !== 0" class="right-field" fxFlex="3%" fxLayoutAlign="center center"
                                 (click)="deleteElement(i)">

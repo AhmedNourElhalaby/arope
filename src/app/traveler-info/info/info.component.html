@@ -208,7 +208,7 @@
                             <div fxFlex="50">
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label> {{ 'results_info.id' | translate }}</mat-label>
-                                    <input matInput type="number" name="tid{{traveler}}" [ngModel]="data_info.id" #tid="ngModel" required>
+                                    <input matInput type="number" name="tid{{traveler}}" ngModel #tid="ngModel" required>
                                 </mat-form-field>
                             </div>
                             <div fxFlex="50%">
@@ -228,8 +228,14 @@
             </section>
 
         </div>
+<p>
+    <mat-checkbox [ngModel]="data_info.confirm" #checkbox="ngModel" name="terms"  color="primary" required> {{ 'results_info.alert2' | translate }} <a href="http://207.154.195.214/TravelWording.pdf" download target="_blank">{{ 'results_info.terms' | translate }}</a></mat-checkbox>
 
-        <mat-checkbox [ngModel]="data_info.confirm" #checkbox="ngModel" name="terms"  color="primary" required> {{ 'results_info.alert2' | translate }} <a href="http://207.154.195.214/TravelWording.pdf" download target="_blank">{{ 'results_info.terms' | translate }}</a></mat-checkbox>
+</p>
+<p>
+
+    <mat-checkbox [ngModel]="data_info.chk" #chk="ngModel" name="chk"  color="primary" required> {{ 'results_info.chk' | translate }}</mat-checkbox>
+</p>
         <br> <br>
         <button  *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid  || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
         <button style="direction: rtl;" *ngIf="lang =='ar'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || cid !== true">{{ 'results_info.complate' | translate }} <span class="mdi mdi-arrow-left "></span></button>

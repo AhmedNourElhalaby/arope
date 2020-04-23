@@ -12,6 +12,7 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/mater
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UIService } from 'src/app/shared/ui.services';
 
 declare let Checkout: any;
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -44,7 +45,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     private dateAdapter: DateAdapter<Date>,
     private router: Router,
     private routerActivated: ActivatedRoute,
-
+    private uiService: UIService,
     private http: HttpClient,
     // private save: saveAs
   ) {
@@ -86,7 +87,8 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     id: '',
     national: 'egyptian',
     Passport:'',
-    confirm: false
+    confirm: false,
+    chk: false
   }
   // emailFormControl = new FormControl('', [
   //   Validators.required,
@@ -136,6 +138,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
           )
           .subscribe(res => {
             console.log('ressss', res);
+            this.uiService.loadResId.next(res[1]);
             // this.testDownload();
 
             // download file
@@ -202,7 +205,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked() {
     let script = document.querySelector("#myscript");
-    script.setAttribute("data-complete", "http://localhost:4200/traveler-insurance/traveler-info?step=thankyou");
+    script.setAttribute("data-complete", "http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou");
 
 
   }
@@ -331,7 +334,8 @@ loadStripe() {
         id: form.value.id,
         mail: form.value.emailAddress,
         national: form.value.national,
-        confirm: true
+        confirm: true,
+        chk: true
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));
       const data = {paramlist: {data: {z: localStorage.getItem('zone'), d: [age],
@@ -404,7 +408,8 @@ loadStripe() {
         mail: form.value.emailAddress,
         id: form.value.id,
         confirm: true,
-        national: form.value.national
+        national: form.value.national,
+        chk: true
 
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));

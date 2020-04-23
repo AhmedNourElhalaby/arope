@@ -27,6 +27,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from "../date.adapter";
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { OdooService } from '../shared/odoo.service';
+import { UIService } from '../shared/ui.services';
 declare let Checkout: any;
 
 
@@ -75,7 +76,8 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     private validation: ValidationService,
     private routerActivated: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private uiService: UIService
   ) {}
   @ViewChild("fInfo", { static: false }) customForm: NgForm;
   matcher = new MyErrorStateMatcher();
@@ -96,15 +98,23 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     last_name: "",
     gender: null,
     id: "",
-    others: "",
+    othere:'',
     after_die: "true"
   };
+  chkOther: boolean = false;
   qnbConfig;
   @Output() changeStatus = new EventEmitter();
   ngOnInit() {
     // start qnp config
     this.initQnpConfig();
     //end qnp config
+    console.log('data info', this.data_info);
+
+    if(!this.data_info.othere) {
+      this.chkOther = false;
+    } else {
+      this.chkOther = true;
+    }
     //params query
     this.routerActivated.queryParamMap.subscribe(param => {
       //start code
@@ -116,7 +126,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
       const formData = JSON.parse(localStorage.getItem('formData'));
 
       const data = { paramlist: {data: formData.data} };
-      console.log('data', data);
+      console.log('data', typeof(formData.data));
       if (formData.key === 'personal') {
         let headers = new HttpHeaders();
         headers = headers.set('Accept', 'application/pdf');
@@ -124,6 +134,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
         this.odoo.call_odoo_function('travel_agency', 'online', 'online',
         'personal.front', 'create_policy', data ).subscribe(res => {
           console.log(res);
+          this.uiService.loadResId.next(res[1]);
           this.http.get('http://207.154.195.214:8070/report/personal/' + res[0], { headers, responseType: 'blob' }).subscribe(res => {
             console.log(res);
             saveAs(res, `Policy (AROPE).pdf`);
@@ -169,14 +180,14 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
       form.value.middleName,
       form.value.lastName
     );
-    let others;
+    let othere;
 
     localStorage.setItem("fullName", full_name);
 
     if (!form.value.others) {
-      others = "";
+      othere = "";
     } else {
-      others = form.value.others;
+      othere = Object.values(form.value.others);
     }
 
     const formData = {
@@ -194,7 +205,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
         cover: coversId,
         address: form.value.address,
         elig_bool: form.value.after_die,
-        othere: others,
+        othere: othere,
         gender: form.value.gender
       },
       key: "personal"
@@ -266,7 +277,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked() {
     let script = document.querySelector("#myscript");
-    script.setAttribute("data-complete", "http://localhost:4200/personal-accident/personal-result?step=thankyou");
+    script.setAttribute("data-complete", "http://207.154.195.214/arope/personal-accident/personal-result?step=thankyou");
     // if(!this.addScript) {
     //   this.qnbScript();
     // }
@@ -298,13 +309,13 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
       console.log("data traveler", data_traveler);
       this.data_info = this.travelerService.getInfoPersonal();
       console.log("data-info", this.data_info);
-      if (this.data_info.others) {
-        this.othere = Object.values(this.data_info.others);
+      if (this.data_info.othere) {
+        this.othere =this.data_info.othere;
         console.log("otheres ", this.othere);
-        if (Object.keys(this.data_info.others).length > 1) {
+        if (this.data_info.othere.length > 1) {
           for (
             let i = 0;
-            i < Object.keys(this.data_info.others).length - 1;
+            i < Object.keys(this.data_info.othere).length - 1;
             i++
           ) {
             this.element.push(this.element.length);

@@ -5,6 +5,8 @@ import { MatSnackBar } from "@angular/material";
 @Injectable()
 export class UIService {
   loadingChangedStatus = new Subject<boolean>();
+  loadResId = new Subject<any[]>();
+
 
   constructor(private snakbar: MatSnackBar) {}
 

@@ -56,8 +56,8 @@ when open open traveler info page check if localstorage is not null
 
 //////// personal acceident task [22/4]
 
-complate fields info form (personal accident)
-stop button button price card 
-stop button complate purchase 
-show button return to Homepage in thankyou Page 
-clear localstorage after leave thankyou Page 
+complate fields info form (personal accident) [Done]
+stop button button price card  [Done]
+stop button complate purchase  [Done]
+show button return to Homepage in thankyou Page  [Done]
+clear localstorage after leave thankyou Page  [Done]

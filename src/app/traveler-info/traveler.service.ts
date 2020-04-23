@@ -56,6 +56,7 @@ export class TravelerService {
     const first_name = split_str[0];
     const middle_name = split_str[1];
     const last_name = split_str[2];
+    const chk = info.data.chk;
 
     return {
         phone: phone,
@@ -71,7 +72,8 @@ export class TravelerService {
         id: id,
         national: national,
         Passport:Passport,
-        confirm:confirm
+        confirm:confirm,
+        chk:chk
     };
     
   }
@@ -85,7 +87,6 @@ export class TravelerService {
     const full_name = info.data.c_name;
     const mail = info.data.mail;
     const address = info.data.address;
-    const national = info.data.national;
     const gender = info.data.gender;
     const id = info.data.id;
 
@@ -98,10 +99,10 @@ export class TravelerService {
     const last_name = split_str[2];
     
     const elig_bool = info.data.elig_bool.toString();
-    let others;
+    let othere;
     if(info.data.othere) {
       console.log('type of othere ', typeof( info.data.othere));
-      others= info.data.othere;
+      othere= Object.values(info.data.othere);
     }
     return {
         phone: phone,
@@ -115,7 +116,7 @@ export class TravelerService {
         last_name: last_name,
         gender: gender,
         id: id,
-        others: others,
+        othere: othere,
         after_die:elig_bool
     };
     

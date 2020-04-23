@@ -1,18 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { UIService } from 'src/app/shared/ui.services';
 
 @Component({
   selector: 'app-thankyou',
   templateUrl: './thankyou.component.html',
   styleUrls: ['./thankyou.component.css']
 })
-export class ThankyouComponent implements OnInit {
+export class ThankyouComponent implements OnInit, OnDestroy {
   fullName: string;
-  constructor(private router: Router) { }
+  numDoc;
+  loadResIdSub: Subscription;
+  constructor(private router: Router, private uiService: UIService) { }
 
   ngOnInit() {
     this.fullName = localStorage.getItem('fullName');
-    
+    this.loadResIdSub = this.uiService.loadResId.subscribe(res=> {
+      this.numDoc = res;
+    });
   }
 
   back_to_home() {
@@ -24,6 +30,10 @@ export class ThankyouComponent implements OnInit {
       let script = document.querySelector("#myscript");
       script.removeAttribute("data-complete");
     });
+  }
+
+  ngOnDestroy () {
+    if(this.loadResIdSub) {this.loadResIdSub.unsubscribe()}
   }
 
 }
