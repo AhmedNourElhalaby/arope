@@ -57,6 +57,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     { value: 'spouse', viewValue: 'Spouse' },
     { value: 'kid', viewValue: 'Kid' }
   ];
+  numberPattern = "^((\\+91-?)|0)?[0-9]{14}$";
   minDateKid;
   maxDateKid;
   dataJson;

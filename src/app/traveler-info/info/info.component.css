@@ -37,7 +37,7 @@ mat-form-field {
 .custom-error {
     position: absolute;
     top: 43px;
-    left: -11px;
+    right: -11px;
     font-size: 13px;
     color: red;
 }

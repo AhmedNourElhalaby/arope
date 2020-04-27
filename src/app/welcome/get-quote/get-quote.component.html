@@ -88,7 +88,8 @@
                             <mat-label>{{"traveler.period"| translate}}</mat-label>
                             <mat-select name="period" ngModel #periodInput="ngModel" (closed)="getdate(f)" (closed)="checkAgeNot85(f)" required>
                                 <mat-option *ngFor="let period of periods" [value]="period">
-                                    {{period}}
+                                {{period}} <span *ngIf="period > 10">{{ 'traveler.day' | translate }}</span>
+                                <span *ngIf="period <= 10">{{ 'traveler.days' | translate }}</span>
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

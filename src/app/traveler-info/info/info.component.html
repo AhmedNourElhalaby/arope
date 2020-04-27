@@ -73,12 +73,12 @@
             </mat-grid-tile>
 
 
-            <mat-grid-tile *ngIf="isEgyptian === true" hintLabel="Should It Be 14 number">
+            <mat-grid-tile *ngIf="isEgyptian === true" >
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.id' | translate }}</mat-label>
 
                     <input matInput name="id" [ngModel]="data_info.id" minlength="14" maxlength="14" #id="ngModel" (input)="checkId()">
-
+                    <mat-hint align="end">{{id.value?.length || 0}}/14</mat-hint>
 
                     <p *ngIf="cid === false" class="custom-error">{{ 'results_info.id_alert' | translate }}</p>
                     <p *ngIf="cid && id.errors?.minlength" class="custom-error">{{ 'results_info.id_alert2' | translate }}</p>
@@ -86,12 +86,24 @@
 
             </mat-grid-tile>
 
-            <mat-grid-tile>
+            <mat-grid-tile *ngIf="isEgyptian === true">
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.passport' | translate }}</mat-label>
-                    <input matInput type="text" name="Passport" maxlength="14" [ngModel]="data_info.Passport" #Passport="ngModel" required>
+                    <input matInput type="text" [pattern]="numberPattern" name="Passport" maxlength="14" [ngModel]="data_info.Passport" #Passport="ngModel" required>
+                    <mat-error *ngIf="Passport.invalid">{{'traveler.validation_passport' | translate}}</mat-error>
+                <mat-hint align="end">{{Passport.value?.length || 0}}/14</mat-hint>
                 </mat-form-field>
             </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="!isEgyptian">
+                <mat-form-field appearance="outline" class='form-field'>
+                    <mat-label> {{ 'results_info.passport' | translate }}</mat-label>
+                    <input matInput type="text"  name="Passport" maxlength="14" [ngModel]="data_info.Passport" #Passport="ngModel" required>
+                  
+                <mat-hint align="end">{{Passport.value?.length || 0}}/14</mat-hint>
+                </mat-form-field>
+            </mat-grid-tile>
+
             <mat-grid-tile *ngIf="isEgyptian === false">
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.enter_address' | translate }}</mat-label>
@@ -211,10 +223,23 @@
                                     <input matInput type="number" name="tid{{traveler}}" ngModel #tid="ngModel" required>
                                 </mat-form-field>
                             </div>
-                            <div fxFlex="50%">
+
+  
+                
+                            <div fxFlex="50%"  *ngIf="isEgyptian === true">
+                                <mat-form-field appearance="outline" class='form-field'>
+                                    <mat-label> {{ 'results_info.passport' | translate }}</mat-label>
+                                    <input matInput type="text" [pattern]="numberPattern" name="Passport" maxlength="14" [ngModel]="data_info.Passport" #tpassport="ngModel" required>
+                                    <mat-error *ngIf="tpassport.invalid">{{'traveler.validation_passport' | translate}}</mat-error>
+                                    <mat-hint align="end">{{tpassport.value?.length || 0}}/14</mat-hint>      
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="50%" *ngIf="isEgyptian === false">
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label> {{ 'results_info.passport' | translate }}</mat-label>
                                     <input matInput type="text" name="tpassport{{traveler}}" ngModel #tpassport="ngModel" required>
+                                    <!-- <mat-hint align="end">{{tpassport.value?.length || 0}}/14</mat-hint>                                </mat-form-field> -->
+
                                 </mat-form-field>
                             </div>
                         </div>

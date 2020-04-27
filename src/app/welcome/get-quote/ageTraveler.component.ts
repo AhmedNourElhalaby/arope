@@ -8,6 +8,7 @@ import { SiteSettingsService } from '../../shared/site_settings.service';
 //FORMATE DATE
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: "app-stop-training",
   template: `
@@ -15,7 +16,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
     
       <div mat-dialog-content>
         <div *ngFor="let element of elements; let i = index">
-          <span id="field-{{ i }}">
+          <span id="field-{{ i }}" class="selectDiv">
             <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%" dir="auto">
               <div *ngIf="i == 0; then thenBlock; else elseBlock"></div>
               <ng-template #thenBlock>
@@ -61,7 +62,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     type="text"
                     matInput
                     [matDatepicker]="picker"
-                    placeholder="Age Of Travel"
+                   placeholder="Birth Of Date"
                     [ngModel]="dataList.dates['date-' + i]"
                     name="date-{{ i }}"
                     #ages="ngModel"
@@ -105,7 +106,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     type="text"
                     matInput
                     [matDatepicker]="picker"
-                    placeholder="Age Of Travel"
+                   placeholder="Birth Of Date"
                     [ngModel]="dataList.dates['date-' + i]"
                     name="date-{{ i }}"
                     #ages="ngModel"
@@ -143,7 +144,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     type="text"
                     matInput
                     [matDatepicker]="picker"
-                    placeholder="Age Of Travel"
+                   placeholder="Birth Of Date"
                     [ngModel]="dataList.dates['date-' + i]"
                     name="date-{{ i }}"
                     #ages="ngModel"
@@ -183,7 +184,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                     type="text"
                     matInput
                     [matDatepicker]="picker"
-                    placeholder="Age Of Travel"
+                   placeholder="Birth Of Date"
                     [ngModel]="dataList.dates['date-' + i]"
                     name="date-{{ i }}"
                     #ages="ngModel"
@@ -268,7 +269,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                 [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }"
                 style="   cursor: pointer;"
                 (click)="deleteElement(i)"
-                *ngIf="i != 0"
+                *ngIf="i > 2"
                 type="button"
                 color="warn"
               >
@@ -282,13 +283,14 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
                   >minimize</mat-icon
                 >
               </div>
-
+             
               <!-- End Section Delete Field -->
             </div>
           </span>
         </div>
       </div>
       <div mat-dialog-actions>
+    
         <div
           style="cursor: pointer; color: #565656"
           onMouseOver="this.style.color='#073e89'"
@@ -296,6 +298,8 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
           (click)="this.clickMe()"
           fxLayout
           fxLayoutAlign="flex-start"
+          *ngIf="showBtn"
+          class="add-additional-traveler"
         >
           <span
             class="mdi mdi-plus"
@@ -334,10 +338,11 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
   ]
 })
 export class AgeTravelerComponent implements OnInit {
-  elements = [];
+  elements = [0,1];
   minDate;
   maxDateKid;
   result;
+  showBtn: boolean = true;
   types = [
     { value: "spouse", viewValue: "Spouse" },
     { value: "kid", viewValue: "Kid" }
@@ -352,10 +357,13 @@ export class AgeTravelerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public passedData,
     private welcomeService: WelcomeService,
     private site_settings: SiteSettingsService,
-    private dateAdapter: DateAdapter<Date>
+    private dateAdapter: DateAdapter<Date>,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
+
+
     if(this.lang == 'en') {
       this.dateAdapter.setLocale('en');
     } else if(this.lang == 'ar') {
@@ -387,6 +395,7 @@ export class AgeTravelerComponent implements OnInit {
 
   clickMe() {
     this.elements.push(this.elements.length);
+    this.toggleBtn();
   }
 
   submitFormAges(form: NgForm) {
@@ -407,6 +416,18 @@ export class AgeTravelerComponent implements OnInit {
     const target_id = 'field-' + index;
     const element_id = document.getElementById(target_id);
     element_id.parentNode.removeChild(element_id);
+
+    this.toggleBtn();
+  }
+
+  toggleBtn() {
+    let countEle = document.querySelectorAll('.selectDiv');
+  
+    if(countEle.length == 5) {
+      this.showBtn = false;
+    } else {
+      this.showBtn = true;
+    }
   }
 
   setLocale(val){
