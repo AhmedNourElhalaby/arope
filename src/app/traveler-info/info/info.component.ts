@@ -57,7 +57,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     { value: 'spouse', viewValue: 'Spouse' },
     { value: 'kid', viewValue: 'Kid' }
   ];
-  numberPattern = "^((\\+91-?)|0)?[0-9]{14}$";
+  numberPattern = '^((\\+91-?)|0)?[0-9]{14}$';
   minDateKid;
   maxDateKid;
   dataJson;
@@ -72,6 +72,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   date;
   indi;
   cid: boolean;
+  isFirstPolicy = true;
   national = 'egyptian';
   isEgyptian: boolean = true;
   data_info = {
@@ -110,12 +111,12 @@ export class InfoComponent implements OnInit, AfterViewChecked {
 
       // start qnp config
       this.initQnpConfig();
-      //end qnp config
-  //params query 
-  this.routerActivated.queryParamMap.subscribe(param => {
+      // end qnp config
+  // params query
+      this.routerActivated.queryParamMap.subscribe(param => {
 
-    //start code
-    if(param.has('step')) {
+    // start code
+    if (param.has('step')) {
       console.log('text', param.get('step'));
       localStorage.setItem('stepper', 'true');
       this.changeStatus.emit(true);
@@ -155,17 +156,17 @@ export class InfoComponent implements OnInit, AfterViewChecked {
               this.downloadTerms('http://207.154.195.214/TravelWording_General_Conditions.pdf');
             });
 
-           
+
           });
         }
-      
+
     }
-    
+
   });
 
 
-    this.type = localStorage.getItem('type');
-    if (this.type === 'individual') {
+      this.type = localStorage.getItem('type');
+      if (this.type === 'individual') {
       this.indi = true;
       this.date = localStorage.getItem('date');
     } else {
@@ -175,17 +176,17 @@ export class InfoComponent implements OnInit, AfterViewChecked {
       this.datesList = this.dataJson.dates;
       console.log('DateList', this.datesList);
     }
-    if (this.lang == 'en') {
+      if (this.lang === 'en') {
       this.dateAdapter.setLocale('en');
-    } else if (this.lang == 'ar') {
+    } else if (this.lang === 'ar') {
       this.dateAdapter.setLocale('ar');
     }
-    this.minDateKid = this.setting.getDateInYears(18);
-    this.maxDateKid = this.welService.getMinDateBefore30Days();
-    const emptyArr = new Array(
+      this.minDateKid = this.setting.getDateInYears(18);
+      this.maxDateKid = this.welService.getMinDateBefore30Days();
+      const emptyArr = new Array(
       parseInt(localStorage.getItem('numOfTraveler'))
     );
-    for (let i = 0; i < emptyArr.length; i++) {
+      for (let i = 0; i < emptyArr.length; i++) {
 
       console.log('count', i);
       this.numOfTravelers.push(i);
@@ -205,8 +206,8 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     });
   }
   ngAfterViewChecked() {
-    let script = document.querySelector("#myscript");
-    script.setAttribute("data-complete", "http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou");
+    const script = document.querySelector('#myscript');
+    script.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
 
 
   }
@@ -216,22 +217,22 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     const session_id = this.travelerService.getJSessionId();
     const total_price = localStorage.getItem('total_price');
 
-    if(data_traveler) {
+    if (data_traveler) {
       console.log('data traveler', data_traveler);
       this.data_info = this.travelerService.getInfoTraveller();
       console.log('data-info', this.data_info);
     }
-    
+
     this.national = this.data_info.national;
-    //qnp config
+    // qnp config
     this.qnbConfig = {
       merchant: 'TESTQNBAATEST001',
       session: {
         id: session_id
       },
       order: {
-          amount: function() {
-              //Dynamic calculation of amount
+          amount() {
+              // Dynamic calculation of amount
               return Number(total_price);
           },
           currency: 'EGP',
@@ -242,10 +243,10 @@ export class InfoComponent implements OnInit, AfterViewChecked {
           merchant      : {
             name   : 'شركة أروب مصر',
             address: {
-              line1: '30, Msadak, Ad Doqi Giza 12411'         
+              line1: '30, Msadak, Ad Doqi Giza 12411'
             },
             phone  : '02 33323299',
-            
+
             logo   : 'https://aropeegypt.com.eg/Property/wp-content/uploads/2019/10/Logoz-3.jpg'
           },
           locale        : 'ar_EG',
@@ -259,19 +260,19 @@ export class InfoComponent implements OnInit, AfterViewChecked {
           }
   };
 
-  Checkout.configure(this.qnbConfig);
+    Checkout.configure(this.qnbConfig);
   }
 
   qnbScript() {
     this.addScript = true;
     return new Promise((resolve, reject) => {
-      let scriptElement = document.createElement('script');
-      scriptElement.src = "https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js";
-      scriptElement.setAttribute("data-complete", "http://localhost:4200/traveler-insurance/traveler-info?step=thankyou");
-      scriptElement.setAttribute("data-error", "errorCallback");
+      const scriptElement = document.createElement('script');
+      scriptElement.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
+      scriptElement.setAttribute('data-complete', 'http://localhost:4200/traveler-insurance/traveler-info?step=thankyou');
+      scriptElement.setAttribute('data-error', 'errorCallback');
       scriptElement.onload = resolve;
       document.head.appendChild(scriptElement);
-    })
+    });
   }
 
   get lang() { return localStorage.getItem('lang'); }
@@ -288,7 +289,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
 
   }
 
-  setLocale(val){
+  setLocale(val) {
     console.log(val);
     this.dateAdapter.setLocale(val);
   }
@@ -296,8 +297,8 @@ export class InfoComponent implements OnInit, AfterViewChecked {
 
 loadStripe() {
 
-  if(!window.document.getElementById('stripe-script')) {
-    let s = window.document.createElement('script');
+  if (!window.document.getElementById('stripe-script')) {
+    const s = window.document.createElement('script');
     s.id = 'stripe-script';
     s.type = 'text/javascript';
     s.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
@@ -346,7 +347,7 @@ loadStripe() {
           const x = res.gross.toFixed(2);
           localStorage.setItem('total_price', parseInt(x.toString(), 10).toString());
           this.changeShowValue();
-          
+
 
           this.onClickAfterSubmit();
         });
@@ -421,7 +422,7 @@ loadStripe() {
         // console.log(res);
         localStorage.setItem('total_price', x);
         this.changeShowValue();
-        
+
 
         this.onClickAfterSubmit();
       });
@@ -430,7 +431,7 @@ loadStripe() {
     this.isValidFormSubmitted = true;
     // form.resetForm();
 
-    
+
   }
 
   onClickAfterSubmit() {
@@ -479,7 +480,24 @@ loadStripe() {
       this.cid = false;
     } else {
       this.cid = true;
+      const data = {paramlist: {filter: [['national_id', '=', id]], need: ['issue_date']}};
+      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      'policy.travel', 'search_read', data ).subscribe(res => {
+        const key = 'issue_date';
+        console.log(res);
+        if (res[0]) {
+        const issueDate = res[0][key].substring(0, 10);
+        const today = new Date();
+        const strDate = this.convertDate(today);
+        if (issueDate === strDate) {
+          this.isFirstPolicy = false;
+        }
+        console.log(strDate);
+        console.log(issueDate);
+      }
+      });
     }
+
   }
   showField(event) {
     const valueField = event.value;

@@ -111,8 +111,8 @@
                 <div class="clearfix"></div>
 
 
-
-
+                <p *ngIf="isNotMore85 !== true" class="custom-error">{{ 'traveler.err85' | translate }}</p>
+                <p *ngIf="isFamly">{{'traveler.familyMean'| translate}}</p>
                 <mat-checkbox color="primary" ngModel #checkbox name="egyptian" [checked]="isEgyption" (change)="isEgyption = !isEgyption">{{ 'traveler.alert' | translate }}</mat-checkbox>
                 <br><br>
                 <div *ngIf="f.invalid" ></div>

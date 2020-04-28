@@ -27,7 +27,9 @@
         "excess": "Excess",
         "plan_benfits": "Plan Benefits",
         "period": "Period in Days",
+        "familyMean": "Eligible family being : self + spouse + eligible children ( any combination from 2 to 5 persons maximum )",
         "egypt": "Egyptian",
+        "err85": "You Must Not Be Older Than 85 Years During The Coverage Period",
         "back_home": "Back To Home page",
         "non_egypt": "Non Egyptian"
     },
@@ -90,7 +92,8 @@
         "submit": "SUBMIT",
         "years": "Years",
         "year": "Year",
-        "dob":"DATE OF BIRTH"
+        "dob":"DATE OF BIRTH",
+        "firstPolicy": "No more than one document can be issued on the same day"
     },
     "car": {
         "title": "Get a Car Insurance Quote",

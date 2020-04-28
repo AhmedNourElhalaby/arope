@@ -39,7 +39,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   isIndividual = true;
   isFamly = false;
   isGroup = false;
-  isNotMore85: boolean;
+  isNotMore85 = true;
   agesString: string;
   ageLoadSubs: Subscription;
   loadingSubs: Subscription;
@@ -122,7 +122,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     this.breakpoint2 = window.innerWidth <= 700 ? 1 : 3;
 
     this.maxDate = new Date();
-    this.maxDate.setDate(this.maxDate.getDate() - 0);
+    this.maxDate.setDate(this.maxDate.getDate() + 1);
     this.minDate = this.welcomeService.getMinDateBefore30Days();
     const maxindiDate = this.site_settings.getDateInYears(85);
     this.indiMaxDate = new Date(maxindiDate.getFullYear(), maxindiDate.getMonth(), (maxindiDate.getDate() + 7));

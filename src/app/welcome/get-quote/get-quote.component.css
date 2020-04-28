@@ -52,3 +52,10 @@ mat-radio-button {
 .clearfix {
     clear: both;
 }
+.custom-error {
+    /* position: absolute;
+    top: 38px;
+    right: -11px;
+    font-size: 13px; */
+    color: red;
+}
