@@ -364,7 +364,7 @@ loadStripe() {
     } else {
       const object = form.value.additionalTravelers;
       const objectKeys = Object.keys(object);
-      const objectKeysLen = objectKeys.length / 6;
+      const objectKeysLen = objectKeys.length / 8;
       let index = 1;
       const emptyArr = [];
       const kidAges = [];

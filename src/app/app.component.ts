@@ -18,16 +18,13 @@ export class AppComponent implements OnInit {
     this.translateService.setLanguage(this.lang);
     this.translateService.setDefault(this.lang);
 
-    // get segments
-    const tree: UrlTree = this.router.parseUrl(this.router.url);
-    const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
-   // const s: UrlSegment[] = g.segments;
-    console.log('save', this.router.url);
-    // this.router.navigateByUrl('/traveler-insurance');
-    if (location.pathname === '/') {
-      this.router.navigateByUrl('/traveler-insurance');
-      console.log('HERE');
-    }
+  //   // get segments
+  //   const tree: UrlTree = this.router.parseUrl(this.router.url);
+  //   const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
+  //  // const s: UrlSegment[] = g.segments;
+  //   console.log('save', this.router.url);
+  //   // this.router.navigateByUrl('/traveler-insurance');
+
 
 
     this.currentDir = this.currentDir === 'ltr' ? 'rtl' : 'ltr';

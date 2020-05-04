@@ -25,8 +25,8 @@ export class HeaderComponent implements OnInit {
     else {
       this.translate.setDir('ltr');
     }
-    
     window.location.reload();
+    
   }
 
 }

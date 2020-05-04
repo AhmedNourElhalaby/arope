@@ -123,6 +123,7 @@
         "group": "Group"
     },
     "medical": {
+        "numOfGroups": "NUMBER OF GROUP",
         "cover": "Cover",
         "golden": "Golden",
         "platinum": "Platinum",
