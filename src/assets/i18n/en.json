@@ -189,7 +189,10 @@
 
         "note4": "Prices shown above are according to the data received by us. In case of requesting the issuance of the document, the prices may increase or decrease until the final actual data is completed.",
         "note5": " The premium shown above is before taxes, stamps, and issuance expenses, plus a relative tax and supervision fee of 1.4%, and the imprint of widening upon issuance of the document as a whole 25 Egyptian pounds.",
-        "note6": "The maximum age limit is 60 years, and the Saudi German Hospital is excluded from the medical network."
+        "note6": "The maximum age limit is 60 years, and the Saudi German Hospital is excluded from the medical network.",
+
+        "condition": "Yes, I have read the ",
+        "guide": "Customer Protection Manual"
     }
 
 }

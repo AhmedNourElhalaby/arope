@@ -72,6 +72,8 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   date;
   indi;
   cid: boolean;
+  breakpoint: number;
+  breakpoint2: number;
   // isFirstPolicy = true;
   national = 'egyptian';
   isEgyptian = true;
@@ -90,7 +92,8 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     national: 'egyptian',
     Passport: '',
     confirm: false,
-    chk: false
+    chk: false,
+    condition: false
   };
   // emailFormControl = new FormControl('', [
   //   Validators.required,
@@ -107,7 +110,9 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   addScript = false;
 
   ngOnInit() {
-    
+    this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint2 = window.innerWidth <= 700 ? 1 : 3;
+
       // start qnp config
       this.initQnpConfig();
       // end qnp config
@@ -206,7 +211,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked() {
     const script = document.querySelector('#myscript');
-    script.setAttribute('data-complete', 'http://localhost:4200/traveler-insurance/traveler-info?step=thankyou');
+    script.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
 
 
   }
@@ -267,7 +272,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     return new Promise((resolve, reject) => {
       const scriptElement = document.createElement('script');
       scriptElement.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
-      scriptElement.setAttribute('data-complete', 'http://localhost:4200/traveler-insurance/traveler-info?step=thankyou');
+      scriptElement.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
       scriptElement.setAttribute('data-error', 'errorCallback');
       scriptElement.onload = resolve;
       document.head.appendChild(scriptElement);
@@ -293,6 +298,11 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     this.dateAdapter.setLocale(val);
   }
 
+  onResize(event) {
+
+    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint2 = event.target.innerWidth <= 700 ? 1 : 3;
+  }
 
 loadStripe() {
 
@@ -336,7 +346,8 @@ loadStripe() {
         mail: form.value.emailAddress,
         national: form.value.national,
         confirm: true,
-        chk: true
+        chk: true,
+        condition: true
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));
       const data = {paramlist: {data: {z: localStorage.getItem('zone'), d: [age],
@@ -411,7 +422,8 @@ loadStripe() {
         id: form.value.id,
         confirm: true,
         national: form.value.national,
-        chk: true
+        chk: true,
+        condition: true
 
       }, key: 'travel'};
       localStorage.setItem('formData', JSON.stringify(formData));

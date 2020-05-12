@@ -106,8 +106,13 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   };
   chkOther = false;
   qnbConfig;
+  breakpoint: number;
+  breakpoint2: number;
   @Output() changeStatus = new EventEmitter();
   ngOnInit() {
+    this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint2 = window.innerWidth <= 700 ? 1 : 3;
+
     const data = {paramlist: {filter: [],
       need: []}};
     this.odoo.call_odoo_function('travel_agency', 'online', 'online',
@@ -176,6 +181,12 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
       console.log(res);
       saveAs(res, `Terms&Conditions.pdf`);
     });
+  }
+
+  onResize(event) {
+
+    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint2 = event.target.innerWidth <= 700 ? 1 : 3;
   }
 
   submitPersonalInfo(form: NgForm) {
@@ -303,9 +314,9 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     return new Promise((resolve, reject) => {
       const scriptElement = document.createElement('script');
       scriptElement.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
-      scriptElement.setAttribute('data-complete', 'http://localhost:4200/personal-accident/personal-result?step=thankyou');
+      scriptElement.setAttribute('data-complete', 'http://207.154.195.214/arope/personal-accident/personal-result?step=thankyou');
       scriptElement.setAttribute('data-error', 'errorCallback');
-      // scriptElement.setAttribute("data-cancel", "http://localhost:4200/traveler-insurance");
+      // scriptElement.setAttribute("data-cancel", "http://207.154.195.214/arope/traveler-insurance");
       scriptElement.onload = resolve;
       document.head.appendChild(scriptElement);
     });

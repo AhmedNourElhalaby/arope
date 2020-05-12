@@ -3,7 +3,7 @@
 
     <form #fInfo="ngForm" (ngSubmit)="submitPersonalInfo(fInfo)">
 
-        <mat-grid-list cols="3" rowHeight="88px" gutterSize="10px">
+        <mat-grid-list [cols]="breakpoint2" (window:resize)="onResize($event)" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
@@ -16,6 +16,7 @@
                     <input matInput type="text" name="middleName" [ngModel]="data_info.middle_name" pattern="[a-zA-Z ]*" #middleName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
+
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.lastName' | translate }}</mat-label>
@@ -23,7 +24,7 @@
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
-        <mat-grid-list cols="2" rowHeight="88px" gutterSize="10px">
+        <mat-grid-list [cols]="breakpoint" (window:resize)="onResize($event)" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label>{{ 'results_info.gender' | translate }}</mat-label>
@@ -92,7 +93,7 @@
             </mat-grid-tile>
 
 
-            <mat-grid-tile colspan="2">
+            <mat-grid-tile [colspan]="breakpoint">
 
                 <mat-label style="width: 200px;">
                     {{"personal.alert_info" | translate}}

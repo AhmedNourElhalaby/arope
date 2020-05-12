@@ -34,6 +34,7 @@ export class TravelerService {
               dd = String(jsId).substring(11);
             }
       }
+
       return dd;
   }
   
@@ -57,6 +58,7 @@ export class TravelerService {
     const middle_name = split_str[1];
     const last_name = split_str[2];
     const chk = info.data.chk;
+    const condition = info.data.condition;
 
     return {
         phone: phone,
@@ -73,7 +75,8 @@ export class TravelerService {
         national: national,
         Passport:Passport,
         confirm:confirm,
-        chk:chk
+        chk:chk,
+        condition:condition
     };
     
   }
