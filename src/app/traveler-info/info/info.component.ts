@@ -107,8 +107,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   addScript: boolean = false;
 
   ngOnInit() {
-
-
+    
       // start qnp config
       this.initQnpConfig();
       // end qnp config

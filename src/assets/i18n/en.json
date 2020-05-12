@@ -175,6 +175,18 @@
         "msg1": "مع تحيات",
         "msg2": "شركة أروب مصر لتأمينات الممتلكات و المسئوليات",
         "msg3": "الخط الساخن   19243"
+    },
+    
+    "notes": {
+        "title": "Notes",
+        "note1": "New members are accepted up to 59 years and in the case of renewal, members are renewed up to 64 years old and the minimum age for accepting a person as the owner of the document is 16 years.",
+        "note2": "The policy is to be paid in one payment at the beginning of the insurance period, and 70 pounds will be added as fees for issuing the policy.",
+        "note3": "Diseases prior to the contracting date are not covered in any way.",
+
+
+        "note4": "Prices shown above are according to the data received by us. In case of requesting the issuance of the document, the prices may increase or decrease until the final actual data is completed.",
+        "note5": " The premium shown above is before taxes, stamps, and issuance expenses, plus a relative tax and supervision fee of 1.4%, and the imprint of widening upon issuance of the document as a whole 25 Egyptian pounds.",
+        "note6": "The maximum age limit is 60 years, and the Saudi German Hospital is excluded from the medical network."
     }
 
 }
