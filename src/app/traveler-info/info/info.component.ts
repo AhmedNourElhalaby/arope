@@ -74,7 +74,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   cid: boolean;
   isFirstPolicy = true;
   national = 'egyptian';
-  isEgyptian: boolean = true;
+  isEgyptian = true;
   data_info = {
     phone: '',
     full_name: '',
@@ -88,10 +88,10 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     gender: '',
     id: '',
     national: 'egyptian',
-    Passport:'',
+    Passport: '',
     confirm: false,
     chk: false
-  }
+  };
   // emailFormControl = new FormControl('', [
   //   Validators.required,
   //   Validators.email,
@@ -104,7 +104,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   matcher = new MyErrorStateMatcher();
   @Output() changeStatus = new EventEmitter();
   qnbConfig;
-  addScript: boolean = false;
+  addScript = false;
 
   ngOnInit() {
 
@@ -207,7 +207,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked() {
     const script = document.querySelector('#myscript');
-    script.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
+    script.setAttribute('data-complete', 'http://localhost:4200/traveler-insurance/traveler-info?step=thankyou');
 
 
   }
@@ -363,8 +363,10 @@ loadStripe() {
       // this.welService.sendQuoteResult('get_individual', data);
     } else {
       const object = form.value.additionalTravelers;
+      console.log('hhhhhhhhhhhhhhhh', object);
       const objectKeys = Object.keys(object);
-      const objectKeysLen = objectKeys.length / 6;
+      console.log('hhhhhhhhhhhhhhhh', objectKeys);
+      const objectKeysLen = objectKeys.length / 8;
       let index = 1;
       const emptyArr = [];
       const kidAges = [];
