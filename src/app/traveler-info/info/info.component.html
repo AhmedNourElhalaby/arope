@@ -262,8 +262,8 @@
     <mat-checkbox [ngModel]="data_info.chk" #chk="ngModel" name="chk"  color="primary" required> {{ 'results_info.chk' | translate }}</mat-checkbox>
 </p>
         <br> <br>
-        <p *ngIf="isFirstPolicy == false" style="color:red;">{{ 'results_info.firstPolicy' | translate }}</p>
-        <button  *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid  || cid !== true || isFirstPolicy == false">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
-        <button style="direction: rtl;" *ngIf="lang =='ar'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || cid !== true || isFirstPolicy == false">{{ 'results_info.complate' | translate }} <span class="mdi mdi-arrow-left "></span></button>
+        <!-- <p *ngIf="isFirstPolicy == false" style="color:red;">{{ 'results_info.firstPolicy' | translate }}</p> -->
+        <button  *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid  || cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
+        <button style="direction: rtl;" *ngIf="lang =='ar'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid || cid !== true">{{ 'results_info.complate' | translate }} <span class="mdi mdi-arrow-left "></span></button>
     </form>
 </mat-card>

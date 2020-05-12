@@ -15,6 +15,7 @@ export class TripDetailsComponent implements OnInit {
   till;
   numOfTraveler;
   countries;
+  period;
   constructor(private welService: WelcomeService, private router: Router) { }
 
   ngOnInit() {
@@ -46,6 +47,7 @@ export class TripDetailsComponent implements OnInit {
     this.age = localStorage.getItem('age');
     this.when = localStorage.getItem('when');
     this.till = localStorage.getItem('till');
+    this.period = localStorage.getItem('period');
     this.numOfTraveler = localStorage.getItem('numOfTraveler');
 
 

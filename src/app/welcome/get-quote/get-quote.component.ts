@@ -325,6 +325,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
       console.log(form);
 
       localStorage.setItem('zone', form.value.zone);
+      localStorage.setItem('period', form.value.period);
       let ageArgs;
       const type = form.value.type;
       let valArgLength = 0;

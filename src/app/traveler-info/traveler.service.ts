@@ -87,6 +87,8 @@ export class TravelerService {
     const full_name = info.data.c_name;
     const mail = info.data.mail;
     const address = info.data.address;
+    const national = info.data.national;
+    const city = info.data.city;
     const gender = info.data.gender;
     const id = info.data.id;
 
@@ -109,6 +111,8 @@ export class TravelerService {
         full_name: full_name,
         mail: mail,
         address: address,
+        national: national,
+        city: city,
         total_price: total_price,
         package: 'your package: '+type,
         first_name: first_name,

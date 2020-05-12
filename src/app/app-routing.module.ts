@@ -16,7 +16,7 @@ import { TicketFormComponent } from './ticket-form/ticket-form.component';
 
 
 const routes: Routes = [
-  {path: '', component: WelcomeComponent},
+  // {path: '', component: WelcomeComponent},
   {path: 'traveler-insurance', component: WelcomeComponent},
   {path: 'traveler-insurance/traveler-info', component: TravelerInfoComponent},
   {path: 'page/terms-of-service', component: TermsOfServicesComponent},

@@ -22,10 +22,10 @@
                     <div class="form-group">
                         <select name="prefixNum" id="selectOptions" #prefixNum="ngModel" ngModel="02" required>
                         <option value="02" checked>02</option>
-                        <option value="011">011</option>  
+                        <option value="011">011</option>
                         <option value="010">010</option>
                         <option value="015">015</option>
-                       
+
                     </select>
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label id="phoneLabel">{{ 'results_info.phone' | translate }}</mat-label>
@@ -41,8 +41,8 @@
 
             </mat-grid-list>
 
-            <mat-checkbox ngModel #checkbox="ngModel" name="terms" color="primary" required> {{ 'results_info.alert2' | translate }} <a href="http://207.154.195.214/TravelWording.pdf" download target="_blank">{{ 'results_info.terms' | translate }}</a></mat-checkbox>
-            <br> <br>
+            <!-- <mat-checkbox ngModel #checkbox="ngModel" name="terms" color="primary" required> {{ 'results_info.alert2' | translate }} <a href="http://207.154.195.214/TravelWording.pdf" download target="_blank">{{ 'results_info.terms' | translate }}</a></mat-checkbox> -->
+            <!-- <br> <br> -->
             <button *ngIf="!isLoading" type="submit" mat-button class='button-quote' [disabled]="f.invalid ">{{ 'results_info.submit2' | translate }}</button>
             <div *ngIf="isLoading">
                 <mat-spinner [diameter]="40"></mat-spinner>

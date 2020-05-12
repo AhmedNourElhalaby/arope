@@ -70,6 +70,22 @@
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
+                    <mat-label>{{"personal.national" | translate}}</mat-label>
+                    <mat-select name="national" ngModel #national="ngModel" required>
+                        <mat-option *ngFor="let country of countries" [value]="country.id">
+                        {{country.display_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class='form-field'>
+                    <mat-label> {{ 'results_info.city' | translate }}</mat-label>
+                    <input matInput type="text" name="city" ngModel #city="ngModel" required>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.enter_address' | translate }}</mat-label>
                     <input matInput type="text" name="address" [ngModel]="data_info.address" #address="ngModel" required>
                 </mat-form-field>
@@ -105,7 +121,7 @@
                             <h4 style="width: 250px;">{{'personal.personal' | translate}} #{{i+1}}</h4>
 
                         <div ngModelGroup="{{i}}" #num="ngModelGroup" style="width: 100%;" *ngIf="chkOther">
-                            <div class="left-field" fxFlex="46%" style="    margin: auto 10px;">
+                            <div class="left-field" fxFlex="29%" style="    margin: auto 10px;">
                                 <mat-form-field appearance="outline" class="form-field" >
                                 <mat-label>{{ 'personal.name' | translate }}</mat-label>
                                 <input type="text" name="name" matInput  [ngModel]="othere[i]?.name" #name="ngModel" 
@@ -113,7 +129,7 @@
                                     
                                 </mat-form-field>
                             </div>
-                            <div class="left-field" fxFlex="46%">
+                            <div class="left-field" fxFlex="29%" style="margin: auto 10px;">
                                 <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>{{ 'personal.rate' | translate }}</mat-label>
                                     <input type="text" name="rate" matInput [ngModel]="othere[i]?.rate"  #rate="ngModel" 
@@ -121,10 +137,17 @@
                                     
                                 </mat-form-field>
                             </div>
+                            <div class="left-field" fxFlex="29%">
+                                <mat-form-field appearance="outline" class="form-field">
+                                    <mat-label>{{ 'results_info.relationship' | translate }}</mat-label>
+                                    <input type="text" name="relationship" matInput [ngModel]="othere[i]?.relationship"  #relationship="ngModel" required>
+                                    
+                                </mat-form-field>
+                            </div>
                         </div>
 
                         <div ngModelGroup="{{i}}" #num="ngModelGroup" style="width: 100%;" *ngIf="!chkOther">
-                            <div class="left-field" fxFlex="46%" style="    margin: auto 10px;">
+                            <div class="left-field" fxFlex="29%" style="margin: auto 10px;">
                                 <mat-form-field appearance="outline" class="form-field" >
                                 <mat-label>{{ 'personal.name' | translate }}</mat-label>
                                 <input type="text" name="name" matInput  ngModel #name="ngModel" 
@@ -132,11 +155,18 @@
                                     
                                 </mat-form-field>
                             </div>
-                            <div class="left-field" fxFlex="46%">
+                            <div class="left-field" fxFlex="29%" style="margin: auto 10px;">
                                 <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>{{ 'personal.rate' | translate }}</mat-label>
                                     <input type="text" name="rate" matInput ngModel  #rate="ngModel" 
                                         placeholder="{{'personal.rate' | translate}}"  required>
+                                    
+                                </mat-form-field>
+                            </div>
+                            <div class="left-field" fxFlex="29%">
+                                <mat-form-field appearance="outline" class="form-field">
+                                    <mat-label>{{ 'results_info.relationship' | translate }}</mat-label>
+                                    <input type="text" name="relationship" matInput ngModel  #relationship="ngModel" required>
                                     
                                 </mat-form-field>
                             </div>

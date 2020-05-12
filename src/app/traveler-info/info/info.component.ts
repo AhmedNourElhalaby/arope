@@ -72,7 +72,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   date;
   indi;
   cid: boolean;
-  isFirstPolicy = true;
+  // isFirstPolicy = true;
   national = 'egyptian';
   isEgyptian = true;
   data_info = {
@@ -365,7 +365,6 @@ loadStripe() {
       const object = form.value.additionalTravelers;
       console.log('hhhhhhhhhhhhhhhh', object);
       const objectKeys = Object.keys(object);
-      console.log('hhhhhhhhhhhhhhhh', objectKeys);
       const objectKeysLen = objectKeys.length / 8;
       let index = 1;
       const emptyArr = [];
@@ -482,22 +481,22 @@ loadStripe() {
       this.cid = false;
     } else {
       this.cid = true;
-      const data = {paramlist: {filter: [['national_id', '=', id]], need: ['issue_date']}};
-      this.odoo.call_odoo_function('travel_agency', 'online', 'online',
-      'policy.travel', 'search_read', data ).subscribe(res => {
-        const key = 'issue_date';
-        console.log(res);
-        if (res[0]) {
-        const issueDate = res[0][key].substring(0, 10);
-        const today = new Date();
-        const strDate = this.convertDate(today);
-        if (issueDate === strDate) {
-          this.isFirstPolicy = false;
-        }
-        console.log(strDate);
-        console.log(issueDate);
-      }
-      });
+      // const data = {paramlist: {filter: [['national_id', '=', id]], need: ['issue_date']}};
+      // this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+      // 'policy.travel', 'search_read', data ).subscribe(res => {
+      //   const key = 'issue_date';
+      //   console.log(res);
+      //   if (res[0]) {
+      //   const issueDate = res[0][key].substring(0, 10);
+      //   const today = new Date();
+      //   const strDate = this.convertDate(today);
+      //   if (issueDate === strDate) {
+      //     this.isFirstPolicy = false;
+      //   }
+      //   console.log(strDate);
+      //   console.log(issueDate);
+      // }
+      // });
     }
 
   }
