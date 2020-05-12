@@ -1,4 +1,4 @@
-import { TravelerService } from "./../traveler-info/traveler.service";
+import { TravelerService } from './../traveler-info/traveler.service';
 import {
   Component,
   OnInit,
@@ -6,23 +6,23 @@ import {
   EventEmitter,
   ViewChild,
   AfterViewChecked
-} from "@angular/core";
+} from '@angular/core';
 import {
   FormControl,
   FormGroupDirective,
   NgForm,
   Validators
-} from "@angular/forms";
-import { SiteSettingsService } from "../shared/site_settings.service";
-import { ErrorStateMatcher } from "@angular/material/core";
-import { ValidationService } from "src/app/shared/validation.service";
+} from '@angular/forms';
+import { SiteSettingsService } from '../shared/site_settings.service';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { ValidationService } from 'src/app/shared/validation.service';
 // FORMATE DATE
 import {
   NativeDateAdapter,
   DateAdapter,
   MAT_DATE_FORMATS
-} from "@angular/material";
-import { AppDateAdapter, APP_DATE_FORMATS } from "../date.adapter";
+} from '@angular/material';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../date.adapter';
 // import { saveAs } from 'file-saver';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -45,9 +45,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 @Component({
-  selector: "app-personal-info",
-  templateUrl: "./personal-info.component.html",
-  styleUrls: ["./personal-info.component.css"],
+  selector: 'app-personal-info',
+  templateUrl: './personal-info.component.html',
+  styleUrls: ['./personal-info.component.css'],
   providers: [
     {
       provide: DateAdapter,
@@ -65,7 +65,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   mail: boolean;
   cid: boolean;
   element: number[] = [0];
-  emailFormControl = new FormControl("", [
+  emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email
   ]);
@@ -79,47 +79,57 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     private http: HttpClient,
     private uiService: UIService
   ) {}
-  @ViewChild("fInfo", { static: false }) customForm: NgForm;
+  @ViewChild('fInfo', { static: false }) customForm: NgForm;
   matcher = new MyErrorStateMatcher();
   maxDate: Date;
   minDate: Date;
   date;
   othere;
-  addScript: boolean = false;
+  countries;
+  addScript = false;
   data_info = {
-    phone: "",
-    full_name: "",
-    mail: "",
-    address: "",
+    phone: '',
+    full_name: '',
+    mail: '',
+    address: '',
+    national: null,
+    city: '',
     total_price: 0,
-    package: "",
-    first_name: "",
-    middle_name: "",
-    last_name: "",
+    package: '',
+    first_name: '',
+    middle_name: '',
+    last_name: '',
     gender: null,
-    id: "",
-    othere:'',
-    after_die: "true"
+    id: '',
+    othere: '',
+    after_die: 'true'
   };
-  chkOther: boolean = false;
+  chkOther = false;
   qnbConfig;
   @Output() changeStatus = new EventEmitter();
   ngOnInit() {
+    const data = {paramlist: {filter: [],
+      need: []}};
+    this.odoo.call_odoo_function('travel_agency', 'online', 'online',
+  'res.country', 'search_read', data ).subscribe(res => {
+    this.countries = res;
+    console.log(this.countries);
+  });
     // start qnp config
     this.initQnpConfig();
-    //end qnp config
+    // end qnp config
     console.log('data info', this.data_info);
 
-    if(!this.data_info.othere) {
+    if (!this.data_info.othere) {
       this.chkOther = false;
     } else {
       this.chkOther = true;
     }
-    //params query
+    // params query
     this.routerActivated.queryParamMap.subscribe(param => {
-      //start code
-    //start code
-    if(param.has('step')) {
+      // start code
+    // start code
+    if (param.has('step')) {
       console.log('text', param.get('step'));
       localStorage.setItem('stepper', 'true');
       this.changeStatus.emit(true);
@@ -141,23 +151,23 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
             this.downloadTerms('http://207.154.195.214/PA_General_Conditions.pdf');
             window.open('http://207.154.195.214/PA_General_Conditions.pdf', '_blank');
           });
-         
+
         });
         }
-      
+
     }
-    
+
     });
 
     /* max and min date */
     this.maxDate = this.setting.getDateInYears(75);
     this.minDate = this.setting.getDateInYears(18);
     /* end max and min date */
-    this.date = localStorage.getItem("date");
-    console.log("this date", this.date);
+    this.date = localStorage.getItem('date');
+    console.log('this date', this.date);
   }
   fullNameText(firstName, middleName, LastName) {
-    return firstName + " " + middleName + " " + LastName;
+    return firstName + ' ' + middleName + ' ' + LastName;
   }
   downloadTerms(url) {
     let header = new HttpHeaders();
@@ -170,10 +180,10 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
 
   submitPersonalInfo(form: NgForm) {
     // console.log(form.value);
-    const data = JSON.parse(localStorage.getItem("personalAccData"));
+    const data = JSON.parse(localStorage.getItem('personalAccData'));
     const sum = data.sum_insured;
     const Job = data.job_id;
-    const coversData = JSON.parse(localStorage.getItem("covers"));
+    const coversData = JSON.parse(localStorage.getItem('covers'));
     const coversId = coversData.id;
     const full_name = this.fullNameText(
       form.value.firstName,
@@ -182,10 +192,10 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     );
     let othere;
 
-    localStorage.setItem("fullName", full_name);
+    localStorage.setItem('fullName', full_name);
 
     if (!form.value.others) {
-      othere = "";
+      othere = '';
     } else {
       othere = Object.values(form.value.others);
     }
@@ -204,15 +214,17 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
         job: Job,
         cover: coversId,
         address: form.value.address,
+        national: form.value.national,
+        city: form.value.city,
         elig_bool: form.value.after_die,
-        othere: othere,
+        othere,
         gender: form.value.gender
       },
-      key: "personal"
+      key: 'personal'
     };
 
-    console.log("form data", formData);
-    localStorage.setItem("formData", JSON.stringify(formData));
+    console.log('form data', formData);
+    localStorage.setItem('formData', JSON.stringify(formData));
     this.changeShowValue();
     // this.changeStatus.emit(true);
     this.isValidFormSubmitted = true;
@@ -221,7 +233,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   }
   onClickAfterSubmit() {
     this.initQnpConfig();
-    console.log("data start", this.data_info);
+    console.log('data start', this.data_info);
     Checkout.showLightbox();
   }
 
@@ -237,22 +249,22 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   //   });
   // }
   get lang() {
-    return localStorage.getItem("lang");
+    return localStorage.getItem('lang');
   }
   convertDate(dateAge) {
     let d = new Date(dateAge),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
       year = d.getFullYear();
 
     if (month.length < 2) {
-      month = "0" + month;
+      month = '0' + month;
     }
     if (day.length < 2) {
-      day = "0" + day;
+      day = '0' + day;
     }
 
-    return [year, month, day].join("-");
+    return [year, month, day].join('-');
   }
   checkId() {
     const dob = this.convertDate(this.customForm.value.indAge);
@@ -272,12 +284,12 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   }
 
   deleteElement(index: number) {
-    const ele = document.getElementById("field-" + index);
+    const ele = document.getElementById('field-' + index);
     ele.parentNode.removeChild(ele);
   }
   ngAfterViewChecked() {
-    let script = document.querySelector("#myscript");
-    script.setAttribute("data-complete", "http://207.154.195.214/arope/personal-accident/personal-result?step=thankyou");
+    const script = document.querySelector('#myscript');
+    script.setAttribute('data-complete', 'http://207.154.195.214/arope/personal-accident/personal-result?step=thankyou');
     // if(!this.addScript) {
     //   this.qnbScript();
     // }
@@ -289,29 +301,29 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   qnbScript() {
     this.addScript = true;
     return new Promise((resolve, reject) => {
-      let scriptElement = document.createElement('script');
-      scriptElement.src = "https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js";
-      scriptElement.setAttribute("data-complete", "http://localhost:4200/personal-accident/personal-result?step=thankyou");
-      scriptElement.setAttribute("data-error", "errorCallback");
+      const scriptElement = document.createElement('script');
+      scriptElement.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
+      scriptElement.setAttribute('data-complete', 'http://localhost:4200/personal-accident/personal-result?step=thankyou');
+      scriptElement.setAttribute('data-error', 'errorCallback');
       // scriptElement.setAttribute("data-cancel", "http://localhost:4200/traveler-insurance");
       scriptElement.onload = resolve;
       document.head.appendChild(scriptElement);
-    })
+    });
   }
 
 
   initQnpConfig() {
-    const data_traveler = JSON.parse(localStorage.getItem("formData"));
+    const data_traveler = JSON.parse(localStorage.getItem('formData'));
     const session_id = this.travelerService.getJSessionId();
-    const total_price = localStorage.getItem("total_price");
+    const total_price = localStorage.getItem('total_price');
 
     if (data_traveler) {
-      console.log("data traveler", data_traveler);
+      console.log('data traveler', data_traveler);
       this.data_info = this.travelerService.getInfoPersonal();
-      console.log("data-info", this.data_info);
+      console.log('data-info', this.data_info);
       if (this.data_info.othere) {
-        this.othere =this.data_info.othere;
-        console.log("otheres ", this.othere);
+        this.othere = this.data_info.othere;
+        console.log('otheres ', this.othere);
         if (this.data_info.othere.length > 1) {
           for (
             let i = 0;
@@ -324,39 +336,39 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
       }
     }
 
-    //qnp config
+    // qnp config
     this.qnbConfig = {
-      merchant: "TESTQNBAATEST001",
+      merchant: 'TESTQNBAATEST001',
       session: {
         id: session_id
       },
       order: {
-        amount: function() {
-          //Dynamic calculation of amount
+        amount() {
+          // Dynamic calculation of amount
           return Number(total_price);
         },
-        currency: "EGP",
+        currency: 'EGP',
         description: this.data_info.package,
         id: session_id
       },
       interaction: {
         merchant: {
-          name: "شركة أروب مصر",
+          name: 'شركة أروب مصر',
           address: {
-            line1: "30, Msadak, Ad Doqi Giza 12411"
+            line1: '30, Msadak, Ad Doqi Giza 12411'
           },
-          phone: "02 33323299",
+          phone: '02 33323299',
 
           logo:
-            "https://aropeegypt.com.eg/Property/wp-content/uploads/2019/10/Logoz-3.jpg"
+            'https://aropeegypt.com.eg/Property/wp-content/uploads/2019/10/Logoz-3.jpg'
         },
-        locale: "ar_EG",
-        theme: "default",
+        locale: 'ar_EG',
+        theme: 'default',
         displayControl: {
-          billingAddress: "HIDE",
-          customerEmail: "HIDE",
-          orderSummary: "SHOW",
-          shipping: "HIDE"
+          billingAddress: 'HIDE',
+          customerEmail: 'HIDE',
+          orderSummary: 'SHOW',
+          shipping: 'HIDE'
         }
       }
     };
