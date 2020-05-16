@@ -86,6 +86,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   date;
   othere;
   countries;
+  policyLang = "ar";
   addScript = false;
   data_info = {
     phone: '',
@@ -102,7 +103,8 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     gender: null,
     id: '',
     othere: '',
-    after_die: 'true'
+    after_die: 'true',
+    language: ''
   };
   chkOther = false;
   qnbConfig;
@@ -191,13 +193,18 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
       form.value.lastName
     );
     let othere;
-
+    let bool_after_die;
     localStorage.setItem('fullName', full_name);
 
     if (!form.value.others) {
       othere = '';
     } else {
       othere = Object.values(form.value.others);
+    }
+    if (form.value.after_die === 'true') {
+      bool_after_die = true;
+    } else {
+      bool_after_die = false;
     }
 
     const formData = {
@@ -216,9 +223,10 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
         address: form.value.address,
         national: form.value.national,
         city: form.value.city,
-        elig_bool: form.value.after_die,
+        elig_bool: bool_after_die,
         othere,
-        gender: form.value.gender
+        gender: form.value.gender,
+        language: form.value.policyLang
       },
       key: 'personal'
     };

@@ -5,16 +5,16 @@ import { WelcomeService } from '../welcome.service';
 import { SiteSettingsService } from '../../shared/site_settings.service';
 
 
-//FORMATE DATE
+// FORMATE DATE
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: "app-stop-training",
   template: `
-  
+
     <form #fDialog="ngForm" (ngSubmit)="submitFormAges(fDialog)">
-    
+
       <div mat-dialog-content>
         <div *ngFor="let element of elements; let i = index">
           <span id="field-{{ i }}" class="selectDiv">
@@ -27,7 +27,7 @@ import { TranslateService } from '@ngx-translate/core';
               font-weight: normal;"
                   fxFlex="21%"
                 >
-                  
+
                   {{ 'traveler.key1' | translate }}
                 </div>
               </ng-template>
@@ -37,7 +37,7 @@ import { TranslateService } from '@ngx-translate/core';
                   fxFlex="30%"
                 >
                 {{ 'traveler.key2' | translate }}
-                  
+
                 </div>
               </ng-template>
 
@@ -47,7 +47,7 @@ import { TranslateService } from '@ngx-translate/core';
 
               <div ngModelGroup="dates" fxFlex="20%" [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }">
 
-            
+
                 <div class="form-group" *ngIf="i == 0">
                 <!-- start mat-from-field -->
 
@@ -55,7 +55,7 @@ import { TranslateService } from '@ngx-translate/core';
                   class="form-age-traveler"
                   style="
                   width: 162px;"
-               
+
                 >
                   <!-- Input Date -->
 
@@ -88,19 +88,19 @@ import { TranslateService } from '@ngx-translate/core';
 
 
                 <div class="form-group" *ngIf="i > 0">
-                
+
                 <!-- Start IF Condition -->
-          
+
                 <!-- start mat-from-field -->
                 <mat-form-field
                   class="form-age-traveler"
                   style="
                   width: 162px;"
-                  *ngIf="fDialog.value.types['type-'+i] === 'kid'" 
-                                    
+                  *ngIf="fDialog.value.types['type-'+i] === 'kid'"
+
                 >
 
-                
+
                   <!-- Input Date -->
 
                   <input
@@ -114,7 +114,7 @@ import { TranslateService } from '@ngx-translate/core';
                     [max]="minDate"
                     [min]="maxDateKid"
                     required
-                   
+
                   />
                   <!-- End Input Date -->
 
@@ -135,11 +135,11 @@ import { TranslateService } from '@ngx-translate/core';
                   class="form-age-traveler"
                   style="
                   width: 162px;"
-                 *ngIf="fDialog.value.types['type-'+i] === 'spouse'"  
-                
+                 *ngIf="fDialog.value.types['type-'+i] === 'spouse'"
+
                 >
 
-                
+
                   <!-- Input Date -->
 
                   <input
@@ -151,7 +151,7 @@ import { TranslateService } from '@ngx-translate/core';
                     name="date-{{ i }}"
                     #ages="ngModel"
                     [max]="maxDateKid"
-                    
+
                     required
                   />
                   <!-- End Input Date -->
@@ -167,7 +167,7 @@ import { TranslateService } from '@ngx-translate/core';
                   ></mat-datepicker>
                 </mat-form-field>
                 <!-- End mat-form-field -->
-           
+
 
                 <!-- End If Condition -->
                 <!-- start mat-from-field -->
@@ -176,7 +176,7 @@ import { TranslateService } from '@ngx-translate/core';
                   style="
                   width: 162px;"
                   *ngIf="!fDialog.value.types['type-'+i]"
-                 
+
                 >
 
 
@@ -193,7 +193,7 @@ import { TranslateService } from '@ngx-translate/core';
                     [max]="minDate"
                     [disabled]="!fDialog.value.types['type-'+i]"
                     required
-                    
+
                   />
                   <!-- End Input Date -->
 
@@ -267,7 +267,7 @@ import { TranslateService } from '@ngx-translate/core';
               <!-- Start Section Delete Field-->
               <div
                 fxFlex="10%"
-               
+
                 [ngClass]="{'margin-right-fix': lang=='en', 'margin-left-fix': lang=='ar' }"
                 style="   cursor: pointer;"
                 (click)="deleteElement(i)"
@@ -285,14 +285,14 @@ import { TranslateService } from '@ngx-translate/core';
                   >minimize</mat-icon
                 >
               </div>
-             
+
               <!-- End Section Delete Field -->
             </div>
           </span>
         </div>
       </div>
       <div mat-dialog-actions>
-    
+
         <div
           style="cursor: pointer; color: #565656"
           onMouseOver="this.style.color='#073e89'"
@@ -341,7 +341,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AgeTravelerComponent implements OnInit {
   @ViewChild('fDialog', {static: false}) fDialog: NgForm;
-  elements = [0,1];
+  elements = [0, 1];
   minDate;
   maxDateKid;
   result;
@@ -366,10 +366,10 @@ export class AgeTravelerComponent implements OnInit {
 
   ngOnInit() {
 
-    
-    if(this.lang == 'en') {
+
+    if (this.lang === 'en') {
       this.dateAdapter.setLocale('en');
-    } else if(this.lang == 'ar') {
+    } else if (this.lang === 'ar') {
       this.dateAdapter.setLocale('ar');
     }
     this.minDate = this.welcomeService.getMinDateBefore30Days();
@@ -393,7 +393,7 @@ export class AgeTravelerComponent implements OnInit {
     }
     this.result = result;
 
-    //console.log('result', this.elements);
+    // console.log('result', this.elements);
   }
 
   get lang() { return localStorage.getItem("lang"); }
@@ -424,9 +424,9 @@ export class AgeTravelerComponent implements OnInit {
     element_id.parentNode.removeChild(element_id);
 
     console.log('form updated', this.fDialog.value);
-    let type_str = "type-"+index;
-    let date_str = "date-"+index;
-    
+    const type_str = "type-" + index;
+    const date_str = "date-" + index;
+
     delete this.fDialog.value.types[type_str];
     delete this.fDialog.value.dates[date_str];
 
@@ -437,16 +437,16 @@ export class AgeTravelerComponent implements OnInit {
   }
 
   toggleBtn() {
-    let countEle = document.querySelectorAll('.selectDiv');
-  
-    if(countEle.length == 5) {
+    const countEle = document.querySelectorAll('.selectDiv');
+
+    if (countEle.length === 5) {
       this.showBtn = false;
     } else {
       this.showBtn = true;
     }
   }
 
-  setLocale(val){
+  setLocale(val) {
     console.log(val);
     this.dateAdapter.setLocale(val);
   }

@@ -6,25 +6,26 @@
             <mat-radio-button value="egyptian">{{ 'traveler.egypt' | translate }}</mat-radio-button>
             <mat-radio-button value="non">{{ 'traveler.non_egypt' | translate }}</mat-radio-button>
         </mat-radio-group>
+        
         <mat-grid-list cols="3" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
-                    <input matInput type="text" name="firstName" [ngModel]="data_info.first_name" #firstName="ngModel" pattern="[a-zA-Z ]*" required>
+                    <input matInput type="text" name="firstName" [ngModel]="data_info.first_name" pattern="[a-zA-Z ]*" #firstName="ngModel" required>
                     <mat-error *ngIf="firstName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.middleName' | translate }}</mat-label>
-                    <input matInput type="text" name="middleName" [ngModel]="data_info.middle_name" #middleName="ngModel" pattern="[a-zA-Z ]*" required>
+                    <input matInput type="text" name="middleName" [ngModel]="data_info.middle_name" pattern="[a-zA-Z ]*" #middleName="ngModel" required>
                     <mat-error *ngIf="middleName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.lastName' | translate }}</mat-label>
-                    <input matInput type="text" name="lastName" [ngModel]="data_info.last_name" #lastName="ngModel" pattern="[a-zA-Z ]*" required>
+                    <input matInput type="text" name="lastName" [ngModel]="data_info.last_name" pattern="[a-zA-Z ]*" #lastName="ngModel" required>
                     <mat-error *ngIf="lastName.hasError('pattern')">Name Must Be In <strong>English</strong></mat-error>
                 </mat-form-field>
             </mat-grid-tile>
