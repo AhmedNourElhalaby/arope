@@ -14,6 +14,7 @@ export class TravelerInfoComponent implements OnInit, OnDestroy {
   infoStatus = false;
   isCompleted = false;
   travelerInfoStatus = false;
+
   paymentStatus = false;
   secondFormGroup: FormGroup;
   isShow: boolean;
@@ -29,6 +30,7 @@ export class TravelerInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+ 
     if(this.selectedIndex === 0) {
       localStorage.removeItem('stepper');
     }

@@ -16,12 +16,13 @@ export class QuoteComponent implements OnInit, OnDestroy {
   isLoadingSubs: Subscription;
   resObjExcess;
 
-
+  typeCheck: string;
 
   constructor(private travelerService: TravelerService, private uiService: UIService) {
    }
 
   ngOnInit() {
+    this.typeCheck = localStorage.getItem('type');
     this.loadBenefitsSub = this.travelerService.loadListBenefits.subscribe(
       result => {
         this.transactions = result;

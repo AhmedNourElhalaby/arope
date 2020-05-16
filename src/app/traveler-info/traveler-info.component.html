@@ -3,6 +3,7 @@
 </div>
 <div class='container' fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="1%">
 
+
     <div fxFlex="75%">
         <mat-horizontal-stepper fxFlex.lt-sm="100%" linear labelPosition="bottom" #stepper
         (selectionChange)="setIndex($event)" (click)="triggerClick()"
@@ -19,7 +20,7 @@
                 <app-quote fxFlex.lt-sm="100%"></app-quote>
             </mat-step>
             <mat-step label="{{'stepper.step5' | translate}}" [completed]="travelerInfoStatus" state="traveler">
-
+                
                 <app-info fxFlex.lt-sm="100%" (changeStatus)="goForwardToPayment(stepper, $event)"></app-info>
 
             </mat-step>

@@ -14,14 +14,40 @@
                 </ng-template>
 
                 <mat-step label="{{ 'stepper.step1' | translate }}" [stepControl]="infoStatus" state="quote">
+                    <mat-card style="margin-bottom: 20px;" *ngIf="type === 'smes'">
+                        <mat-card-title class="special-title">
+                            {{ 'notes.title' | translate }} <span style="color: red;">*</span>
+                        </mat-card-title>
+                    
+                        <ul class="notes">
+                            <li>{{ 'notes.note4' | translate }}</li>
+                            <li>{{ 'notes.note5' | translate }}</li>
+                            <li>{{ 'notes.note6' | translate }}</li>
+                    
+                        </ul>
+                    </mat-card>
+
+                    <mat-card style="margin-bottom: 20px;" *ngIf="type == 'individual'">
+                        <mat-card-title class="special-title">
+                            {{ 'notes.title' | translate }} <span style="color: red;">*</span>
+                        </mat-card-title>
+                    
+                        <ul class="notes">
+                            <li>{{ 'notes.note1' | translate }}</li>
+                            <li>{{ 'notes.note2' | translate }}</li>
+                            <li>{{ 'notes.note3' | translate }}</li>
+                    
+                        </ul>
+                    </mat-card>
                 <h2 class=""><span class="big-text">{{"medical.plans_price" | translate}}</span> (<span class="small-text"> {{ 'medical.small_text' | translate }}</span>)</h2>
 
 
                     <div *ngIf="type === 'smes'" style="overflow-x: scroll;">
-
+                        
                         <app-smes-table [objMedicalInfo]="objMedicalInfo" [stepper]="stepper"></app-smes-table>
                     </div>
                     <div *ngIf="type != 'smes'" style="overflow-x: scroll;">
+                       
                         <mat-card *ngFor="let info of objMedicalInfo; let i = index">
                             <mat-card-title *ngIf="info.name != 'main'">{{info.name}}</mat-card-title>
                             <div *ngIf="i == 0 ;then thenBlock1 else elseBlock1"></div>

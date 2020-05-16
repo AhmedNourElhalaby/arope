@@ -218,3 +218,19 @@ form-field:not(:last-child) {
 .info-form .button-quote span.mat-button-wrapper {
     margin: auto -7px;
 }
+
+
+/*notes*/
+
+ul.notes {
+    list-style-type: square;
+}
+
+ul.notes>li::marker {
+    color: #073e89;
+}
+
+ul.notes>li {
+    margin-bottom: 11px;
+    font-family: Arial;
+}

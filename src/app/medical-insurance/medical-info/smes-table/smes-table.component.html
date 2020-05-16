@@ -1,3 +1,5 @@
+
+
 <mat-card *ngFor="let info of objMedicalInfo; let i = index">
     <mat-card-title *ngIf="info.name != 'main'">{{info.name}}</mat-card-title>
     <div *ngIf="i == 0 ;then thenBlock11 else elseBlock11"></div>
