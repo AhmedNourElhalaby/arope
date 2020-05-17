@@ -2,17 +2,12 @@
     <h2 class="special-title">{{ 'results_info.title2' | translate }}</h2>
 
     <form #fInfo="ngForm" (ngSubmit)="submitPersonalInfo(fInfo)">
-<<<<<<< HEAD
         <mat-radio-group color="success" aria-label="Select an option" color="primary" name="policyLang" [(ngModel)]="policyLang" #typeInput="ngModel" required>
             <mat-radio-button value="ar">{{ 'personal.ar' | translate }}</mat-radio-button>
             <mat-radio-button value="en">{{ 'personal.en' | translate }}</mat-radio-button>
         </mat-radio-group>
         <h4>{{'personal.lang_note' | translate}}</h4>
-        <mat-grid-list cols="3" rowHeight="88px" gutterSize="10px">
-=======
-
         <mat-grid-list [cols]="breakpoint2" (window:resize)="onResize($event)" rowHeight="88px" gutterSize="10px">
->>>>>>> 025b7bfc22761da66ffd811d53debbb7bac9705c
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
