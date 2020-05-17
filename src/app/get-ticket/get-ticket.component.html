@@ -3,7 +3,7 @@
         <mat-card-title fxLayoutAlign="flex-start">
             {{ 'results_info.title2' | translate }}</mat-card-title>
         <mat-card-content>
-            <mat-grid-list [cols]="3" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
+            <mat-grid-list [cols]="breakpoint" rowHeight="75px" (window:resize)="onResize($event)" gutterSize="10px">
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class='form-field'>
                         <mat-label>{{ 'group.name' | translate }}</mat-label>

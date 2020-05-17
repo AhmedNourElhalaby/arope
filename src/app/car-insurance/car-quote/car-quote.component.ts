@@ -53,14 +53,17 @@ export class CarQuoteComponent implements OnInit, OnDestroy {
     if ( !form.valid) {
       return;
     }
-    console.log(form.value.type, form.value.brand, form.value.price);
-    if (form.value.deductibleRate === 'option1' || form.value.deductibleRate === 'option2') {
+
+    const brandCar = this.carService.getValueBrand(Number(form.value.brandCar));
+   
+    if (form.value.type == 'General') {
+     
     this.router.navigate(['/', 'car-insurance', 'insurance-info',
-    this.carService.getValueBrand(Number(form.value.brandCar)), form.value.brand, form.value.type,
-     form.value.price, form.value.deductibleRate]);
+    brandCar, form.value.brand, form.value.type,
+     form.value.price]);
     } else {
       this.router.navigate(['/', 'car-insurance', 'insurance-info',
-      this.carService.getValueBrand(Number(form.value.brandCar)), form.value.brand, form.value.type,
+      brandCar, form.value.brand, form.value.type,
       form.value.price]);
     }
   }

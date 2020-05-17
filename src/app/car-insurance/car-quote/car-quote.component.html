@@ -55,7 +55,7 @@
                         </mat-form-field>
                     </mat-grid-tile>
 
-                    <mat-grid-tile *ngIf="checkDeductibleRateOptions(f) != false" >
+                    <!-- <mat-grid-tile *ngIf="checkDeductibleRateOptions(f) != false" >
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label>{{ 'car.deductible' | translate }}</mat-label>
                             <mat-select name="deductibleRate" ngModel #deductibleRate="ngModel" required>
@@ -67,7 +67,9 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                    </mat-grid-tile>
+                    </mat-grid-tile> -->
+
+
                     <mat-grid-tile *ngIf="checkDeductibleRateOptions(f) == false" >
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label>{{ 'car.model_year' | translate }}</mat-label>
@@ -78,8 +80,19 @@
                             </mat-select>
                         </mat-form-field>
                     </mat-grid-tile>
+
+                    <mat-grid-tile  *ngIf="checkDeductibleRateOptions(f) != false">
+                        <mat-form-field appearance="outline" class='form-field' >
+                            <mat-label>{{ 'car.model_year' | translate }}</mat-label>
+                            <mat-select name="year" ngModel #year="ngModel" required>
+                                <mat-option *ngFor="let year of years" [value]="year">
+                                    {{year}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
                 </mat-grid-list>
-                <mat-grid-list *ngIf="checkDeductibleRateOptions(f) != false" cols="1" rowHeight="75px" gutterSize="10px">
+                <!-- <mat-grid-list *ngIf="checkDeductibleRateOptions(f) != false" cols="1" rowHeight="75px" gutterSize="10px">
                     <mat-grid-tile>
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label>{{ 'car.model_year' | translate }}</mat-label>
@@ -90,7 +103,7 @@
                             </mat-select>
                         </mat-form-field>
                     </mat-grid-tile>
-                </mat-grid-list>
+                </mat-grid-list> -->
 
                 <br><br>
                 <button class='button-quote' mat-button color="primary" type="submit" [disabled]="!f.valid">{{ 'car.get_quote' | translate }}</button>
