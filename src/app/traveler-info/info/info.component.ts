@@ -114,11 +114,11 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
     this.breakpoint2 = window.innerWidth <= 700 ? 1 : 3;
 
-      // start qnp config
-      this.initQnpConfig();
+    // start qnp config
+    this.initQnpConfig();
       // end qnp config
   // params query
-      this.routerActivated.queryParamMap.subscribe(param => {
+    this.routerActivated.queryParamMap.subscribe(param => {
 
     // start code
     if (param.has('step')) {
@@ -170,31 +170,31 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   });
 
 
-      this.type = localStorage.getItem('type');
-      if (this.type === 'individual') {
-      this.indi = true;
-      this.date = localStorage.getItem('date');
-    } else {
-      const fJson = JSON.parse(localStorage.getItem('typesDates'));
-      this.dataJson = JSON.parse(fJson);
-      this.typesList = this.dataJson.types;
-      this.datesList = this.dataJson.dates;
-      console.log('DateList', this.datesList);
-    }
-      if (this.lang === 'en') {
-      this.dateAdapter.setLocale('en');
-    } else if (this.lang === 'ar') {
-      this.dateAdapter.setLocale('ar');
-    }
-      this.minDateKid = this.setting.getDateInYears(18);
-      this.maxDateKid = this.welService.getMinDateBefore30Days();
-      const emptyArr = new Array(
-      parseInt(localStorage.getItem('numOfTraveler'))
-    );
-      for (let i = 0; i < emptyArr.length; i++) {
+    this.type = localStorage.getItem('type');
+    if (this.type === 'individual') {
+    this.indi = true;
+    this.date = localStorage.getItem('date');
+  } else {
+    const fJson = JSON.parse(localStorage.getItem('typesDates'));
+    this.dataJson = JSON.parse(fJson);
+    this.typesList = this.dataJson.types;
+    this.datesList = this.dataJson.dates;
+    console.log('DateList', this.datesList);
+  }
+    if (this.lang === 'en') {
+    this.dateAdapter.setLocale('en');
+  } else if (this.lang === 'ar') {
+    this.dateAdapter.setLocale('ar');
+  }
+    this.minDateKid = this.setting.getDateInYears(18);
+    this.maxDateKid = this.welService.getMinDateBefore30Days();
+    const emptyArr = new Array(
+    parseInt(localStorage.getItem('numOfTraveler'))
+  );
+    for (let i = 0; i < emptyArr.length; i++) {
 
-      console.log('count', i);
-      this.numOfTravelers.push(i);
+    console.log('count', i);
+    this.numOfTravelers.push(i);
    }
 
     // this.loadStripe();

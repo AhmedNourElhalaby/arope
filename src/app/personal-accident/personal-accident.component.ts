@@ -30,14 +30,14 @@ export class PersonalAccidentComponent implements OnInit {
   isOn = true;
   maxDate: Date;
   minDate: Date;
-  type;
+  type = 6;
   isShow = true;
   constructor(private odoo: OdooService, private router: Router, private site: SiteSettingsService,
               private activateRouter: ActivatedRoute) { }
 
   ngOnInit() {
-    this.activateRouter.queryParamMap.subscribe(paramMap=> {
-      if(paramMap.has('page')) {
+    this.activateRouter.queryParamMap.subscribe(paramMap => {
+      if (paramMap.has('page')) {
         this.isOn = false;
       }
     });
@@ -141,10 +141,10 @@ export class PersonalAccidentComponent implements OnInit {
       console.log('HERE');
       // console.log(this.getTitleJobId(form.value.job));
       this.isOn = false;
-      this.router.navigate(['/personal-accident'], {queryParams: {page: 'find-yourjob',dateOfBirth: this.convertDate(form.value.indAge), job: this.getTitleJobId(form.value.job), sum_insured: form.value.rate}});
+      this.router.navigate(['/personal-accident'], {queryParams: {page: 'find-yourjob', dateOfBirth: this.convertDate(form.value.indAge), job: this.getTitleJobId(form.value.job), sum_insured: form.value.rate}});
       return;
     } else {
-      this.router.navigate(['/','personal-accident','personal-result']);
+      this.router.navigate(['/', 'personal-accident', 'personal-result']);
     }
   });
   }

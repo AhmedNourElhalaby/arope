@@ -94,7 +94,7 @@ export class TravelerService {
     const city = info.data.city;
     const gender = info.data.gender;
     const id = info.data.id;
-
+    const lang = info.data.policyLang;
 
     
     
@@ -103,7 +103,7 @@ export class TravelerService {
     const middle_name = split_str[1];
     const last_name = split_str[2];
     
-    const elig_bool = info.data.elig_bool.toString();
+    const elig_bool = info.data.elig_bool;
     let othere;
     if(info.data.othere) {
       console.log('type of othere ', typeof( info.data.othere));
@@ -124,7 +124,8 @@ export class TravelerService {
         gender: gender,
         id: id,
         othere: othere,
-        after_die:elig_bool
+        after_die: elig_bool,
+        language: lang
     };
     
   }

@@ -40,21 +40,21 @@
 
 
                         </mat-grid-list>
-                        <div [ngClass]="{'radioFloat': this.lang =='en', 'ar_radioFloat': this.lang == 'ar', 'non-float': this.type == 6}">
+                        <div [ngClass]="{'radioFloat': this.lang =='en', 'ar_radioFloat': this.lang == 'ar'}">
                             <h3>{{ 'personal.covers' | translate }}</h3>
                             <div *ngIf="!isShow" fxLayoutAlign="center center">
                                 <mat-spinner [diameter]="40"></mat-spinner>
                             </div>
                             <div *ngIf="isShow">
                                 <mat-radio-group *ngFor="let cover of basicCovers" required aria-label="Select an option" color="primary" name="type" ngModel="type" #typeInput="ngModel" (change)="showField($event)">
-                                    <mat-radio-button style="margin-bottom:4px;" value="{{cover.id}}">{{cover.cover_id}}</mat-radio-button>
+                                    <mat-radio-button style="margin-bottom:4px;" checked value="{{cover.id}}">{{cover.cover_id}}</mat-radio-button>
                                     <br>
                                 </mat-radio-group>
 
                             </div>
 
                         </div>
-                        <div [ngClass]="{'radioMargin': this.lang =='en', 'ar_radioMargin': this.lang == 'ar'}" *ngIf="this.type != 6">
+                        <div [ngClass]="{'radioMargin': this.lang =='en', 'ar_radioMargin': this.lang == 'ar'}">
                             <h3>{{ 'personal.covers_optional' | translate }}</h3>
                             <div *ngIf="!isShow" fxLayoutAlign="center center">
                                 <mat-spinner [diameter]="40"></mat-spinner>

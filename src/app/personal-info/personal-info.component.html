@@ -2,25 +2,29 @@
     <h2 class="special-title">{{ 'results_info.title2' | translate }}</h2>
 
     <form #fInfo="ngForm" (ngSubmit)="submitPersonalInfo(fInfo)">
-
+        <mat-radio-group color="success" aria-label="Select an option" color="primary" name="policyLang" [(ngModel)]="policyLang" #typeInput="ngModel" required>
+            <mat-radio-button value="ar">{{ 'personal.ar' | translate }}</mat-radio-button>
+            <mat-radio-button value="en">{{ 'personal.en' | translate }}</mat-radio-button>
+        </mat-radio-group>
+        <h4>{{'personal.lang_note' | translate}}</h4>
         <mat-grid-list [cols]="breakpoint2" (window:resize)="onResize($event)" rowHeight="88px" gutterSize="10px">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.firstName' | translate }}</mat-label>
-                    <input matInput type="text" name="firstName" [ngModel]="data_info.first_name" pattern="[a-zA-Z ]*" #firstName="ngModel" required>
+                    <input matInput type="text" name="firstName" [ngModel]="data_info.first_name" #firstName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.middleName' | translate }}</mat-label>
-                    <input matInput type="text" name="middleName" [ngModel]="data_info.middle_name" pattern="[a-zA-Z ]*" #middleName="ngModel" required>
+                    <input matInput type="text" name="middleName" [ngModel]="data_info.middle_name" #middleName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.lastName' | translate }}</mat-label>
-                    <input matInput type="text" name="lastName" [ngModel]="data_info.last_name" pattern="[a-zA-Z ]*" #lastName="ngModel" required>
+                    <input matInput type="text" name="lastName" [ngModel]="data_info.last_name" #lastName="ngModel" required>
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
@@ -73,8 +77,11 @@
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label>{{"personal.national" | translate}}</mat-label>
                     <mat-select name="national" ngModel #national="ngModel" required>
-                        <mat-option *ngFor="let country of countries" [value]="country.id">
-                        {{country.display_name}}
+                        <mat-option value="egyptian">
+                        {{'traveler.egypt' | translate }}
+                        </mat-option>
+                        <mat-option value="non_egyptian">
+                            {{'traveler.non_egypt' | translate }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
