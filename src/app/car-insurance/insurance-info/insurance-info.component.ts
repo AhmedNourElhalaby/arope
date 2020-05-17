@@ -26,12 +26,10 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
   direction: 'rtl' | 'ltr';
   infoStatus = false;
   travelerInfoStatus = false;
-  deductibleRate;
   constructor(private http: HttpClient , private carService: CarInsuranceService, private route: ActivatedRoute, private router: Router, private uiService: UIService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      this.deductibleRate = paramMap.get('deductibleRate');
       if (!paramMap.has('brand') && !paramMap.has('product') && !paramMap.has('price'))  {
         this.router.navigate(['car-insurance']);
         return;
@@ -44,35 +42,28 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
     });
     this.isLoadingSubs = this.uiService.loadingChangedStatus.subscribe(res => {
       this.isLoading = res;
+      
     });
 
 
     this.carService.loadCovers.subscribe(covers => {
       this.objCovers = covers;
-      console.log('covers', covers);
+     
     });
     this.carService.getCovers(this.type);
     this.loadPriceSub = this.carService.loadPrice.subscribe(res => {
 
       this.totalPrice = res;
+      
     });
-    if (this.deductibleRate === 'option1' || this.deductibleRate === 'option2') {
-      const data = {
-        paramlist: {
-          data: {brand: this.brand, product: this.type, price: parseInt(this.price), deductible: this.deductibleRate}
-        }
-      };
-      console.log('10');
-      this.carService.sendPriceAndGetPrice(data);
-    } else {
+
     const data = {
       paramlist: {
         data: {brand: this.brand, product: this.type, price: parseInt(this.price)}
       }
     };
-    console.log(this.deductibleRate);
     this.carService.sendPriceAndGetPrice(data);
-  }
+  
 
     if (this.lang === 'en') {
       this.direction = 'ltr';
@@ -111,6 +102,13 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
 
   }
 
+  convertObjectToKeys(obj) {
+    return Object.keys(obj);
+  }
+
+  convertObjectToValues(obj) {
+    return Object.values(obj);
+  }
 
 
   ngOnDestroy() {

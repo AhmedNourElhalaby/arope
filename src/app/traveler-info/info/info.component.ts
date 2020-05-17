@@ -53,9 +53,10 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   @ViewChild('fInfo', {static: false}) customForm: NgForm;
   // @ViewChild('fInfo', {static: true}) form: NgForm;
   numOfTravelers = [];
-  types = [
-    { value: 'spouse', viewValue: 'Spouse' },
-    { value: 'kid', viewValue: 'Kid' }
+  types  = [
+    {value: 'spouse', viewValue: 'Spouse'},
+    {value: 'kid', viewValue: 'Kid'}
+    
   ];
   numberPattern = '^((\\+91-?)|0)?[0-9]{14}$';
   minDateKid;

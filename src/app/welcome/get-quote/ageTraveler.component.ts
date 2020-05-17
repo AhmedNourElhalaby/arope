@@ -347,8 +347,8 @@ export class AgeTravelerComponent implements OnInit {
   result;
   showBtn: boolean = true;
   types = [
-    { value: "spouse", viewValue: "Spouse" },
-    { value: "kid", viewValue: "Kid" }
+    {value: 'spouse', viewValue: 'Spouse'},
+    {value: 'kid', viewValue: 'Kid'}
   ];
   dataList = {
     dates: "",
@@ -400,8 +400,8 @@ export class AgeTravelerComponent implements OnInit {
 
   clickMe() {
     this.elements.push(this.elements.length);
-    this.toggleBtn();
-    console.log('result', this.elements);
+    // this.toggleBtn();
+    // console.log('result', this.elements);
   }
 
   submitFormAges(form: NgForm) {

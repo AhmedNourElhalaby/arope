@@ -234,3 +234,15 @@ ul.notes>li {
     margin-bottom: 11px;
     font-family: Arial;
 }
+
+/* Tabs */
+
+div#mat-tab-label-0-1,div#mat-tab-label-0-0 {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+mat-tab-header.mat-tab-header{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

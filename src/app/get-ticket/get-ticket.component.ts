@@ -31,7 +31,7 @@ export class GetTicketComponent implements OnInit {
     });
 
 
-    this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint = window.innerWidth <= 700 ? 1 : 3;
     this.planType = localStorage.getItem('planType');
   }
   get lang() { return localStorage.getItem('lang'); }
@@ -141,7 +141,7 @@ export class GetTicketComponent implements OnInit {
 
   onResize(event) {
 
-    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 3;
   }
 
 }

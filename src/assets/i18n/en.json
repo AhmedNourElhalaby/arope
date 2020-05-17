@@ -193,6 +193,10 @@
 
         "condition": "Yes, I have read the ",
         "guide": "Customer Protection Manual"
+    },
+    "tabs": {
+        "tab0": "250 EGP",
+        "tab1": "4 per Thousand"
     }
 
 }

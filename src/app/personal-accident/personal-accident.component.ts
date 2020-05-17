@@ -42,7 +42,7 @@ export class PersonalAccidentComponent implements OnInit {
       }
     });
 
-
+    this.breakpoint = window.innerWidth <= 700 ? 1 : 3;
     /* max and min date */
     this.maxDate = this.site.getDateInYears(18);
     this.minDate = this.site.getDateInYears(75);
@@ -102,8 +102,7 @@ export class PersonalAccidentComponent implements OnInit {
     }
   }
   onResize(event) {
-    console.log('yeah', event);
-    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
+    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 3;
   }
 
   get lang() { return localStorage.getItem('lang'); }
