@@ -69,8 +69,10 @@
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.id' | translate }}</mat-label>
-                    <input matInput type="number" name="id" ngModel #id="ngModel" minlength="14" maxlength="14" required (input)="checkId()">
+                    <input matInput name="id" ngModel #id="ngModel" minlength="14" maxlength="14" required (input)="checkId()">
+                    <mat-hint align="start">{{id.value?.length || 0}}/14</mat-hint>
                     <p *ngIf="cid === false" class="custom-error"> {{ 'results_info.id_alert' | translate }}</p>
+                    <p *ngIf="cid && id.errors?.minlength" class="custom-error">{{ 'results_info.id_alert2' | translate }}</p>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
@@ -140,7 +142,7 @@
                             <div class="left-field" fxFlex="29%" style="margin: auto 10px;">
                                 <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>{{ 'personal.rate' | translate }}</mat-label>
-                                    <input type="text" name="rate" matInput [ngModel]="othere[i]?.rate"  #rate="ngModel" 
+                                    <input type="text" name="rate" matInput [ngModel]="othere[i]?.rate" (blur)="checkRate()"  #rate="ngModel" 
                                         placeholder="{{'personal.rate' | translate}}"  required>
                                     
                                 </mat-form-field>
@@ -167,7 +169,7 @@
                                 <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>{{ 'personal.rate' | translate }}</mat-label>
                                     <input type="text" name="rate" matInput ngModel  #rate="ngModel" 
-                                        placeholder="{{'personal.rate' | translate}}"  required>
+                                        placeholder="{{'personal.rate' | translate}}" (blur)="checkRate()"  required>
                                     
                                 </mat-form-field>
                             </div>
@@ -194,6 +196,7 @@
                     </span>
 
             </div>
+            <p *ngIf="cRate === false" class="custom-error-rate"> {{ 'results_info.rate_alert' | translate }}</p>
 
             <!-- <button mat-raised-button type="button" color="primary" (click)="increaseElement()"> 
                 <mat-icon>add</mat-icon>
@@ -210,9 +213,19 @@
 
 
 
-
-        <button *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid ||  cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
-        <button *ngIf="lang =='ar'" style="direction: rtl;" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid ||  cid !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_left_alt</mat-icon></button>
+        <p>
+            <mat-checkbox [ngModel]="confirm" #checkbox="ngModel" name="terms"  color="primary" required> {{ 'results_info.alert2' | translate }} <a href="http://207.154.195.214/PA_General_Conditions.pdf" download target="_blank">{{ 'results_info.terms' | translate }}</a></mat-checkbox>
+        
+        </p>
+        
+        <p>
+        
+            <mat-checkbox [ngModel]="conditions" #condition="ngModel" name="condition"  color="primary" required> {{ 'notes.condition' | translate }} <a href="http://207.154.195.214/دليل حماية المتعاملين في التأمين.pdf" target="_blank" rel="noopener noreferrer">{{ 'notes.guide'|translate }}</a></mat-checkbox>
+        </p>
+                <br> <br>
+        
+        <button *ngIf="lang =='en'" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid ||  cid !== true ||  cRate !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_right_alt</mat-icon></button>
+        <button *ngIf="lang =='ar'" style="direction: rtl;" type="submit" mat-button class='button-quote' [disabled]="fInfo.invalid ||  cid !== true ||  cRate !== true">{{ 'results_info.complate' | translate }} <mat-icon>arrow_left_alt</mat-icon></button>
 
     </form>
 </mat-card>

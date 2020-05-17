@@ -37,6 +37,10 @@ mat-grid-list.mat-grid-list.ng-star-inserted {
     font-size: 13px;
     color: red;
 }
+.custom-error-rate{
+    font-size: 18px;
+    color: red;
+}
 
 mat-radio-group {
     width: 100%;
