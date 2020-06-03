@@ -21,4 +21,12 @@ export class OdooService {
     this.http.get('http://207.154.195.214:8070/report/pdf/smart_travel_agency.policy/46').subscribe(res => console.log('report ', res));
   }
 
+  // getSession() {
+  //   const data = {paramlist: {data: {}}};
+  //   this.call_odoo_function('get_session', 'online', 'online', 'policy.travel',
+  //     'get_individual', data).subscribe(res => {
+  //       console.log(res, 'res session');
+  //     });
+  //   }
+
 }

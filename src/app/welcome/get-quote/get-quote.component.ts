@@ -15,6 +15,7 @@ import { OdooService } from '../../shared/odoo.service';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 import { FocusKeyManager } from '@angular/cdk/a11y';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -77,10 +78,13 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
     private odoo: OdooService,
     private route: ActivatedRoute,
     private dateAdapter: DateAdapter<Date>,
-    private site_settings: SiteSettingsService
+    private site_settings: SiteSettingsService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
+   
+
     if (this.lang === 'en') {
       this.dateAdapter.setLocale('en');
     } else if (this.lang === 'ar') {
@@ -133,7 +137,6 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
     this.countries = this.welcomeService.getAllCountries();
   }
-
 
 
 
