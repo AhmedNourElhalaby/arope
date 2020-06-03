@@ -60,6 +60,7 @@
         "phone": "Phone Number",
         "id": "National ID Number",
         "id_alert": "ID is not matching date of birth",
+        "rate_alert": "The total rate must be 100",
         "id_alert2": "ID must be 14 Number",
         "enter_address": "Enter Your Address",
         "complate": "COMPALTE PURCHASE",

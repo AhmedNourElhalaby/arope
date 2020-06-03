@@ -11,7 +11,8 @@ import {
   FormControl,
   FormGroupDirective,
   NgForm,
-  Validators
+  Validators,
+  NgModelGroup
 } from '@angular/forms';
 import { SiteSettingsService } from '../shared/site_settings.service';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -63,6 +64,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   isValidFormSubmitted = false;
   isConfrim = false;
   mail: boolean;
+  cRate: boolean = true;
   cid: boolean;
   element: number[] = [0];
   emailFormControl = new FormControl('', [
@@ -80,12 +82,16 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     private uiService: UIService
   ) {}
   @ViewChild('fInfo', { static: false }) customForm: NgForm;
+  @ViewChild('others', { static: false }) ngModelGroup: NgModelGroup;
   matcher = new MyErrorStateMatcher();
   maxDate: Date;
   minDate: Date;
   date;
   othere;
   countries;
+  others;
+  confirm;
+  conditions;
   policyLang = "ar";
   addScript = false;
   data_info = {
@@ -305,6 +311,22 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
   deleteElement(index: number) {
     const ele = document.getElementById('field-' + index);
     ele.parentNode.removeChild(ele);
+    // this.ngModelGroup.reset(delete this.ngModelGroup.value[index]);
+    this.checkRate();
+  }
+  checkRate() {
+    const others = Object.values(this.customForm.value.others);
+    let x = 0;
+    for (const other of others) {
+      const key = 'rate';
+      x += Number(other[key]);
+    }
+    if (x !== 100) {
+      this.cRate = false;
+    } else {
+      this.cRate = true;
+    }
+
   }
   ngAfterViewChecked() {
     const script = document.querySelector('#myscript');
