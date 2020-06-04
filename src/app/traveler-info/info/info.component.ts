@@ -36,6 +36,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   ]
 })
 export class InfoComponent implements OnInit, AfterViewChecked {
+  
   constructor(
     private setting: SiteSettingsService,
     private odoo: OdooService,
@@ -51,6 +52,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   ) {
   }
   @ViewChild('fInfo', {static: false}) customForm: NgForm;
+  sessionID: string;
   // @ViewChild('fInfo', {static: true}) form: NgForm;
   numOfTravelers = [];
   types  = [
@@ -111,11 +113,16 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   addScript = false;
 
   ngOnInit() {
+
+   this.getSession();
+    // this.getSession();
+
+
     this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
     this.breakpoint2 = window.innerWidth <= 700 ? 1 : 3;
 
     // start qnp config
-    this.initQnpConfig();
+    // this.initQnpConfig();
       // end qnp config
   // params query
     this.routerActivated.queryParamMap.subscribe(param => {
@@ -212,16 +219,16 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked() {
     const script = document.querySelector('#myscript');
-    script.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
+    script.setAttribute('data-complete', 'http://localhost:4200/traveler-insurance/traveler-info?step=thankyou');
 
 
   }
 
   initQnpConfig() {
     const data_traveler = JSON.parse(localStorage.getItem('formData'));
-    const session_id = this.travelerService.getJSessionId();
     const total_price = localStorage.getItem('total_price');
-
+    const sessionIDLocalStorage = localStorage.getItem('__arop_session_id');
+    console.log('sessionID', sessionIDLocalStorage);
     if (data_traveler) {
       console.log('data traveler', data_traveler);
       this.data_info = this.travelerService.getInfoTraveller();
@@ -233,7 +240,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     this.qnbConfig = {
       merchant: 'TESTQNBAATEST001',
       session: {
-        id: session_id
+        id: sessionIDLocalStorage
       },
       order: {
           amount() {
@@ -241,10 +248,11 @@ export class InfoComponent implements OnInit, AfterViewChecked {
               return Number(total_price);
           },
           currency: 'EGP',
-          description: this.data_info.package,
-        id: session_id
+          description: this.data_info.package
+       
       },
         interaction: {
+          // operation: 'AUTHORIZE', 
           merchant      : {
             name   : 'شركة أروب مصر',
             address: {
@@ -259,14 +267,17 @@ export class InfoComponent implements OnInit, AfterViewChecked {
           displayControl: {
               billingAddress  : 'HIDE',
               customerEmail   : 'HIDE',
-              orderSummary    : 'SHOW',
+              orderSummary    : 'HIDE',
               shipping        : 'HIDE'
             }
           }
   };
 
+  console.log('qnp config', this.qnbConfig);
+
     Checkout.configure(this.qnbConfig);
   }
+
 
   qnbScript() {
     this.addScript = true;
@@ -319,8 +330,8 @@ loadStripe() {
 }
 
   submitTravelerInfo(form: NgForm) {
-    console.log(form.value);
-    console.log(form.value.additionalTravelers);
+    
+
     this.isValidFormSubmitted = false;
     const age = this.setting.convertDate(form.value.dateBirth);
     const when = this.setting.convertDate(localStorage.getItem('when'));
@@ -330,6 +341,9 @@ loadStripe() {
     localStorage.setItem('fullName', fullName);
     // console.log(this.emailFormControl);
     if (localStorage.getItem('type') === 'individual') {
+      
+
+
       const formData = {data: {
         source: 'online',
         package: localStorage.getItem('type'),
@@ -447,6 +461,16 @@ loadStripe() {
 
   }
 
+
+
+  getSession() {
+    this.http.get('http://207.154.195.214:4000/get_session').subscribe(res=> {
+     this.sessionID = res['sessionID'];
+      //return res["sessionID"];
+      localStorage.setItem('__arop_session_id', this.sessionID);
+      console.log(this.sessionID, 'in func');
+    });
+  }
   onClickAfterSubmit() {
     this.initQnpConfig();
     console.log('data start', this.data_info);
