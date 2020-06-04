@@ -13,6 +13,7 @@ import { AppDateAdapter, APP_DATE_FORMATS} from '../../date.adapter';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UIService } from 'src/app/shared/ui.services';
+import 'rxjs/add/operator/catch';
 
 declare let Checkout: any;
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -114,7 +115,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
 
-   this.getSession();
+   this.setting.getSession();
     // this.getSession();
 
 
@@ -221,14 +222,14 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     const script = document.querySelector('#myscript');
     script.setAttribute('data-complete', 'http://localhost:4200/traveler-insurance/traveler-info?step=thankyou');
 
-
+    console.log('script added');
   }
 
   initQnpConfig() {
     const data_traveler = JSON.parse(localStorage.getItem('formData'));
     const total_price = localStorage.getItem('total_price');
     const sessionIDLocalStorage = localStorage.getItem('__arop_session_id');
-    console.log('sessionID', sessionIDLocalStorage);
+   
     if (data_traveler) {
       console.log('data traveler', data_traveler);
       this.data_info = this.travelerService.getInfoTraveller();
@@ -283,7 +284,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     this.addScript = true;
     return new Promise((resolve, reject) => {
       const scriptElement = document.createElement('script');
-      scriptElement.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
+      scriptElement.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/56/checkout.js';
       scriptElement.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
       scriptElement.setAttribute('data-error', 'errorCallback');
       scriptElement.onload = resolve;
@@ -462,15 +463,6 @@ loadStripe() {
   }
 
 
-
-  getSession() {
-    this.http.get('http://207.154.195.214:4000/get_session').subscribe(res=> {
-     this.sessionID = res['sessionID'];
-      //return res["sessionID"];
-      localStorage.setItem('__arop_session_id', this.sessionID);
-      console.log(this.sessionID, 'in func');
-    });
-  }
   onClickAfterSubmit() {
     this.initQnpConfig();
     console.log('data start', this.data_info);

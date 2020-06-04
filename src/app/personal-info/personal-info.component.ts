@@ -128,10 +128,9 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     this.countries = res;
     console.log(this.countries);
   });
-    // start qnp config
-    this.initQnpConfig();
-    // end qnp config
-    console.log('data info', this.data_info);
+
+  this.setting.getSession();
+
 
     if (!this.data_info.othere) {
       this.chkOther = false;
@@ -339,23 +338,10 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     this.element.push(this.element.length);
   }
 
-  qnbScript() {
-    this.addScript = true;
-    return new Promise((resolve, reject) => {
-      const scriptElement = document.createElement('script');
-      scriptElement.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
-      scriptElement.setAttribute('data-complete', 'http://207.154.195.214/arope/personal-accident/personal-result?step=thankyou');
-      scriptElement.setAttribute('data-error', 'errorCallback');
-      // scriptElement.setAttribute("data-cancel", "http://207.154.195.214/arope/traveler-insurance");
-      scriptElement.onload = resolve;
-      document.head.appendChild(scriptElement);
-    });
-  }
-
 
   initQnpConfig() {
     const data_traveler = JSON.parse(localStorage.getItem('formData'));
-    const session_id = this.travelerService.getJSessionId();
+    const sessionIDLocalStorage = this.travelerService.getJSessionId();
     const total_price = localStorage.getItem('total_price');
 
     if (data_traveler) {
@@ -381,7 +367,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     this.qnbConfig = {
       merchant: 'TESTQNBAATEST001',
       session: {
-        id: session_id
+        id: sessionIDLocalStorage
       },
       order: {
         amount() {
@@ -390,7 +376,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
         },
         currency: 'EGP',
         description: this.data_info.package,
-        id: session_id
+        // id: session_id
       },
       interaction: {
         merchant: {
@@ -408,7 +394,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
         displayControl: {
           billingAddress: 'HIDE',
           customerEmail: 'HIDE',
-          orderSummary: 'SHOW',
+          orderSummary: 'HIDE',
           shipping: 'HIDE'
         }
       }
