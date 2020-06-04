@@ -163,17 +163,18 @@
         "thankyou": "THANK YOU!",
         "title2": "Thank you for asking AROPE EGYPT It means a lot to us, We will come back to you shortly with an offer.",
         "desc": "Description",
-        "alert_info": "Inheritance after you die",
-        "option1": "The legal heirs",
+        "alert_info": "Beneficiaries in case of death",
+        "option1": "Legitimate heirs",
         "option2": "Others",
         "name": "Full Name",
-        "rate": "Rate",
+        "rate": "percentage ( % of sum insured )",
         "personal": "Personal",
         "national": "Nationality",
         "add_addtional": "Add New Person",
         "ar": "The policy is issued in Arabic",
         "en": "The policy is issued in English",
-        "lang_note": "Note Please fill in the information in the chosen language"
+        "lang_note": "Note Please fill in the information in the chosen language",
+        "policy_covers": "The Policy Covers  / Benefits"
     },
     "thankyou": {
         "title1": "عميلنا العزيز",

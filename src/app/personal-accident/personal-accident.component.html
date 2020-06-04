@@ -23,9 +23,14 @@
                             <mat-grid-tile>
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label>{{ 'personal.job' | translate }}</mat-label>
-                                    <mat-select name="job" ngModel #jobInput="ngModel" required>
+                                    <mat-select *ngIf="lang == 'en'"  name="job" ngModel #jobInput="ngModel" required>
                                         <mat-option *ngFor="let job of jobs" [value]="job.id">
                                             {{job.job_id}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-select *ngIf="lang == 'ar'"  name="job" ngModel #jobInput="ngModel" required>
+                                        <mat-option *ngFor="let job of jobs" [value]="job.id">
+                                            {{job.ar_job_id}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
