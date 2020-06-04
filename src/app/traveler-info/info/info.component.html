@@ -91,7 +91,7 @@
             <mat-grid-tile *ngIf="isEgyptian === true">
                 <mat-form-field appearance="outline" class='form-field'>
                     <mat-label> {{ 'results_info.passport' | translate }}</mat-label>
-                    <input matInput type="text" [pattern]="numberPattern" name="Passport" [ngModel]="data_info.Passport" #Passport="ngModel" required>
+                    <input matInput type="text" pattern="^(\d|\w)+$"  name="Passport" [ngModel]="data_info.Passport" #Passport="ngModel" required>
                     <!-- <mat-error *ngIf="Passport.invalid">{{'traveler.validation_passport' | translate}}</mat-error>
                     <mat-hint align="end">{{Passport.value?.length || 0}}/14</mat-hint> -->
                 </mat-form-field>
@@ -231,7 +231,7 @@
                             <div fxFlex="50%"  *ngIf="isEgyptian === true">
                                 <mat-form-field appearance="outline" class='form-field'>
                                     <mat-label> {{ 'results_info.passport' | translate }}</mat-label>
-                                    <input matInput type="text" [pattern]="numberPattern" name="tpassport{{traveler}}" [ngModel]="data_info.Passport" #tpassport="ngModel" required>
+                                    <input matInput type="text" pattern="^(\d|\w)+$"  name="tpassport{{traveler}}" [ngModel]="data_info.Passport" #tpassport="ngModel" required>
                                     <!-- <mat-error *ngIf="tpassport.invalid">{{'traveler.validation_passport' | translate}}</mat-error>
                                     <mat-hint align="end">{{tpassport.value?.length || 0}}/14</mat-hint>       -->
                                 </mat-form-field>

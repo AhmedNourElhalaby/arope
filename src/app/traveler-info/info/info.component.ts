@@ -36,7 +36,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   ]
 })
 export class InfoComponent implements OnInit, AfterViewChecked {
-  
+
   constructor(
     private setting: SiteSettingsService,
     private odoo: OdooService,
@@ -58,9 +58,9 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   types  = [
     {value: 'spouse', viewValue: 'Spouse'},
     {value: 'kid', viewValue: 'Kid'}
-    
+
   ];
-  numberPattern = '^((\\+91-?)|0)?[0-9]{14}$';
+  numberPattern = '^(\d|\w)+$';
   minDateKid;
   maxDateKid;
   dataJson;
@@ -118,14 +118,14 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     // this.getSession();
 
 
-    this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
-    this.breakpoint2 = window.innerWidth <= 700 ? 1 : 3;
+   this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
+   this.breakpoint2 = window.innerWidth <= 700 ? 1 : 3;
 
     // start qnp config
     // this.initQnpConfig();
       // end qnp config
   // params query
-    this.routerActivated.queryParamMap.subscribe(param => {
+   this.routerActivated.queryParamMap.subscribe(param => {
 
     // start code
     if (param.has('step')) {
@@ -177,8 +177,8 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   });
 
 
-    this.type = localStorage.getItem('type');
-    if (this.type === 'individual') {
+   this.type = localStorage.getItem('type');
+   if (this.type === 'individual') {
     this.indi = true;
     this.date = localStorage.getItem('date');
   } else {
@@ -188,17 +188,17 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     this.datesList = this.dataJson.dates;
     console.log('DateList', this.datesList);
   }
-    if (this.lang === 'en') {
+   if (this.lang === 'en') {
     this.dateAdapter.setLocale('en');
   } else if (this.lang === 'ar') {
     this.dateAdapter.setLocale('ar');
   }
-    this.minDateKid = this.setting.getDateInYears(18);
-    this.maxDateKid = this.welService.getMinDateBefore30Days();
-    const emptyArr = new Array(
+   this.minDateKid = this.setting.getDateInYears(18);
+   this.maxDateKid = this.welService.getMinDateBefore30Days();
+   const emptyArr = new Array(
     parseInt(localStorage.getItem('numOfTraveler'))
   );
-    for (let i = 0; i < emptyArr.length; i++) {
+   for (let i = 0; i < emptyArr.length; i++) {
 
     console.log('count', i);
     this.numOfTravelers.push(i);
@@ -219,7 +219,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked() {
     const script = document.querySelector('#myscript');
-    script.setAttribute('data-complete', 'http://localhost:4200/traveler-insurance/traveler-info?step=thankyou');
+    script.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
 
 
   }
@@ -249,10 +249,10 @@ export class InfoComponent implements OnInit, AfterViewChecked {
           },
           currency: 'EGP',
           description: this.data_info.package
-       
+
       },
         interaction: {
-          // operation: 'AUTHORIZE', 
+          // operation: 'AUTHORIZE',
           merchant      : {
             name   : 'شركة أروب مصر',
             address: {
@@ -273,7 +273,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
           }
   };
 
-  console.log('qnp config', this.qnbConfig);
+    console.log('qnp config', this.qnbConfig);
 
     Checkout.configure(this.qnbConfig);
   }
@@ -330,7 +330,7 @@ loadStripe() {
 }
 
   submitTravelerInfo(form: NgForm) {
-    
+
 
     this.isValidFormSubmitted = false;
     const age = this.setting.convertDate(form.value.dateBirth);
@@ -341,7 +341,7 @@ loadStripe() {
     localStorage.setItem('fullName', fullName);
     // console.log(this.emailFormControl);
     if (localStorage.getItem('type') === 'individual') {
-      
+
 
 
       const formData = {data: {
@@ -464,11 +464,12 @@ loadStripe() {
 
 
   getSession() {
-    this.http.get('http://207.154.195.214:4000/get_session').subscribe(res=> {
-     this.sessionID = res['sessionID'];
-      //return res["sessionID"];
-      localStorage.setItem('__arop_session_id', this.sessionID);
-      console.log(this.sessionID, 'in func');
+    this.http.get('http://207.154.195.214:4000/get_session').subscribe(res => {
+     const key = 'sessionID';
+     this.sessionID = res[key];
+      // return res["sessionID"];
+     localStorage.setItem('__arop_session_id', this.sessionID);
+     console.log(this.sessionID, 'in func');
     });
   }
   onClickAfterSubmit() {
