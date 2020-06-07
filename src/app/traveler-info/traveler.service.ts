@@ -23,21 +23,20 @@ export class TravelerService {
 
   }
 
-  getJSessionId(){
-      let jsId = document.cookie.match(/JSESSIONID=[^;]+/);
+  getJSessionId() {
+      const jsId = document.cookie.match(/JSESSIONID=[^;]+/);
       let dd;
-      if(jsId != null) {
+      if (jsId != null) {
           if (jsId instanceof Array) {
               dd = jsId[0].substring(11);
-            }
-          else {
+            } else {
               dd = String(jsId).substring(11);
             }
       }
 
       return dd;
   }
-  
+
   getInfoTraveller() {
     const info = JSON.parse(localStorage.getItem('formData'));
     const total_price = Number(localStorage.getItem('total_price'));
@@ -61,24 +60,24 @@ export class TravelerService {
     const condition = info.data.condition;
 
     return {
-        phone: phone,
-        full_name: full_name,
-        mail: mail,
-        address: address,
-        total_price: total_price,
+        phone,
+        full_name,
+        mail,
+        address,
+        total_price,
         package: 'your package: ' + type,
-        first_name: first_name,
-        middle_name: middle_name,
-        last_name: last_name,
-        gender: gender,
-        id: id,
-        national: national,
-        Passport:Passport,
-        confirm:confirm,
-        chk:chk,
-        condition:condition
+        first_name,
+        middle_name,
+        last_name,
+        gender,
+        id,
+        national,
+        Passport,
+        confirm,
+        chk,
+        condition
     };
-    
+
   }
 
   getInfoPersonal() {
@@ -96,38 +95,38 @@ export class TravelerService {
     const id = info.data.id;
     const lang = info.data.policyLang;
 
-    
-    
+
+
     const split_str = full_name.split(' ');
     const first_name = split_str[0];
     const middle_name = split_str[1];
     const last_name = split_str[2];
-    
+
     const elig_bool = info.data.elig_bool;
     let othere;
-    if(info.data.othere) {
+    if (info.data.othere) {
       console.log('type of othere ', typeof( info.data.othere));
-      othere= Object.values(info.data.othere);
+      othere = Object.values(info.data.othere);
     }
     return {
-        phone: phone,
-        full_name: full_name,
-        mail: mail,
-        address: address,
-        national: national,
-        city: city,
-        total_price: total_price,
-        package: 'your package: '+type,
-        first_name: first_name,
-        middle_name: middle_name,
-        last_name: last_name,
-        gender: gender,
-        id: id,
-        othere: othere,
+        phone,
+        full_name,
+        mail,
+        address,
+        national,
+        city,
+        total_price,
+        package: 'your package: ' + type,
+        first_name,
+        middle_name,
+        last_name,
+        gender,
+        id,
+        othere,
         after_die: elig_bool,
         language: lang
     };
-    
+
   }
 
   /* get payment list data */
