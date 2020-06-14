@@ -59,6 +59,8 @@ import { FamilyMedicalComponent } from './medical-insurance/medical-quote/family
 import { SmesMedicalComponent } from './medical-insurance/medical-quote/smes-medical/smes-medical.component';
 import { SmesTableComponent } from './medical-insurance/medical-info/smes-table/smes-table.component';
 import { GetTicketComponent } from './get-ticket/get-ticket.component';
+import { PaymentService } from './shared/payment.service';
+import {  FaweryService } from './shared/fawery.service';
 
 @NgModule({
   declarations: [
@@ -121,7 +123,9 @@ import { GetTicketComponent } from './get-ticket/get-ticket.component';
     SiteSettingsService,
     ValidationService,
     MedicalService,
-    TranslateConfigService
+    TranslateConfigService,
+    PaymentService,
+    FaweryService
   ],
   bootstrap: [AppComponent],
   entryComponents: [AgeTravelerComponent, GroupAgeComponent]

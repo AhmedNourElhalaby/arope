@@ -6,6 +6,7 @@ import { MatSnackBar } from "@angular/material";
 export class UIService {
   loadingChangedStatus = new Subject<boolean>();
   loadResId = new Subject<any[]>();
+  loadPriceTotal = new Subject<number>();
 
 
   constructor(private snakbar: MatSnackBar) {}

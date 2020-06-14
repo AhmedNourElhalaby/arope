@@ -29,8 +29,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { OdooService } from '../shared/odoo.service';
 import { UIService } from '../shared/ui.services';
+import { FaweryService } from '../shared/fawery.service';
+import { PaymentService } from '../shared/payment.service';
 declare let Checkout: any;
-
+declare let FawryPay: any;
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -79,7 +81,9 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     private routerActivated: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private uiService: UIService
+    private uiService: UIService,
+    private paymentService: PaymentService,
+    private faweryService: FaweryService
   ) {}
   @ViewChild('fInfo', { static: false }) customForm: NgForm;
   @ViewChild('others', { static: false }) ngModelGroup: NgModelGroup;
@@ -253,14 +257,32 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
     // this.changeStatus.emit(true);
     this.isValidFormSubmitted = true;
     // form.resetForm();
-    this.onClickAfterSubmit();
-  }
-  onClickAfterSubmit() {
-    this.initQnpConfig();
-    console.log('data start', this.data_info);
-    Checkout.showLightbox();
+    this.onClickAfterSubmit(form.value.payment_method);
   }
 
+
+  async onClickAfterSubmit(payment_method) {
+    const total_price = localStorage.getItem('total_price');
+   
+    await this.paymentService.qnpGetSession(total_price).subscribe(response => {
+      console.log(response , 'session');
+      const dataSaved = {sesionID: response['sesionID'], orderID: response['orderID']}
+      localStorage.setItem('__arope_order_details', JSON.stringify(dataSaved));
+
+    });
+
+    if(payment_method == 'qnp') {
+      this.initQnpConfig();
+      // console.log('data start', this.data_info);
+      Checkout.showLightbox();
+    } else if(payment_method == 'fawery') {
+      const returnData = this.faweryService.faweryConfig();
+      console.log(returnData, 'return data');
+      FawryPay.checkout((await returnData).charge_request, (await returnData).sucess_page_url, (await returnData).failer_page_url);
+    }
+
+    this.uiService.loadingChangedStatus.next(true);
+  }
   changeShowValue() {
     this.travelerService.changeStatusShowValue();
   }
@@ -328,11 +350,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
 
   }
   ngAfterViewChecked() {
-    const script = document.querySelector('#myscript');
-    script.setAttribute('data-complete', 'http://207.154.195.214/arope/personal-accident/personal-result?step=thankyou');
-    // if(!this.addScript) {
-    //   this.qnbScript();
-    // }
+
   }
   increaseElement() {
     this.element.push(this.element.length);
@@ -341,7 +359,7 @@ export class PersonalInfoComponent implements OnInit, AfterViewChecked {
 
   initQnpConfig() {
     const data_traveler = JSON.parse(localStorage.getItem('formData'));
-    const sessionIDLocalStorage = this.travelerService.getJSessionId();
+    const sessionIDLocalStorage =  JSON.parse(localStorage.getItem('__arope_order_details')).sesionID;
     const total_price = localStorage.getItem('total_price');
 
     if (data_traveler) {

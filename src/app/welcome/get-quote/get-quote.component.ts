@@ -84,7 +84,6 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
    
-
     if (this.lang === 'en') {
       this.dateAdapter.setLocale('en');
     } else if (this.lang === 'ar') {
@@ -298,11 +297,11 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
       // 'get_group', data).subscribe(res => {
       //   console.log(res);
       // });
-      localStorage.setItem('type', form.value.type);
+      
       this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'policy.travel',
       'get_group', data).subscribe(res => {
         const x = res.gross;
-        console.log(res);
+        this.uiService.loadPriceTotal.next( parseInt(x.toString(), 10) );
         localStorage.setItem('total_price', parseInt(x.toString(), 10).toString());
         const groubLocal = JSON.stringify(groups);
         localStorage.setItem('groupMembers', groubLocal);
@@ -383,7 +382,7 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
   }
 
   setLocale(val) {
-    console.log(val);
+    
     this.dateAdapter.setLocale(val);
   }
 
@@ -436,13 +435,13 @@ export class GetQuoteComponent implements OnInit, OnDestroy {
       }
 
     }
-    console.log(yearAge, dateAge);
+   
     if (yearAge < 85 || yearAge === 85 && dateAge === 0 ) {
       this.isNotMore85 = true;
-      console.log(this.isNotMore85);
+     
     } else {
       this.isNotMore85 = false;
-      console.log(this.isNotMore85);
+     
       const key = 'date-0';
     }
   }

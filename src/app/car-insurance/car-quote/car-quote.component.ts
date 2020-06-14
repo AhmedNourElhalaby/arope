@@ -56,16 +56,11 @@ export class CarQuoteComponent implements OnInit, OnDestroy {
 
     const brandCar = this.carService.getValueBrand(Number(form.value.brandCar));
    
-    if (form.value.type == 'General') {
-     
+
     this.router.navigate(['/', 'car-insurance', 'insurance-info',
-    brandCar, form.value.brand, form.value.type,
+    brandCar, form.value.brand,
      form.value.price]);
-    } else {
-      this.router.navigate(['/', 'car-insurance', 'insurance-info',
-      brandCar, form.value.brand, form.value.type,
-      form.value.price]);
-    }
+    
   }
 
   checkDeductibleRateOptions(form: NgForm) {

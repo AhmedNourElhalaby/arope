@@ -116,6 +116,16 @@
 
 
         </mat-grid-list>
+        <mat-grid-list  cols="1" rowHeight="88px" gutterSize="10px">
+            <mat-grid-tile>
+                <mat-radio-group aria-label="select payment method" required ngModel="payment_method" name="payment_method" #payment_method="ngModel">
+                    <mat-label>{{'payment.title' | translate}}</mat-label>
+                    <mat-radio-button value="fawery">{{'payment.fawery' | translate}}</mat-radio-button>
+                    <mat-radio-button value="qnp"> {{'payment.qnb' | translate}}</mat-radio-button>
+                  </mat-radio-group>
+            </mat-grid-tile>
+
+        </mat-grid-list>
 
         <mat-card style="    width: 96%;
         margin-bottom: 20px;

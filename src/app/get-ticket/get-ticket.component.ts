@@ -18,6 +18,8 @@ export class GetTicketComponent implements OnInit {
   product: string;
   price: number;
   type: string;
+  planTypeCar: string;
+  @Input('plan') plan: string;
   constructor(private carService: CarInsuranceService , private odoo: OdooService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -27,12 +29,14 @@ export class GetTicketComponent implements OnInit {
       this.product = param.get('product');
       this.price = Number(param.get('price'));
       this.type = localStorage.getItem('medicalType');
-      console.log(this.type);
+      console.log(this.brandCar, this.product, this.price);
     });
+    
 
 
     this.breakpoint = window.innerWidth <= 700 ? 1 : 3;
     this.planType = localStorage.getItem('planType');
+    this.planTypeCar = localStorage.getItem('planTypeCar');
   }
   get lang() { return localStorage.getItem('lang'); }
 
@@ -58,7 +62,7 @@ export class GetTicketComponent implements OnInit {
         mail: form.value.emailAddress,
         price: this.price,
         brand: this.brandCar,
-        product: this.product
+        product: this.planTypeCar
       };
 
       this.getTicketCar(obj);
@@ -88,6 +92,8 @@ export class GetTicketComponent implements OnInit {
         this.clicked.emit('true');
       }
     }, error => console.log(error));
+
+    localStorage.setItem('planTypeCar', '');
   }
 
   getTicketGroup(dataList) {

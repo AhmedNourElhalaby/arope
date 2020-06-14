@@ -14,6 +14,7 @@
     <script id="myscript" src="https://qnbalahli.test.gateway.mastercard.com/checkout/version/43/checkout.js" 
     data-cancel="cancelCallback" 
     data-error="errorCallback"
+    data-complete="completeCallback"
    
     >
     </script>
@@ -38,7 +39,25 @@
         function timeoutCallback() {
             alert('Network Error : No Data Received.');
         }
+
+        function completeCallback() {
+            // fetch('http://207.154.195.214:4000/complete/travel/test')
+            // .then(response => response.json())
+            // .then(data => console.log(data));
+            const key = JSON.parse(localStorage.getItem('formData')).key;
+            if(key == 'travel') {
+
+                window.location.replace('http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
+            } else {
+                window.location.replace('http://207.154.195.214/arope/personal-accident/personal-result?step=thankyou');
+            }
+        }
     </script>
+    <script>
+        if (global === undefined) {
+          var global = window;
+        }
+      </script>
 
     <link rel="stylesheet" href="http://207.154.195.214:8070/im_livechat/external_lib.css"/>
 
