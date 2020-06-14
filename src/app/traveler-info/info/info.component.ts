@@ -1,5 +1,5 @@
 import { WelcomeService } from './../../welcome/welcome.service';
-import { Component, OnInit, Output, EventEmitter, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {FormControl, FormGroupDirective, NgForm, Validators, AbstractControl} from '@angular/forms';
 import { SiteSettingsService } from 'src/app/shared/site_settings.service';
@@ -14,8 +14,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UIService } from 'src/app/shared/ui.services';
 import 'rxjs/add/operator/catch';
+import { PaymentService } from 'src/app/shared/payment.service';
+import { FaweryService } from 'src/app/shared/fawery.service';
 
 declare let Checkout: any;
+declare let FawryPay: any;
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -36,7 +39,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     }
   ]
 })
-export class InfoComponent implements OnInit, AfterViewChecked {
+export class InfoComponent implements OnInit, AfterViewInit {
 
   constructor(
     private setting: SiteSettingsService,
@@ -49,6 +52,9 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     private routerActivated: ActivatedRoute,
     private uiService: UIService,
     private http: HttpClient,
+    private paymentService: PaymentService,
+    private ui: UIService,
+    private faweyService: FaweryService
     // private save: saveAs
   ) {
   }
@@ -99,14 +105,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     chk: false,
     condition: false
   };
-  // emailFormControl = new FormControl('', [
-  //   Validators.required,
-  //   Validators.email,
-  //   // this.checkMailValidator
-
-  // ]);
-
-  // emailFormControl = new FormControl(null, [this.checkMailValidator]);
+ 
 
   matcher = new MyErrorStateMatcher();
   @Output() changeStatus = new EventEmitter();
@@ -115,8 +114,6 @@ export class InfoComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
 
-   this.setting.getSession();
-    // this.getSession();
 
 
    this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
@@ -201,8 +198,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   );
    for (let i = 0; i < emptyArr.length; i++) {
 
-    console.log('count', i);
-    this.numOfTravelers.push(i);
+        this.numOfTravelers.push(i);
    }
 
     // this.loadStripe();
@@ -218,22 +214,26 @@ export class InfoComponent implements OnInit, AfterViewChecked {
       saveAs(res, `Terms&Conditions.pdf`);
     });
   }
-  ngAfterViewChecked() {
-    const script = document.querySelector('#myscript');
-    script.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
 
-    console.log('script added');
+
+  ngAfterViewInit() {
+    const script = document.querySelector('#myscript');
+    //script.setAttribute('data-complete', 'http://207.154.195.214:4000/complete/travel/test');
   }
 
-  initQnpConfig() {
+  async initQnpConfig() {
     const data_traveler = JSON.parse(localStorage.getItem('formData'));
-    const total_price = localStorage.getItem('total_price');
-    const sessionIDLocalStorage = localStorage.getItem('__arop_session_id');
+    let total_price = localStorage.getItem('total_price');
+
+    // await this.uiService.loadPriceTotal.subscribe(total => {
+    //   total_price = total;
+    // });
+
+
+    const sessionIDLocalStorage = JSON.parse(localStorage.getItem('__arope_order_details')).sesionID;
    
     if (data_traveler) {
-      console.log('data traveler', data_traveler);
       this.data_info = this.travelerService.getInfoTraveller();
-      console.log('data-info', this.data_info);
     }
 
     this.national = this.data_info.national;
@@ -274,23 +274,11 @@ export class InfoComponent implements OnInit, AfterViewChecked {
           }
   };
 
-    console.log('qnp config', this.qnbConfig);
-
+  
     Checkout.configure(this.qnbConfig);
   }
 
 
-  qnbScript() {
-    this.addScript = true;
-    return new Promise((resolve, reject) => {
-      const scriptElement = document.createElement('script');
-      scriptElement.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/56/checkout.js';
-      scriptElement.setAttribute('data-complete', 'http://207.154.195.214/arope/traveler-insurance/traveler-info?step=thankyou');
-      scriptElement.setAttribute('data-error', 'errorCallback');
-      scriptElement.onload = resolve;
-      document.head.appendChild(scriptElement);
-    });
-  }
 
   get lang() { return localStorage.getItem('lang'); }
 
@@ -307,7 +295,7 @@ export class InfoComponent implements OnInit, AfterViewChecked {
   }
 
   setLocale(val) {
-    console.log(val);
+    
     this.dateAdapter.setLocale(val);
   }
 
@@ -317,18 +305,6 @@ export class InfoComponent implements OnInit, AfterViewChecked {
     this.breakpoint2 = event.target.innerWidth <= 700 ? 1 : 3;
   }
 
-loadStripe() {
-
-  if (!window.document.getElementById('stripe-script')) {
-    const s = window.document.createElement('script');
-    s.id = 'stripe-script';
-    s.type = 'text/javascript';
-    s.src = 'https://qnbalahli.test.gateway.mastercard.com/checkout/version/49/checkout.js';
-    s.setAttribute('data-error', 'errorCallbackn');
-    s.setAttribute('data-cancel', 'cancelCallback');
-    window.document.head.appendChild(s);
-  }
-}
 
   submitTravelerInfo(form: NgForm) {
 
@@ -375,7 +351,7 @@ loadStripe() {
           this.changeShowValue();
 
 
-          this.onClickAfterSubmit();
+          this.onClickAfterSubmit(form.value.payment_method);
         });
       const caching = {
         fname: form.value.firstName,
@@ -452,35 +428,42 @@ loadStripe() {
         this.changeShowValue();
 
 
-        this.onClickAfterSubmit();
+        this.onClickAfterSubmit(form.value.payment_method);
       });
       this.welService.sendQuoteResult('get_family', data);
     }
     this.isValidFormSubmitted = true;
-    // form.resetForm();
-
-
   }
 
 
-  onClickAfterSubmit() {
-    this.initQnpConfig();
-    console.log('data start', this.data_info);
-    Checkout.showLightbox();
+  async onClickAfterSubmit(payment_method) {
+    const total_price = localStorage.getItem('total_price');
+   
+    await this.paymentService.qnpGetSession(total_price).subscribe(response => {
+      console.log(response , 'session');
+      const dataSaved = {sesionID: response['sesionID'], orderID: response['orderID']}
+      localStorage.setItem('__arope_order_details', JSON.stringify(dataSaved));
+
+    });
+
+    if(payment_method == 'qnp') {
+      this.initQnpConfig();
+      // console.log('data start', this.data_info);
+      Checkout.showLightbox();
+    } else if(payment_method == 'fawery') {
+      const returnData = this.faweyService.faweryConfig();
+      console.log(returnData, 'return data');
+      FawryPay.checkout((await returnData).charge_request, (await returnData).sucess_page_url, (await returnData).failer_page_url);
+    }
+
+    this.ui.loadingChangedStatus.next(true);
   }
 
   changeShowValue() {
     this.travelerService.changeStatusShowValue();
 
   }
-  // checkMail() {
-  //   // let result = true;
-  //   const email = this.customForm.value.emailAddress;
-  //   this.validation.checkMail(email).subscribe(res => {
-  //     const key = 'smtp_check';
-  //     this.mail = res[key];
-  //   });
-  // }
+
   convertDate(dateAge) {
     let d = new Date(dateAge),
       month = '' + (d.getMonth() + 1),
@@ -509,22 +492,7 @@ loadStripe() {
       this.cid = false;
     } else {
       this.cid = true;
-      // const data = {paramlist: {filter: [['national_id', '=', id]], need: ['issue_date']}};
-      // this.odoo.call_odoo_function('travel_agency', 'online', 'online',
-      // 'policy.travel', 'search_read', data ).subscribe(res => {
-      //   const key = 'issue_date';
-      //   console.log(res);
-      //   if (res[0]) {
-      //   const issueDate = res[0][key].substring(0, 10);
-      //   const today = new Date();
-      //   const strDate = this.convertDate(today);
-      //   if (issueDate === strDate) {
-      //     this.isFirstPolicy = false;
-      //   }
-      //   console.log(strDate);
-      //   console.log(issueDate);
-      // }
-      // });
+
     }
 
   }

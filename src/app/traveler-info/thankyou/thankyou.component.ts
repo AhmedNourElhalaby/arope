@@ -12,20 +12,27 @@ export class ThankyouComponent implements OnInit, OnDestroy {
   fullName: string;
   numDoc;
   loadResIdSub: Subscription;
+  isLoading: boolean = true;
+  isLoadingSubscription: Subscription;
   constructor(private router: Router, private uiService: UIService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.fullName = localStorage.getItem('fullName');
-    this.loadResIdSub = this.uiService.loadResId.subscribe(res=> {
+    this.loadResIdSub = await this.uiService.loadResId.subscribe(res=> {
       this.numDoc = res;
+      this.uiService.loadingChangedStatus.next(false);
+    });
+
+    this.isLoadingSubscription = this.uiService.loadingChangedStatus.subscribe(res=> {
+      this.isLoading = res;
     });
   }
 
   back_to_home() {
     this.router.navigate(['/', 'traveler-insurance']).then(() => {
-      let myItem = localStorage.getItem('lang');
-      localStorage.clear();
-      localStorage.setItem('lang', myItem);
+      // let myItem = localStorage.getItem('lang');
+      // localStorage.clear();
+      // localStorage.setItem('lang', myItem);
   
       let script = document.querySelector("#myscript");
       script.removeAttribute("data-complete");
@@ -34,6 +41,7 @@ export class ThankyouComponent implements OnInit, OnDestroy {
 
   ngOnDestroy () {
     if(this.loadResIdSub) {this.loadResIdSub.unsubscribe()}
+    if(this.isLoadingSubscription) {this.isLoadingSubscription.unsubscribe()}
   }
 
 }

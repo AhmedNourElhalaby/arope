@@ -115,8 +115,12 @@
         "total_quote": "Your Total Quote",
         "currency": "EGP",
         "buy": "BUY",
-        "model_year": "Model Year"
-
+        "model_year": "Model Year",
+        "plans_price": "Plan Prices",
+        "cover": "Cover",
+        "comprehensive_1": "Comprehensive",
+        "comprehensive_2": "Comprehensive 2",
+        "total_loss_only": "Total Loss Only"
     },
     "group": {
         "title": "Please fill out the form below",
@@ -202,6 +206,11 @@
     "tabs": {
         "tab0": "250 EGP",
         "tab1": "4 per Thousand"
+    },
+    "payment": {
+        "title": "Choose a suitable payment method",
+        "fawery": "Fawery",
+        "qnb": "QNB"
     }
 
 }

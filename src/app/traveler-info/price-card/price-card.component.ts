@@ -51,11 +51,8 @@ export class PriceCardComponent implements OnInit {
     this.type = localStorage.getItem('type');
 
     this.totalPrice = localStorage.getItem('total_price');
-    // this.loadPriceSubs = this.welService.priceLoad.subscribe(result => {
-    //   console.log(result);
-    //   this.totalPrice = result;
-    // });
-    console.log('total price', this.totalPrice);
+
+
     this.uiService.loadingChangedStatus.subscribe(res => {
       this.isLoading = res;
 

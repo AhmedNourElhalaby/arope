@@ -75,42 +75,7 @@ export class PaymentComponent implements OnInit, AfterViewChecked {
     // script.src = "https://qnbalahli.test.gateway.mastercard.com/checkout/version/55/checkout.js";
   }
   
- onPay() {
-    var handler = (<any>window).Checkout.configure({
-            merchant: 'TESTQNBAATEST001',
-        order: {
-            amount: function() {
-                //Dynamic calculation of amount
-                return 80 + 20;
-            },
-            currency: 'EGP',
-            description: 'Ordered goods',
-            id: ''
-        },
-        interaction: {
-            merchant: {
-                name: 'Your merchant name',
-                address: {
-                    line1: '200 Sample St',
-                    line2: '1234 Example Town'
-                },
-                email: 'order@yourMerchantEmailAddress.com',
-                phone: '+1 123 456 789 012',
-                logo: 'https://aropeegypt.com.eg/Property/wp-content/uploads/2019/10/Logoz-3.jpg'
-            },
-            locale: 'en_US',
-            theme: 'default',
-            displayControl: {
-                billingAddress: 'HIDE',
-                customerEmail: 'HIDE',
-                orderSummary: 'SHOW',
-                shipping: 'HIDE'
-            }
-        }
-    });
- 
-    handler.showLightbox();
-    }
+
 
     ngAfterViewChecked() {
      
@@ -119,7 +84,7 @@ export class PaymentComponent implements OnInit, AfterViewChecked {
 
   
   submitPayment(form: NgForm) {
-    console.log("ay kalam");
+    
     if (form.valid) {
       console.log("ay kalam 1");
       const formData = JSON.parse(localStorage.getItem("formData"));
@@ -134,7 +99,7 @@ export class PaymentComponent implements OnInit, AfterViewChecked {
           data
         )
         .subscribe(res => {
-          console.log("res", res);
+        
           this.paymentStatus.emit(true);
         });
     }

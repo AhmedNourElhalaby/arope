@@ -55,8 +55,10 @@ export class WelcomeService {
     this.odoo.call_odoo_function('travel_agency', 'online', 'online', 'policy.travel',
      fun, data).subscribe(res => {
         const x = res.gross.toFixed(2);
-        console.log(res);
+       
         localStorage.setItem('total_price', parseInt(x.toString(), 10).toString());
+        this.uiService.loadPriceTotal.next( x );
+        console.log('from a quote', x);
         this.priceValue = res;
         this.uiService.loadingChangedStatus.next(false);
         this.router.navigate(['/','traveler-insurance','traveler-info']);

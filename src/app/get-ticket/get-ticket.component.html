@@ -20,7 +20,7 @@
                 </mat-grid-tile>
                 <mat-grid-tile>
                     <div class="form-group">
-                        <select name="prefixNum" id="selectOptions" #prefixNum="ngModel" ngModel="02" required>
+                        <select name="prefixNum" dir="auto" id="selectOptions" #prefixNum="ngModel" ngModel="02" required>
                         <option value="02" checked>02</option>
                         <option value="011">011</option>
                         <option value="010">010</option>
@@ -29,7 +29,7 @@
                     </select>
                         <mat-form-field appearance="outline" class='form-field'>
                             <mat-label id="phoneLabel">{{ 'results_info.phone' | translate }}</mat-label>
-                            <input matInput type="tel" id="phoneInput" name="phoneNumber" ngModel #phoneNumber="ngModel" maxlength="90" minlength="5" required>
+                            <input matInput  type="tel" id="phoneInput" name="phoneNumber" ngModel #phoneNumber="ngModel" maxlength="90" minlength="5" required>
                         </mat-form-field>
                     </div>
                 </mat-grid-tile>

@@ -6,14 +6,9 @@
             <mat-card-title fxLayoutAlign="flex-start">{{ 'car.title' | translate }}</mat-card-title>
             <mat-card-content>
 
-                <mat-radio-group aria-label="Select an option" color="primary" name="type" ngModel="General" #typeInput="ngModel" required>
-                    <mat-radio-button value="General">{{ 'car.general' | translate }}</mat-radio-button>
-                    <mat-radio-button value="Total Loss Only">{{ 'car.total_loss' | translate }}</mat-radio-button>
-                </mat-radio-group>
+             
 
 
-                <br><br>
-              
                 <mat-grid-list [cols]="breakpoint" rowHeight="75px" gutterSize="10px" (window:resize)="onResize($event)">
 
 
@@ -54,20 +49,6 @@
                             </mat-select>
                         </mat-form-field>
                     </mat-grid-tile>
-
-                    <!-- <mat-grid-tile *ngIf="checkDeductibleRateOptions(f) != false" >
-                        <mat-form-field appearance="outline" class='form-field'>
-                            <mat-label>{{ 'car.deductible' | translate }}</mat-label>
-                            <mat-select name="deductibleRate" ngModel #deductibleRate="ngModel" required>
-                                <mat-option value="option1">
-                                    {{'car.option1' | translate}}
-                                </mat-option>
-                                <mat-option value="option2">
-                                    {{'car.option2' | translate}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </mat-grid-tile> -->
 
 
                     <mat-grid-tile *ngIf="checkDeductibleRateOptions(f) == false" >

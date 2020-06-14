@@ -81,10 +81,10 @@ export class PersonalResultComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log('component destroy');
-    let myItem = localStorage.getItem('lang');
-    localStorage.clear();
-    localStorage.setItem('lang', myItem);
+    // console.log('component destroy');
+    // let myItem = localStorage.getItem('lang');
+    // localStorage.clear();
+    // localStorage.setItem('lang', myItem);
 
     let script = document.querySelector("#myscript");
     script.removeAttribute("data-complete");
